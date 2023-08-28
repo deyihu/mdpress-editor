@@ -4,6 +4,7 @@ import miniToastr from 'mini-toastr';
 import dayjs from 'dayjs';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
+import emoji from 'markdown-it-emoji';
 import { extendMarkdownItWithKatex } from './plugins/katex';
 const md = MarkdownIt({
     html: true,
@@ -18,6 +19,7 @@ const md = MarkdownIt({
         return ''; // use external default escaping
     }
 });
+md.use(emoji, {});
 extendMarkdownItWithKatex(md);
 
 let miniToastrInit = false;
@@ -174,8 +176,16 @@ const icons = [
         label: '表格'
     },
     {
+        name: 'icon-js',
+        label: '插入js code'
+    },
+    {
+        name: 'icon-Artboard',
+        label: '插入ts code'
+    },
+    {
         name: 'icon-emoji',
-        label: 'emoji'
+        label: 'github emoji'
     },
     {
         name: 'icon-093info',
@@ -257,6 +267,19 @@ const KATEX = `
 \\sqrt{3x-1}+(1+x)^2
 
 :::\n
+`;
+
+const JSCODE = `
+function add(a,b){
+    return a+b;
+}
+console.log(add(1,2));
+`;
+const TSCODE = `
+function add(a:number,b:number):number{
+    return a+b;
+}
+console.log(add(1,2));
 `;
 
 const OPTIONS = {
@@ -675,6 +698,29 @@ export class MDEditor {
         });
 
         // ====
+        const codeClick = (text) => {
+            const result = getCurrentRange();
+            if (!validateSelect(result)) {
+                return;
+            }
+            const [range, editor] = result;
+            editor.executeEdits('', [
+                {
+                    range,
+                    text
+                }
+            ]);
+        };
+        const jsCode = () => {
+            codeClick('```js' + JSCODE + '```\n');
+        };
+        const tsCode = () => {
+            codeClick('```ts' + TSCODE + '```\n');
+        };
+        on(iconDoms[17], 'click', jsCode);
+        on(iconDoms[18], 'click', tsCode);
+
+        // ====
         const emojiClick = (text) => {
             const result = getCurrentRange();
             if (!validateSelect(result)) {
@@ -688,7 +734,7 @@ export class MDEditor {
                 }
             ]);
         };
-        on(iconDoms[17], 'click', emojiClick);
+        on(iconDoms[19], 'click', emojiClick);
         // ====
         const containerClick = (text) => {
             const result = getCurrentRange();
@@ -721,12 +767,12 @@ export class MDEditor {
         const ketex = () => {
             containerClick(KATEX);
         };
-        on(iconDoms[18], 'click', info);
-        on(iconDoms[19], 'click', tip);
-        on(iconDoms[20], 'click', warn);
-        on(iconDoms[21], 'click', danger);
-        on(iconDoms[22], 'click', ketex);
-        on(iconDoms[23], 'click', mermaid);
+        on(iconDoms[20], 'click', info);
+        on(iconDoms[21], 'click', tip);
+        on(iconDoms[22], 'click', warn);
+        on(iconDoms[23], 'click', danger);
+        on(iconDoms[24], 'click', ketex);
+        on(iconDoms[25], 'click', mermaid);
 
         // ====
         const timeClick = (text) => {
@@ -743,14 +789,14 @@ export class MDEditor {
             ]);
         };
 
-        on(iconDoms[24], 'click', timeClick);
+        on(iconDoms[26], 'click', timeClick);
         // ====
         const previewClick = (text) => {
             this.preview = !this.preview;
             this.checkPreviewState();
         };
 
-        on(iconDoms[25], 'click', previewClick);
+        on(iconDoms[27], 'click', previewClick);
         // ====
         const fullScreenClick = (text) => {
             const isFullScreen = document.mozFullScreen || document.webkitIsFullScreen;
@@ -762,7 +808,7 @@ export class MDEditor {
             }
         };
 
-        on(iconDoms[26], 'click', fullScreenClick);
+        on(iconDoms[28], 'click', fullScreenClick);
         // on(iconDoms[6], 'click', h1Click);
         iconDoms.forEach(dom => {
             toolsDom.appendChild(dom);
@@ -774,7 +820,7 @@ export class MDEditor {
         if (preview) {
             this.editorDom.style.width = '50%';
             this.previewDom.style.display = 'block';
-            this.editorUpdateValues.push(this.getValue());
+            // this.editorUpdateValues.push(this.getValue());
             // this.previewDom.style.width = '50%';
         } else {
             this.editorDom.style.width = '100%';

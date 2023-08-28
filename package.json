@@ -37,11 +37,12 @@
   "dependencies": {
     "dayjs": "^1.11.9",
     "highlight.js": "^11.8.0",
+    "katex": "^0.16.8",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
+    "markdown-it-emoji": "^2.0.2",
     "mini-toastr": "^0.8.1",
     "monaco-editor": "^0.41.0",
-    "punycode": "^2.3.0",
-    "katex": "^0.16.8"
+    "punycode": "^2.3.0"
   }
 }

@@ -1,10 +1,28 @@
 # 地图
 
+## github emoji
+:tada:  
+:100:
+
+------------
+
+## ketex
+
 ::: katex
 
 \sqrt{3x-1}+(1+x)^2
 
 :::
+
+------------
+
+## links
+
+[Markdown 官方教程](https://markdown.com.cn/)
+
+![Markdown 官方教程](https://markdown.com.cn/hero.png)
+
+------------
 
 hello world
 
