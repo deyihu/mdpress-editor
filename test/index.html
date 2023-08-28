@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mdeditor test</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+        font-family: 微软雅黑;
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        margin: auto;
+        margin-top: 10px;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_koml4tdkma.css">
+<link rel="stylesheet" href="./../index.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
+<script type="text/javascript" src="./../dist/mdeditor.js"></script>
+<script>
+    var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
+</script>
+<script src="./lib/monaco-editor/min/vs/loader.js"></script>
+<script src="./lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+<script src="./lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+
+<body>
+
+    <div id="map" class="container"></div>
+
+    <script>
+        require(['vs/editor/editor.main'], function () {
+            // console.log(monaco);
+            // var editor = monaco.editor.create(document.getElementById('container'), {
+            //     value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+            //     language: 'javascript'
+            // });
+            createEditor(monaco);
+        });
+        let editor;
+        function createEditor(monaco) {
+            editor = new mdeditor.MDEditor('#map', {
+                monaco,
+                monacoOptions: {
+                    // theme: 'vs-dark'
+                }
+            })
+            loadData();
+        }
+
+        function loadData() {
+            fetch('./data.md').then(res => res.text()).then(text => {
+                editor.setValue(text);
+            })
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mdeditor test</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        margin: auto;
+        margin-top: 10px;
+    }
+</style>
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_f9g6ycst1q.css">
+<link rel="stylesheet" href="./../index.css">
+<script type="text/javascript" src="./../dist/mdeditor.js"></script>
+<script>
+    var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
+</script>
+<script src="./lib/monaco-editor/min/vs/loader.js"></script>
+<script src="./lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+<script src="./lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+
+<body>
+
+    <dialog id="d" class="mdeditor-dialog">
+        <div>
+            <label>列数:</label>
+            <input type="number" value="3" id="table-columns"/>
+        </div>
+        <br>
+        <div>
+            <label>行数:</label>
+            <input type="number" value="3" id="table-rows"/>
+        </div>
+        <br>
+        <div style="text-align: right;">
+            <button id="table-btn-cancel">取消</button>
+            <button id="table-btn-confirm">确认</button>
+        </div>
+    </dialog>
+
+    <script>
+
+        const dialog = document.querySelector('#d');
+        dialog.show();
+
+
+    </script>
+</body>
+
+</html>
