@@ -16,6 +16,28 @@
 
 ------------
 
+## mermaid
+
+::: mermaid
+
+flowchart LR
+    A[Hard] -->|Text| B(Round)
+    B --> C{Decision}
+    C -->|One| D[Result 1]
+    C -->|Two| E[Result 2]
+    
+:::
+
+::: mermaid
+pie
+    title 为什么总是宅在家里？
+    "喜欢宅" : 15
+    "天气太热或太冷" : 20
+    "穷" : 500
+:::
+
+------------
+
 ## links
 
 [Markdown 官方教程](https://markdown.com.cn/)

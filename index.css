@@ -1,10 +1,10 @@
 .mdeditor-tools {
-  height: 40px;
+  height: 38px;
   border: 1px solid whitesmoke;
   background-color: white;
 }
 .mdeditor-tools .item {
-  line-height: 40px;
+  line-height: 38px;
   font-size: 22px;
   margin-right: 4px;
   margin-left: 4px;
@@ -30,7 +30,7 @@
   height: 100%;
   width: 50%;
   background-color: white;
-  padding: 10px;
+  padding: 0px 10px;
   overflow: auto;
   /* background-color: black; */
 }
@@ -70,11 +70,13 @@ pre {
   padding: 20px;
   background: #1e1e1e;
   color: #dcdcdc;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    Liberation Mono, Courier New, monospace;
   font-size: 1em;
 }
 pre code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     Liberation Mono, Courier New, monospace;
+}
+
+.mermaid{
+  background: white;
 }

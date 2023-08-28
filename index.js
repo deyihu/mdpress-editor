@@ -5,11 +5,13 @@ import dayjs from 'dayjs';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import emoji from 'markdown-it-emoji';
+import mermaid from 'mermaid';
 import { extendMarkdownItWithKatex } from './plugins/katex';
+import { extendMarkdownItWithMermaid } from './plugins/mermaid';
 const md = MarkdownIt({
     html: true,
     highlight: function (str, lang) {
-        console.log(lang);
+        // console.log(lang);
         if (lang && hljs.getLanguage(lang)) {
             try {
                 return hljs.highlight(str, { language: lang }).value;
@@ -21,6 +23,7 @@ const md = MarkdownIt({
 });
 md.use(emoji, {});
 extendMarkdownItWithKatex(md);
+extendMarkdownItWithMermaid(md);
 
 let miniToastrInit = false;
 
@@ -96,6 +99,26 @@ function getTableMdStr(rows, cols) {
 
 function now() {
     return new Date().getTime();
+}
+
+function syncMermaid(dom) {
+    if (!mermaid) {
+        return;
+    }
+    mermaid.initialize({ startOnLoad: false });
+    const els = dom.querySelectorAll('.mermaid');
+    const notInit = [];
+    for (let i = 0, len = els.length; i < len; i++) {
+        const dataset = els[i].dataset;
+        if (!dataset.processed) {
+            notInit.push(1);
+        }
+    }
+    if (notInit.length) {
+        mermaid.run({
+            nodes: els
+        });
+    }
 }
 
 const icons = [
@@ -324,6 +347,7 @@ export class MDEditor {
                 this.updatePreview();
                 time = now();
             }
+            syncMermaid(this.previewDom);
             this.frameId = requestAnimationFrame(loop);
         };
 

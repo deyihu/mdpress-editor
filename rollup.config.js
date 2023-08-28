@@ -7,12 +7,12 @@ import builtins from 'rollup-plugin-node-builtins';
 import pkg from './package.json';
 const path = require('path');
 
-const product = process.env.NODE_ENV.trim() === 'prd';
+const isDEV = process.env.NODE_ENV.trim() === 'dev';
 const FILEMANE = pkg.name;
-const sourceMap = !product;
+const sourceMap = isDEV;
 
 const banner = `/*!\n * ${pkg.name} v${pkg.version}\n  */`;
-const external = ['highlight.js'];
+const external = ['highlight.js', 'mermaid'];
 const plugins = [
     json(),
     nodeResolve(),
@@ -27,21 +27,26 @@ function getEntry() {
     return path.join(__dirname, './index.js');
 }
 
-export default [
+const namespace = 'mdeditor';
+
+const globals = {
+    'hljs': 'highlight.js',
+    'mermaid': 'mermaid'
+};
+
+let outs = [
     {
         input: getEntry(),
         external: external,
         plugins: plugins,
         output: {
             'format': 'umd',
-            'name': 'mdeditor',
+            'name': namespace,
             'file': `dist/${FILEMANE}.js`,
             'sourcemap': sourceMap,
             'extend': true,
             'banner': banner,
-            'globals': {
-                'hljs': 'highlight.js'
-            }
+            'globals': globals
         }
     },
     {
@@ -55,9 +60,7 @@ export default [
             'file': `dist/${FILEMANE}.mjs`,
             'extend': true,
             'banner': banner,
-            'globals': {
-                'hljs': 'highlight.js'
-            }
+            'globals': globals
         }
     },
     {
@@ -66,15 +69,18 @@ export default [
         plugins: plugins.concat([terser()]),
         output: {
             'format': 'umd',
-            'name': 'mdeditor',
+            'name': namespace,
             'file': `dist/${FILEMANE}.min.js`,
             'sourcemap': false,
             'extend': true,
             'banner': banner,
-            'globals': {
-                'hljs': 'highlight.js'
-            }
+            'globals': globals
         }
     }
 
 ];
+if (isDEV) {
+    outs = outs.slice(0, 1);
+}
+
+export default outs;

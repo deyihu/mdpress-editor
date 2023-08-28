@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./*.js",
     "dev": "npm run lint && cross-env NODE_ENV=dev  rollup -w -c",
-    "build": "npm run lint && cross-env NODE_ENV=dev  rollup -c",
+    "build": "npm run lint && cross-env NODE_ENV=prd  rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -41,6 +41,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.2",
+    "mermaid": "^10.4.0",
     "mini-toastr": "^0.8.1",
     "monaco-editor": "^0.41.0",
     "punycode": "^2.3.0"
