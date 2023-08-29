@@ -27,7 +27,7 @@ function getEntry() {
     return path.join(__dirname, './index.js');
 }
 
-const namespace = 'mdeditor';
+const namespace = 'mdpress';
 
 const globals = {
     'highlight.js': 'hljs',

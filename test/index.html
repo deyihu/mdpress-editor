@@ -29,7 +29,7 @@
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
 <script type="text/javascript" src="./../dist/mdeditor.js"></script>
 <script>
-    var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
+    var require = { paths: { vs: './lib/mdpress-editor/min/vs' } };
 </script>
 <script src="./lib/monaco-editor/min/vs/loader.js"></script>
 <script src="./lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
@@ -50,7 +50,7 @@
         });
         let mEditor;
         function createEditor(monaco) {
-            mEditor = new mdeditor.MDEditor('#map', {
+            mEditor = new mdpress.MDEditor('#map', {
                 monaco,
                 monacoOptions: {
                     // language: 'markdown-math'
