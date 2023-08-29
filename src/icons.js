@@ -66,7 +66,8 @@ const ICONS = [
     },
     {
         name: 'icon-hr',
-        title: '横线'
+        title: '横线',
+        enable: false
     },
     {
         name: 'icon-lianjie',
@@ -123,6 +124,11 @@ const ICONS = [
     {
         name: 'icon-emoji',
         title: 'github emoji'
+    },
+    {
+        name: 'icon-m-geshihuawenzi',
+        title: '格式化文档',
+        enable: false
     },
     {
         name: 'icon-yulan',
@@ -202,7 +208,7 @@ const CODEGROUP = '::: code-group\n\n' +
 export function createDefaultIcons(mdEditor, miniToastr) {
     const editor = mdEditor.editor;
     const icons = ICONS.map(d => {
-        return new ToolIcon(d);
+        return new ToolIcon(Object.assign(d, { icon: d.name }));
     });
 
     const validateSelect = (result) => {
@@ -283,7 +289,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         editor.executeEdits('', [
             {
                 range,
-                text: '> '
+                text: '> hello\n'
             }
         ]);
     };
@@ -585,6 +591,11 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         ]);
     };
     iconAddEvent(icons[27], 'click', emojiClick);
+    // ====
+    const formatClick = function (text) {
+        editor.getAction('editor.action.formatDocument').run();
+    };
+    iconAddEvent(icons[28], 'click', formatClick);
 
     // ====
     const previewClick = function (text) {
@@ -592,7 +603,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         mdEditor.checkPreviewState();
     };
 
-    iconAddEvent(icons[28], 'click', previewClick);
+    iconAddEvent(icons[29], 'click', previewClick);
     // ====
     const fullScreenClick = function (text) {
         const isFullScreen = document.mozFullScreen || document.webkitIsFullScreen;
@@ -604,7 +615,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         }
     };
 
-    iconAddEvent(icons[29], 'click', fullScreenClick);
+    iconAddEvent(icons[30], 'click', fullScreenClick);
     icons.forEach(icon => {
         if (!icon.isEnable()) {
             return;

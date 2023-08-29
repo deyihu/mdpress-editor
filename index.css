@@ -587,7 +587,7 @@
  .vp-doc a {
    font-weight: 500;
    color: var(--vp-c-brand);
-   text-decoration-style: dotted;
+   /* text-decoration-style: dotted; */
    transition: color 0.25s;
  }
  

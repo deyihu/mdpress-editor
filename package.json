@@ -20,6 +20,12 @@
     "url": "https://github.com/deyihu/mdeditor/issues"
   },
   "homepage": "https://github.com/deyihu/mdeditor#readme",
+  "files": [
+    "src/",
+    "dist/",
+    "./index.js",
+    "./index.css"
+  ],
   "devDependencies": {
     "cross-env": "^5.1.4",
     "eslint": "^6.2.2",

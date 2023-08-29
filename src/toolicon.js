@@ -1,7 +1,7 @@
 import { createDom, on } from './util';
 
 const OPTIONS = {
-    name: 'icon-zitijiacu',
+    icon: 'icon-zitijiacu',
     title: '加粗'
 };
 
@@ -9,9 +9,9 @@ export class ToolIcon {
     constructor(options) {
         options = Object.assign({}, OPTIONS, options);
         this.options = options;
-        const { name, title } = options;
+        const { icon, title } = options;
         const dom = createDom('i');
-        dom.className = `item iconfont ${name}`;
+        dom.className = `item iconfont ${icon}`;
         dom.title = title;
         this.dom = dom;
         this.editor = null;

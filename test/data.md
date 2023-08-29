@@ -1,8 +1,11 @@
-# 地图
+# mdedtor
+
+**markdown editor base monaco**
 
 hello world
 
 ## github emoji
+
 :tada:  
 :100:
 
@@ -20,13 +23,11 @@ This is a tip.
 
 :::
 
-
 ::: warning
 
 This is a warning.
 
 :::
-
 
 ::: danger
 
@@ -35,32 +36,30 @@ This is a dangerous warning.
 :::
 
 ::: details Click me to view the code
+
 ```js
 console.log('Hello, VitePress!')
 ```
+
 :::
 
 ::: code-group
 
-```js [config.js]
-/**
- * @type {import('vitepress').UserConfig}
- */
-const config = {
-  // ...
-}
+```js [add.js]
+function add(a, b){
 
-export default config
+    return a+b;
+
+}
+console.log(add(1, 2)); 
+
 ```
 
-```ts [config.ts]
-import type { UserConfig } from 'vitepress'
-
-const config: UserConfig = {
-  // ...
+```ts [add.ts]
+function add(a:number,b:number):number{
+    return a+b;
 }
-
-export default config
+console.log(add(1,2));
 ```
 
 :::
@@ -73,34 +72,35 @@ export default config
 
 :::
 
-
 ## mermaid
 
 ::: mermaid
 
 flowchart LR
+
     A[Hard] -->|Text| B(Round)
     B --> C{Decision}
     C -->|One| D[Result 1]
     C -->|Two| E[Result 2]
     
+
 :::
 
 ::: mermaid
 pie
+
     title 为什么总是宅在家里？
     "喜欢宅" : 15
     "天气太热或太冷" : 20
     "穷" : 500
-:::
 
+:::
 
 ## links
 
 [Markdown 官方教程](https://markdown.com.cn/)
 
 ![Markdown 官方教程](https://markdown.com.cn/hero.png)
-
 
 hello world
 
@@ -167,6 +167,7 @@ map.once('click', mapClickFunc)
 ## 关于地图的创建和销毁
 
 ### 地图的创建
+
 我们创建地图一般都是
 
 ```js
