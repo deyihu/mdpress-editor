@@ -1,8 +1,8 @@
 {
-  "name": "mdeditor",
+  "name": "md-editor",
   "version": "0.1.0",
   "description": "markdown editor base monaco",
-  "main": "./dist/mdeditor.js",
+  "main": "./dist/md-editor.js",
   "module": "./index.js",
   "scripts": {
     "lint": "eslint ./*.js",
