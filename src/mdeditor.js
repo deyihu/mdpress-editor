@@ -1,6 +1,6 @@
 
 import miniToastr from 'mini-toastr';
-import { createDom, getDom, now, on } from './util';
+import { createDom, domSizeByWindow, getDom, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from '../plugins/mermaid';
 import { createDefaultIcons } from './icons';
@@ -44,7 +44,6 @@ function checkCodeGroup(dom) {
                 domActive(pre);
             });
         });
-
     });
 
 }
@@ -74,6 +73,7 @@ export class MDEditor {
         this.dialog = null;
         this.options = options;
         this.preview = this.options.preview;
+        this.fullScreen = false;
         this.editorUpdateValues = [];
         if (!this.options.monaco) {
             console.error('not find monaco namespace');
@@ -95,6 +95,12 @@ export class MDEditor {
         };
 
         this.frameId = requestAnimationFrame(loop);
+        window.addEventListener('resize', () => {
+            if (!this.fullScreen) {
+                return;
+            }
+            domSizeByWindow(this.getContainer());
+        });
 
     }
 
@@ -223,5 +229,13 @@ export class MDEditor {
             endColumn: position.column
         };
         return [range];
+    }
+
+    isPreview() {
+        return this.preview;
+    }
+
+    getContainer() {
+        return this.dom;
     }
 }

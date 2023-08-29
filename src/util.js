@@ -65,3 +65,9 @@ export function getTableMdText(rows, cols) {
 export function now() {
     return new Date().getTime();
 }
+
+export function domSizeByWindow(dom) {
+    const { innerWidth, innerHeight } = window;
+    dom.style.width = `${innerWidth}px`;
+    dom.style.height = `${innerHeight}px`;
+}

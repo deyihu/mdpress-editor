@@ -1,5 +1,5 @@
 import { ToolIcon } from './toolicon';
-import { createDialog, getTableMdText, on } from './util';
+import { createDialog, domSizeByWindow, getTableMdText, on } from './util';
 import dayjs from 'dayjs';
 
 const ICONS = [
@@ -80,6 +80,10 @@ const ICONS = [
     {
         name: 'icon-biaodanzujian-biaoge',
         title: '表格'
+    },
+    {
+        name: 'icon-code',
+        title: '插入代码'
     },
     {
         name: 'icon-js',
@@ -207,6 +211,7 @@ const CODEGROUP = '::: code-group\n\n' +
 
 export function createDefaultIcons(mdEditor, miniToastr) {
     const editor = mdEditor.editor;
+    const container = mdEditor.getContainer();
     const icons = ICONS.map(d => {
         return new ToolIcon(Object.assign(d, { icon: d.name }));
     });
@@ -507,14 +512,18 @@ export function createDefaultIcons(mdEditor, miniToastr) {
             }
         ]);
     };
+    const commonCode = () => {
+        codeClick('```\n\n```\n');
+    };
     const jsCode = () => {
         codeClick('```js' + JSCODE + '```\n');
     };
     const tsCode = () => {
         codeClick('```ts' + TSCODE + '```\n');
     };
-    iconAddEvent(icons[17], 'click', jsCode);
-    iconAddEvent(icons[18], 'click', tsCode);
+    iconAddEvent(icons[17], 'click', commonCode);
+    iconAddEvent(icons[18], 'click', jsCode);
+    iconAddEvent(icons[19], 'click', tsCode);
 
     // ====
     const containerClick = function (text) {
@@ -551,13 +560,13 @@ export function createDefaultIcons(mdEditor, miniToastr) {
     const ketex = () => {
         containerClick(KATEX);
     };
-    iconAddEvent(icons[19], 'click', codeGroup);
-    iconAddEvent(icons[20], 'click', info);
-    iconAddEvent(icons[21], 'click', tip);
-    iconAddEvent(icons[22], 'click', warn);
-    iconAddEvent(icons[23], 'click', danger);
-    iconAddEvent(icons[24], 'click', ketex);
-    iconAddEvent(icons[25], 'click', mermaid);
+    iconAddEvent(icons[20], 'click', codeGroup);
+    iconAddEvent(icons[21], 'click', info);
+    iconAddEvent(icons[22], 'click', tip);
+    iconAddEvent(icons[23], 'click', warn);
+    iconAddEvent(icons[24], 'click', danger);
+    iconAddEvent(icons[25], 'click', ketex);
+    iconAddEvent(icons[26], 'click', mermaid);
 
     // ====
     const timeClick = function (text) {
@@ -574,7 +583,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         ]);
     };
 
-    iconAddEvent(icons[26], 'click', timeClick);
+    iconAddEvent(icons[27], 'click', timeClick);
 
     // ====
     const emojiClick = function (text) {
@@ -590,12 +599,12 @@ export function createDefaultIcons(mdEditor, miniToastr) {
             }
         ]);
     };
-    iconAddEvent(icons[27], 'click', emojiClick);
+    iconAddEvent(icons[28], 'click', emojiClick);
     // ====
     const formatClick = function (text) {
         editor.getAction('editor.action.formatDocument').run();
     };
-    iconAddEvent(icons[28], 'click', formatClick);
+    iconAddEvent(icons[29], 'click', formatClick);
 
     // ====
     const previewClick = function (text) {
@@ -603,19 +612,39 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         mdEditor.checkPreviewState();
     };
 
-    iconAddEvent(icons[29], 'click', previewClick);
+    iconAddEvent(icons[30], 'click', previewClick);
     // ====
+    let oldStyle = {
+
+    };
+    const fullScreenClass = 'mdeditor-fullscreen';
     const fullScreenClick = function (text) {
-        const isFullScreen = document.mozFullScreen || document.webkitIsFullScreen;
-        const dom = mdEditor.dom;
-        if (dom.requestFullscreen && !isFullScreen) {
-            dom.requestFullscreen();
-        } else if (document.exitFullscreen) {
-            document.exitFullscreen();
+        const classList = container.classList;
+        if (classList.contains(fullScreenClass)) {
+            classList.remove(fullScreenClass);
+            mdEditor.fullScreen = false;
+            for (const key in oldStyle) {
+                container.style[key] = oldStyle[key];
+            }
+        } else {
+            classList.add(fullScreenClass);
+            oldStyle = {
+                width: container.style.width,
+                height: container.style.height
+            };
+            mdEditor.fullScreen = true;
+            domSizeByWindow(container);
         }
+        // const isFullScreen = document.mozFullScreen || document.webkitIsFullScreen;
+        // const dom = mdEditor.dom;
+        // if (dom.requestFullscreen && !isFullScreen) {
+        //     dom.requestFullscreen();
+        // } else if (document.exitFullscreen) {
+        //     document.exitFullscreen();
+        // }
     };
 
-    iconAddEvent(icons[30], 'click', fullScreenClick);
+    iconAddEvent(icons[31], 'click', fullScreenClick);
     icons.forEach(icon => {
         if (!icon.isEnable()) {
             return;
