@@ -1,11 +1,12 @@
 
 import mdItContainer from 'markdown-it-container';
+import mermaid from 'mermaid';
 const pluginKeyword = 'mermaid';
 const tokenTypeInline = 'inline';
 const ttContainerOpen = 'container_' + pluginKeyword + '_open';
 const ttContainerClose = 'container_' + pluginKeyword + '_close';
 
-export function extendMarkdownItWithMermaid(md, config) {
+export function mermaidPlugin(md, config) {
     md.use(mdItContainer, pluginKeyword, {
         anyClass: true,
         validate: (info) => {
@@ -77,3 +78,23 @@ function preProcess(source) {
 // function escapeRegExp(string) {
 //     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 // }
+
+export function initMermaid(dom) {
+    if (!mermaid) {
+        return;
+    }
+    mermaid.initialize({ startOnLoad: false });
+    const els = dom.querySelectorAll('.mermaid');
+    const notInit = [];
+    for (let i = 0, len = els.length; i < len; i++) {
+        const dataset = els[i].dataset;
+        if (!dataset.processed) {
+            notInit.push(1);
+        }
+    }
+    if (notInit.length) {
+        mermaid.run({
+            nodes: els
+        });
+    }
+}

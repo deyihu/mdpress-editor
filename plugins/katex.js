@@ -6,7 +6,7 @@ const tokenTypeInline = 'inline';
 const ttContainerOpen = 'container_' + pluginKeyword + '_open';
 const ttContainerClose = 'container_' + pluginKeyword + '_close';
 
-export function extendMarkdownItWithKatex(md, config) {
+export function katexPlugin(md, config) {
     md.use(mdItContainer, pluginKeyword, {
         anyClass: true,
         validate: (info) => {

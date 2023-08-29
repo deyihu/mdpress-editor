@@ -22,9 +22,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/an-old-hope.min.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_7jhjtfkpw5h.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_7lxig2ev6zx.css">
 <link rel="stylesheet" href="./../index.css">
-<script src="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
 <script type="text/javascript" src="./../dist/mdeditor.js"></script>
 <script>
@@ -47,9 +48,9 @@
             // });
             createEditor(monaco);
         });
-        let editor;
+        let mEditor;
         function createEditor(monaco) {
-            editor = new mdeditor.MDEditor('#map', {
+            mEditor = new mdeditor.MDEditor('#map', {
                 monaco,
                 monacoOptions: {
                     // theme: 'vs-dark'
@@ -60,7 +61,7 @@
 
         function loadData() {
             fetch('./data.md').then(res => res.text()).then(text => {
-                editor.setValue(text);
+                mEditor.setValue(text);
             })
         }
 

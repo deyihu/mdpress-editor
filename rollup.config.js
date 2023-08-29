@@ -30,7 +30,7 @@ function getEntry() {
 const namespace = 'mdeditor';
 
 const globals = {
-    'hljs': 'highlight.js',
+    'highlight.js': 'hljs',
     'mermaid': 'mermaid'
 };
 

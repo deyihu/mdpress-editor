@@ -1,8 +1,9 @@
 {
   "name": "mdeditor",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "markdown editor base monaco",
+  "main": "./dist/mdeditor.js",
+  "module": "./index.js",
   "scripts": {
     "lint": "eslint ./*.js",
     "dev": "npm run lint && cross-env NODE_ENV=dev  rollup -w -c",
