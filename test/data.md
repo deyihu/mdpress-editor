@@ -4,7 +4,64 @@
 :tada:  
 :100:
 
-------------
+## container
+
+::: info
+
+This is an info box.
+
+:::
+
+::: tip
+
+This is a tip.
+
+:::
+
+
+::: warning
+
+This is a warning.
+
+:::
+
+
+::: danger
+
+This is a dangerous warning.
+
+:::
+
+::: details Click me to view the code
+```js
+console.log('Hello, VitePress!')
+```
+:::
+
+::: code-group
+
+```js [config.js]
+/**
+ * @type {import('vitepress').UserConfig}
+ */
+const config = {
+  // ...
+}
+
+export default config
+```
+
+```ts [config.ts]
+import type { UserConfig } from 'vitepress'
+
+const config: UserConfig = {
+  // ...
+}
+
+export default config
+```
+
+:::
 
 ## ketex
 
@@ -14,7 +71,6 @@
 
 :::
 
-------------
 
 ## mermaid
 
@@ -36,7 +92,6 @@ pie
     "穷" : 500
 :::
 
-------------
 
 ## links
 
@@ -44,7 +99,6 @@ pie
 
 ![Markdown 官方教程](https://markdown.com.cn/hero.png)
 
-------------
 
 hello world
 

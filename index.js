@@ -8,10 +8,11 @@ import emoji from 'markdown-it-emoji';
 import mermaid from 'mermaid';
 import { extendMarkdownItWithKatex } from './plugins/katex';
 import { extendMarkdownItWithMermaid } from './plugins/mermaid';
+import { containerPlugin } from './plugins/container';
 const md = MarkdownIt({
     html: true,
     highlight: function (str, lang) {
-        // console.log(lang);
+        // console.log(str);
         if (lang && hljs.getLanguage(lang)) {
             try {
                 return hljs.highlight(str, { language: lang }).value;
@@ -22,6 +23,7 @@ const md = MarkdownIt({
     }
 });
 md.use(emoji, {});
+containerPlugin(md, { hasSingleTheme: false });
 extendMarkdownItWithKatex(md);
 extendMarkdownItWithMermaid(md);
 
@@ -51,6 +53,10 @@ function getDom(id) {
 function createDom(tagName) {
     return document.createElement(tagName);
 }
+
+const on = (target, event, hanlder) => {
+    target.addEventListener(event, hanlder);
+};
 
 function createDialog() {
     const dialog = createDom('dialog');
@@ -119,6 +125,39 @@ function syncMermaid(dom) {
             nodes: els
         });
     }
+}
+
+function checkCodeGroup(dom) {
+    const codeGroups = dom.querySelectorAll('.vp-code-group');
+
+    const domActive = (dom, active = true) => {
+        if (!dom) {
+            return;
+        }
+        if (active) {
+            dom.classList.add('active');
+        } else {
+            dom.classList.remove('active');
+        }
+    };
+    codeGroups.forEach(codeGroup => {
+        const tabsDom = codeGroup.querySelector('.tabs');
+        const blocksDom = codeGroup.querySelector('.blocks');
+        const radios = tabsDom.querySelectorAll('input[type=radio]');
+        const pres = blocksDom.querySelectorAll('pre');
+        domActive(pres[0]);
+        radios.forEach((radio, index) => {
+            on(radio, 'click', () => {
+                pres.forEach(pre => {
+                    domActive(pre, false);
+                });
+                const pre = pres[index];
+                domActive(pre);
+            });
+        });
+
+    });
+
 }
 
 const icons = [
@@ -362,7 +401,7 @@ export class MDEditor {
         editorDom.className = 'mdeditor-editor';
 
         const previewDom = this.previewDom = createDom('div');
-        previewDom.className = 'mdeditor-preview';
+        previewDom.className = 'mdeditor-preview vp-doc';
 
         const toolsDom = this.toolsDom = createDom('div');
         toolsDom.className = 'mdeditor-tools';
@@ -393,10 +432,6 @@ export class MDEditor {
             dom.title = label;
             return dom;
         });
-
-        const on = (target, event, hanlder) => {
-            target.addEventListener(event, hanlder);
-        };
 
         // https://github.com/microsoft/monaco-editor/issues/639
         // eslint-disable-next-line no-unused-vars
@@ -882,5 +917,6 @@ export class MDEditor {
         const html = md.render(value);
         this.previewDom.innerHTML = html;
         this.editorUpdateValues = [];
+        checkCodeGroup(this.previewDom);
     }
 }
