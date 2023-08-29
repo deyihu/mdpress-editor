@@ -272,7 +272,7 @@
 }
 
 .custom-block.info code {
-  background-color: var(--vp-custom-block-info-code-bg);
+  /* background-color: var(--vp-custom-block-info-code-bg); */
 }
 
 .custom-block.tip {
@@ -282,7 +282,7 @@
 }
 
 .custom-block.tip code {
-  background-color: var(--vp-custom-block-tip-code-bg);
+  /* background-color: var(--vp-custom-block-tip-code-bg); */
 }
 
 .custom-block.warning {
@@ -292,7 +292,7 @@
 }
 
 .custom-block.warning code {
-  background-color: var(--vp-custom-block-warning-code-bg);
+  /* background-color: var(--vp-custom-block-warning-code-bg); */
 }
 
 .custom-block.danger {
@@ -302,7 +302,7 @@
 }
 
 .custom-block.danger code {
-  background-color: var(--vp-custom-block-danger-code-bg);
+  /* background-color: var(--vp-custom-block-danger-code-bg); */
 }
 
 .custom-block.details {

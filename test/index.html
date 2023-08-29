@@ -18,12 +18,16 @@
         margin: auto;
         /* margin-top: 10px; */
     }
+
+    .red {
+        color: red !important;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/an-old-hope.min.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_61334k0mtqq.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_4vz9tvh60h8.css">
 <link rel="stylesheet" href="./../index.css">
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
@@ -58,12 +62,46 @@
                 }
             })
             loadData();
+            customIcons();
         }
 
         function loadData() {
             fetch('./data.md').then(res => res.text()).then(text => {
                 mEditor.setValue(text);
             })
+        }
+
+        function customIcons() {
+            const data = {
+                icon: 'icon-file-markdown1',
+                title: '我是自定义按钮-导入markdown',
+                className: 'red'
+            }
+            const icon = new mdpress.ToolIcon(data);
+            icon.addTo(mEditor);
+            icon.on('click', () => {
+                const parseMd = (file) => {
+                    const fileRender = new FileReader();
+                    fileRender.onload = () => {
+                        if (mEditor && fileRender.result) {
+                            mEditor.setValue(fileRender.result);
+                        }
+                    };
+                    fileRender.readAsText(file);
+                };
+                const inputFile = document.createElement('input');
+                inputFile.type = 'file';
+                inputFile.accept = '.md';
+                inputFile.addEventListener('change', () => {
+                    if (inputFile.files.length) {
+                        parseMd(inputFile.files[0]);
+                    } else {
+                        alert('没有发现上传文件');
+                    }
+                });
+                inputFile.click();
+            })
+
         }
 
     </script>
