@@ -29,12 +29,12 @@
 
 <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_qxxgkq5rzd.css">
 <link rel="stylesheet" href="./../index.css">
+<script
+    src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/shiki/dist/index.jsdelivr.iife.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script> -->
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/mdpress-editor/dist/mdpress-editor.min.js"></script>
-
-<script
-    src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/shiki/dist/index.unpkg.iife.js"></script>
+<script type="text/javascript" src="./base.js"></script>
 <script>
     var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
 </script>
@@ -47,75 +47,7 @@
     <div id="map" class="container"></div>
 
     <script>
-        function loadMonaco() {
-            require(['vs/editor/editor.main'], function () {
-                mdpress.registerMonaco(monaco);
-                loadShiki();
-            });
-        }
 
-        function loadShiki() {
-            const languages = [
-                'objective-c',
-                'bat',
-                'c',
-                'cpp',
-                'csharp',
-                'css',
-                'dart',
-                'docker',
-                'git-commit',
-                'glsl',
-                'go',
-                'html',
-                'http',
-                'ini',
-                'java',
-                'json',
-                'jsx',
-                'kotlin',
-                'latex',
-                'julia',
-                'less',
-                'markdown',
-                'mermaid',
-                'nginx',
-                'php',
-                'plsql',
-                'postcss',
-                'powershell',
-                'python',
-                'rust',
-                'sass',
-                'scala',
-                'scss',
-                'shellscript',
-                'sql',
-                'svelte',
-                'swift',
-                'toml',
-                'typescript',
-                'viml',
-                'vue-html',
-                'vue',
-                // 'wasm',
-                'yaml',
-                'xml',
-
-            ];
-            shiki
-                .getHighlighter({
-                    theme: 'material-theme-palenight',
-                    langs: languages
-                })
-                .then(highlighter => {
-                    mdpress.registerShikiHighlighter(highlighter);
-                    // const html = highlighter.codeToHtml(code, { lang: 'js' })
-                    // document.getElementById('map').innerHTML = html
-                    createEditor();
-                })
-
-        }
         let mEditor;
         function createEditor() {
             mEditor = new mdpress.MDEditor('#map', {
@@ -134,7 +66,11 @@
             })
         }
 
-        loadMonaco();
+        mdpress.showLoading();
+        init().then(() => {
+            createEditor();
+            mdpress.hideLoading();
+        })
 
         function customIcons() {
             const data = {

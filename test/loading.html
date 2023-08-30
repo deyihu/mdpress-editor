@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mdeditor test</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+        font-family: 微软雅黑;
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        margin: auto;
+        /* margin-top: 10px; */
+    }
+
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+        font-size: 14px;
+    }
+
+    .loading {
+        width: 30px;
+        height: 30px;
+        border: 5px solid #000;
+        border-top-color: transparent;
+        border-radius: 100%;
+
+        animation: circle infinite 0.75s linear;
+    }
+
+    @keyframes circle {
+        0% {
+            transform: rotate(0);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/shiki"></script>
+
+<body>
+    <div class="loading"></div>
+    <div id="map" class="container"></div>
+
+    <script>
+
+    </script>
+</body>
+
+</html>
