@@ -55,10 +55,58 @@
         }
 
         function loadShiki() {
+            const languages = [
+                'objective-c',
+                'bat',
+                'c',
+                'cpp',
+                'csharp',
+                'css',
+                'dart',
+                'docker',
+                'git-commit',
+                'glsl',
+                'go',
+                'html',
+                'http',
+                'ini',
+                'java',
+                'json',
+                'jsx',
+                'kotlin',
+                'latex',
+                'julia',
+                'less',
+                'markdown',
+                'mermaid',
+                'nginx',
+                'php',
+                'plsql',
+                'postcss',
+                'powershell',
+                'python',
+                'rust',
+                'sass',
+                'scala',
+                'scss',
+                'shellscript',
+                'sql',
+                'svelte',
+                'swift',
+                'toml',
+                'typescript',
+                'viml',
+                'vue-html',
+                'vue',
+                // 'wasm',
+                'yaml',
+                'xml',
+
+            ];
             shiki
                 .getHighlighter({
                     theme: 'material-theme-palenight',
-                    // langs: ['*'],
+                    langs: languages
                 })
                 .then(highlighter => {
                     mdpress.registerShikiHighlighter(highlighter);
