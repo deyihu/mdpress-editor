@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="./../index.css">
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/shiki"></script>
 <script type="text/javascript" src="./../dist/mdpress-editor.js"></script>
 <script>
     var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
@@ -40,18 +41,37 @@
     <div id="map" class="container"></div>
 
     <script>
-        require(['vs/editor/editor.main'], function () {
-            // console.log(monaco);
-            // var editor = monaco.editor.create(document.getElementById('container'), {
-            //     value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-            //     language: 'javascript'
-            // });
-            createEditor(monaco);
-        });
+
+        function loadMonaco() {
+            require(['vs/editor/editor.main'], function () {
+                // console.log(monaco);
+                // var editor = monaco.editor.create(document.getElementById('container'), {
+                //     value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+                //     language: 'javascript'
+                // });
+                mdpress.registerMonaco(monaco);
+                loadShiki();
+            });
+        }
+
+        function loadShiki() {
+            shiki
+                .getHighlighter({
+                    theme: 'material-theme-palenight',
+                    // langs: ['*'],
+                })
+                .then(highlighter => {
+                    mdpress.registerShikiHighlighter(highlighter);
+                    // const html = highlighter.codeToHtml(code, { lang: 'js' })
+                    // document.getElementById('map').innerHTML = html
+                    createEditor();
+                })
+
+        }
         let mEditor;
-        function createEditor(monaco) {
+        function createEditor() {
             mEditor = new mdpress.MDEditor('#map', {
-                monaco,
+                // monaco: window.monaco,
                 monacoOptions: {
                     // language: 'markdown-math'
                     // theme: 'vs-dark'
@@ -66,6 +86,7 @@
             })
         }
 
+        loadMonaco();
     </script>
 </body>
 

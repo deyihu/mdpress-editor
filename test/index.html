@@ -23,15 +23,17 @@
         color: red !important;
     }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css"> -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/an-old-hope.min.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 
 <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_qxxgkq5rzd.css">
 <link rel="stylesheet" href="./../index.css">
-<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script> -->
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/mdpress-editor/dist/mdpress-editor.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/shiki"></script>
 <script>
     var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
 </script>
@@ -44,18 +46,30 @@
     <div id="map" class="container"></div>
 
     <script>
-        require(['vs/editor/editor.main'], function () {
-            // console.log(monaco);
-            // var editor = monaco.editor.create(document.getElementById('container'), {
-            //     value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-            //     language: 'javascript'
-            // });
-            createEditor(monaco);
-        });
+        function loadMonaco() {
+            require(['vs/editor/editor.main'], function () {
+                mdpress.registerMonaco(monaco);
+                loadShiki();
+            });
+        }
+
+        function loadShiki() {
+            shiki
+                .getHighlighter({
+                    theme: 'material-theme-palenight',
+                    // langs: ['*'],
+                })
+                .then(highlighter => {
+                    mdpress.registerShikiHighlighter(highlighter);
+                    // const html = highlighter.codeToHtml(code, { lang: 'js' })
+                    // document.getElementById('map').innerHTML = html
+                    createEditor();
+                })
+
+        }
         let mEditor;
-        function createEditor(monaco) {
+        function createEditor() {
             mEditor = new mdpress.MDEditor('#map', {
-                monaco,
                 monacoOptions: {
                     // language: 'markdown-math'
                     // theme: 'vs-dark'
@@ -70,6 +84,8 @@
                 mEditor.setValue(text);
             })
         }
+
+        loadMonaco();
 
         function customIcons() {
             const data = {

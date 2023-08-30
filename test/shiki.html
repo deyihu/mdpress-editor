@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mdeditor test</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+        font-family: 微软雅黑;
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        margin: auto;
+        /* margin-top: 10px; */
+    }
+
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+        font-size: 14px;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/shiki"></script>
+
+<body>
+
+    <div id="map" class="container"></div>
+
+    <script>
+
+        const code = `
+
+                import MarkdownIt from 'markdown-it';
+                import hljs from 'highlight.js';
+                import emojiPlugin from 'markdown-it-emoji';
+                import { containerPlugin } from '../plugins/container';
+                import { katexPlugin } from '../plugins/katex';
+                import { mermaidPlugin } from '../plugins/mermaid';
+
+                export function installPlugins(md) {
+                    md.use(emojiPlugin, {});
+                    containerPlugin(md, { hasSingleTheme: false });
+                    katexPlugin(md);
+                    mermaidPlugin(md);
+                }
+
+                export function createMarkdown() {
+                    const md = MarkdownIt({
+                        html: true,
+                        highlight: function (str, lang) {
+                            // console.log(str);
+                            if (lang && hljs.getLanguage(lang)) {
+                                try {
+                                    return hljs.highlight(str, { language: lang }).value;
+                                } catch (__) { }
+                            }
+
+                            return ''; // use external default escaping
+                        }
+                    });
+                    installPlugins(md);
+                    return md;
+                }
+
+
+        `;
+        shiki
+            .getHighlighter({
+                theme: 'material-theme-palenight',
+                // langs: ['*'],
+            })
+            .then(highlighter => {
+                const html = highlighter.codeToHtml(code, { lang: 'js' })
+                document.getElementById('map').innerHTML = html
+            })
+
+
+//             export type Theme =
+//   | 'css-variables'
+//   | 'dark-plus'
+//   | 'dracula-soft'
+//   | 'dracula'
+//   | 'github-dark-dimmed'
+//   | 'github-dark'
+//   | 'github-light'
+//   | 'hc_light'
+//   | 'light-plus'
+//   | 'material-theme-darker'
+//   | 'material-theme-lighter'
+//   | 'material-theme-ocean'
+//   | 'material-theme-palenight'
+//   | 'material-theme'
+//   | 'min-dark'
+//   | 'min-light'
+//   | 'monokai'
+//   | 'nord'
+//   | 'one-dark-pro'
+//   | 'poimandres'
+//   | 'rose-pine-dawn'
+//   | 'rose-pine-moon'
+//   | 'rose-pine'
+//   | 'slack-dark'
+//   | 'slack-ochin'
+//   | 'solarized-dark'
+//   | 'solarized-light'
+//   | 'vitesse-dark'
+//   | 'vitesse-light'
+
+    </script>
+</body>
+
+</html>
