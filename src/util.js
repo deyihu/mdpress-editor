@@ -98,3 +98,24 @@ export function registerHightLight(hls) {
 export function getHightLight() {
     return hlsjs;
 }
+
+const LOADING_ID = 'mdeditor-loading-container';
+export function showLoading() {
+    const dom = document.getElementById(LOADING_ID);
+    if (dom) {
+        return;
+    }
+    const div = createDom('div');
+    div.id = LOADING_ID;
+    div.className = LOADING_ID;
+    div.innerHTML = ' <div class="mdeditor-loading"></div> ';
+    document.body.appendChild(div);
+}
+
+export function hideLoading() {
+    const dom = document.getElementById(LOADING_ID);
+    if (!dom) {
+        return;
+    }
+    document.body.removeChild(dom);
+}
