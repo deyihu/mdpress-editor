@@ -50,6 +50,7 @@
     "markdown-it-emoji": "^2.0.2",
     "mermaid": "^10.4.0",
     "mini-toastr": "^0.8.1",
-    "monaco-editor": "^0.41.0"
+    "monaco-editor": "^0.41.0",
+    "shiki": "^0.14.3"
   }
 }

@@ -71,3 +71,30 @@ export function domSizeByWindow(dom) {
     dom.style.width = `${innerWidth}px`;
     dom.style.height = `${innerHeight}px`;
 }
+
+let shikiHighlighter;
+export function registerShikiHighlighter(highlighter) {
+    shikiHighlighter = highlighter;
+}
+
+export function getShikiHighlighter() {
+    return shikiHighlighter;
+}
+
+let monaco;
+export function registerMonaco(monacoObj) {
+    monaco = monacoObj;
+}
+
+export function getMonaco() {
+    return monaco;
+}
+
+let hlsjs;
+export function registerHightLight(hls) {
+    hlsjs = hls;
+}
+
+export function getHightLight() {
+    return hlsjs;
+}

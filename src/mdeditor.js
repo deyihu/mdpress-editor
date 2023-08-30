@@ -1,9 +1,10 @@
 
 import miniToastr from 'mini-toastr';
-import { createDom, domSizeByWindow, getDom, now, on } from './util';
+import { createDom, domSizeByWindow, getDom, getMonaco, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from '../plugins/mermaid';
 import { createDefaultIcons } from './icons';
+
 const md = createMarkdown();
 
 let miniToastrInit = false;
@@ -75,10 +76,6 @@ export class MDEditor {
         this.preview = this.options.preview;
         this.fullScreen = false;
         this.editorUpdateValues = [];
-        if (!this.options.monaco) {
-            console.error('not find monaco namespace');
-            return;
-        }
         this.initDoms();
         this.initTools();
         this.checkPreviewState();
@@ -105,7 +102,7 @@ export class MDEditor {
     }
 
     initDoms() {
-        const { monaco, monacoOptions } = this.options;
+        const { monacoOptions } = this.options;
 
         const editorDom = this.editorDom = createDom('div');
         editorDom.className = 'mdeditor-editor';
@@ -123,6 +120,11 @@ export class MDEditor {
         this.dom.appendChild(mainDom);
         mainDom.appendChild(editorDom);
         mainDom.appendChild(previewDom);
+        const monaco = getMonaco();
+        if (!monaco) {
+            console.error('not find monaco editor namespace');
+            return;
+        }
         this.editor = monaco.editor.create(this.editorDom, Object.assign({}, OPTIONS.monacoOptions, monacoOptions));
         this.editor.onDidChangeModelContent(() => {
             // console.log(this.editor.getValue());

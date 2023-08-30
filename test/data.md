@@ -4,6 +4,11 @@
 
 hello world
 
+```shell
+npm i maptalks
+```
+
+
 ## github emoji
 
 :tada:  

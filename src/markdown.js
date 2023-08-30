@@ -1,9 +1,9 @@
 import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js';
 import emojiPlugin from 'markdown-it-emoji';
 import { containerPlugin } from '../plugins/container';
 import { katexPlugin } from '../plugins/katex';
 import { mermaidPlugin } from '../plugins/mermaid';
+import { getHightLight, getShikiHighlighter } from './util';
 
 export function installPlugins(md) {
     md.use(emojiPlugin, {});
@@ -17,7 +17,12 @@ export function createMarkdown() {
         html: true,
         highlight: function (str, lang) {
             // console.log(str);
-            if (lang && hljs.getLanguage(lang)) {
+            const shikiHighlighter = getShikiHighlighter();
+            if (shikiHighlighter && shikiHighlighter.codeToHtml) {
+                return shikiHighlighter.codeToHtml(str, { lang });
+            }
+            const hljs = getHightLight();
+            if (lang && hljs && hljs.getLanguage(lang)) {
                 try {
                     return hljs.highlight(str, { language: lang }).value;
                 } catch (__) { }
