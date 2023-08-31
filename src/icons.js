@@ -130,6 +130,10 @@ const ICONS = [
         title: 'github emoji'
     },
     {
+        name: 'icon-mulu',
+        title: '(toc)table of content'
+    },
+    {
         name: 'icon-m-geshihuawenzi',
         title: '格式化文档',
         enable: false
@@ -601,10 +605,25 @@ export function createDefaultIcons(mdEditor, miniToastr) {
     };
     iconAddEvent(icons[28], 'click', emojiClick);
     // ====
+    const tocClick = function (text) {
+        const result = mdEditor.getCurrentRange();
+        if (!validateSelect(result)) {
+            return;
+        }
+        const [range] = result;
+        editor.executeEdits('', [
+            {
+                range,
+                text: '\n[[toc]]\n'
+            }
+        ]);
+    };
+    iconAddEvent(icons[29], 'click', tocClick);
+    // ====
     const formatClick = function (text) {
         editor.getAction('editor.action.formatDocument').run();
     };
-    iconAddEvent(icons[29], 'click', formatClick);
+    iconAddEvent(icons[30], 'click', formatClick);
 
     // ====
     const previewClick = function (text) {
@@ -612,7 +631,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         mdEditor.checkPreviewState();
     };
 
-    iconAddEvent(icons[30], 'click', previewClick);
+    iconAddEvent(icons[31], 'click', previewClick);
     // ====
     let oldStyle = {
 
@@ -644,7 +663,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         // }
     };
 
-    iconAddEvent(icons[31], 'click', fullScreenClick);
+    iconAddEvent(icons[32], 'click', fullScreenClick);
     icons.forEach(icon => {
         if (!icon.isEnable()) {
             return;

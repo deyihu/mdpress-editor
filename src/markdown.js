@@ -1,5 +1,7 @@
 import MarkdownIt from 'markdown-it';
 import emojiPlugin from 'markdown-it-emoji';
+import markdownAnchor from 'markdown-it-anchor';
+import markdownToc from 'markdown-it-toc-done-right';
 import { containerPlugin } from '../plugins/container';
 import { katexPlugin } from '../plugins/katex';
 import { mermaidPlugin } from '../plugins/mermaid';
@@ -7,6 +9,8 @@ import { getHightLight, getShikiHighlighter } from './util';
 
 export function installPlugins(md) {
     md.use(emojiPlugin, {});
+    md.use(markdownAnchor, { level: 1, permalink: true, permalinkBefore: true, permalinkSymbol: '#' });
+    md.use(markdownToc, {});
     containerPlugin(md, { hasSingleTheme: false });
     katexPlugin(md);
     mermaidPlugin(md);
