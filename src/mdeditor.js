@@ -4,6 +4,7 @@ import { createDom, domSizeByWindow, getDom, getMonaco, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from '../plugins/mermaid';
 import { createDefaultIcons } from './icons';
+import Eventable from './Eventable';
 
 const md = createMarkdown();
 
@@ -58,8 +59,16 @@ const OPTIONS = {
     }
 };
 
-export class MDEditor {
+/**
+ * a Class for Eventable
+ */
+function Base() {
+
+}
+
+export class MDEditor extends Eventable(Base) {
     constructor(dom, options) {
+        super();
         dom = getDom(dom);
         if (!dom || !(dom instanceof HTMLElement)) {
             console.error('dom is not HTMLElement', dom);
@@ -78,7 +87,9 @@ export class MDEditor {
         this.editorUpdateValues = [];
         this.initDoms();
         this.initTools();
-        this.checkPreviewState();
+        setTimeout(() => {
+            this.checkPreviewState();
+        }, 16);
         initToastr();
 
         this.frameId = null;
@@ -152,6 +163,7 @@ export class MDEditor {
             this.previewDom.style.display = 'none';
             // this.previewDom.style.width = '50%';
         }
+        this.fire(preview ? 'openpreview' : 'closepreview', { preview });
     }
 
     setValue(value) {
@@ -235,6 +247,10 @@ export class MDEditor {
 
     isPreview() {
         return this.preview;
+    }
+
+    isFullScreen() {
+        return this.fullScreen;
     }
 
     getContainer() {

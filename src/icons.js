@@ -645,6 +645,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
             for (const key in oldStyle) {
                 container.style[key] = oldStyle[key];
             }
+            mdEditor.fire('closefullscreen', { fullScreen: mdEditor.fullScreen });
         } else {
             classList.add(fullScreenClass);
             oldStyle = {
@@ -653,6 +654,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
             };
             mdEditor.fullScreen = true;
             domSizeByWindow(container);
+            mdEditor.fire('openfullscreen', { fullScreen: mdEditor.fullScreen });
         }
         // const isFullScreen = document.mozFullScreen || document.webkitIsFullScreen;
         // const dom = mdEditor.dom;

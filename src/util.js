@@ -1,4 +1,59 @@
 
+/**
+ * Merges the properties of sources into destination object.
+ * @param  {Object} dest   - object to extend
+ * @param  {...Object} src - sources
+ * @return {Object}
+ * @memberOf Util
+ */
+export function extend(dest) { // (Object[, Object, ...]) ->
+    for (let i = 1; i < arguments.length; i++) {
+        const src = arguments[i];
+        for (const k in src) {
+            dest[k] = src[k];
+        }
+    }
+    return dest;
+}
+
+/**
+ * Whether the object is null or undefined.
+ * @param  {Object}  obj - object
+ * @return {Boolean}
+ * @memberOf Util
+ */
+export function isNil(obj) {
+    return obj == null;
+}
+
+/**
+ * Check whether the object is a string
+ * @param {Object} obj
+ * @return {Boolean}
+ * @memberOf Util
+ */
+export function isString(obj) {
+    if (isNil(obj)) {
+        return false;
+    }
+    return typeof obj === 'string' || (obj.constructor !== null && obj.constructor === String);
+}
+
+/**
+ * Stop browser event propagation
+ * @param  {Event} e - browser event.
+ * @memberOf DomUtil
+ */
+export function stopPropagation(e) {
+    e._cancelBubble = true;
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else {
+        e.cancelBubble = true;
+    }
+    return this;
+}
+
 export function getDom(id) {
     if (id instanceof HTMLElement) {
         return id;
