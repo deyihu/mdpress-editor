@@ -82,7 +82,7 @@
   height: 100%;
   width: 50%;
   background-color: white;
-  padding: 0px 10px;
+  padding: 0px 26px;
   overflow: auto;
   scroll-behavior: smooth;
   
@@ -579,7 +579,7 @@
 
 .vp-doc .header-anchor {
   float: left;
-  /* margin-left: -0.87em; */
+  margin-left: -0.87em;
   padding-right: 0.23em;
   font-weight: 500;
   user-select: none;
