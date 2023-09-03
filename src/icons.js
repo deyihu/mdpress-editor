@@ -134,6 +134,10 @@ const ICONS = [
         title: '(toc)table of content'
     },
     {
+        name: 'icon-daoruwenjian',
+        title: 'link a markdown file'
+    },
+    {
         name: 'icon-m-geshihuawenzi',
         title: '格式化文档',
         enable: false
@@ -620,10 +624,25 @@ export function createDefaultIcons(mdEditor, miniToastr) {
     };
     iconAddEvent(icons[29], 'click', tocClick);
     // ====
+    const linkFileClick = function (text) {
+        const result = mdEditor.getCurrentRange();
+        if (!validateSelect(result)) {
+            return;
+        }
+        const [range] = result;
+        editor.executeEdits('', [
+            {
+                range,
+                text: '\n<<< @//mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
+            }
+        ]);
+    };
+    iconAddEvent(icons[30], 'click', linkFileClick);
+    // ====
     const formatClick = function (text) {
         editor.getAction('editor.action.formatDocument').run();
     };
-    iconAddEvent(icons[30], 'click', formatClick);
+    iconAddEvent(icons[31], 'click', formatClick);
 
     // ====
     const previewClick = function (text) {
@@ -631,7 +650,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         mdEditor.checkPreviewState();
     };
 
-    iconAddEvent(icons[31], 'click', previewClick);
+    iconAddEvent(icons[32], 'click', previewClick);
     // ====
     let oldStyle = {
 
@@ -665,7 +684,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         // }
     };
 
-    iconAddEvent(icons[32], 'click', fullScreenClick);
+    iconAddEvent(icons[33], 'click', fullScreenClick);
     icons.forEach(icon => {
         if (!icon.isEnable()) {
             return;

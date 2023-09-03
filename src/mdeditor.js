@@ -114,6 +114,15 @@ function checkSnippets(text, callback) {
     // callback(text);
 }
 
+function checkLinks(dom) {
+    const links = dom.querySelectorAll('a');
+    links.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.indexOf('http:') > -1 || href.indexOf('https://') > -1 || href.indexOf('//') > -1) {
+            link.setAttribute('target', '_blank');
+        }
+    });
+}
 const OPTIONS = {
     preview: true,
     monacoOptions: {
@@ -261,6 +270,7 @@ export class MDEditor extends Eventable(Base) {
         this.previewDom.innerHTML = html;
         this.editorUpdateValues = [];
         checkCodeGroup(this.previewDom);
+        checkLinks(this.previewDom);
         initMermaid(this.previewDom);
     }
 
