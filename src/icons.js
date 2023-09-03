@@ -29,19 +29,23 @@ const ICONS = [
     },
     {
         name: 'icon-h11',
-        title: '标题1'
+        title: '标题1',
+        enable: false
     },
     {
         name: 'icon-h',
-        title: '标题2'
+        title: '标题2',
+        enable: false
     },
     {
         name: 'icon-h3',
-        title: '标题3'
+        title: '标题3',
+        enable: false
     },
     {
         name: 'icon-h2',
-        title: '标题4'
+        title: '标题4',
+        enable: false
     },
     // {
     //     name: 'icon-h1',

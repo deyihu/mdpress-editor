@@ -13,14 +13,14 @@ function loadMonaco() {
 function loadShiki() {
     // shiki.setCDN('https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/shiki');
     const languages = [
-        'objective-c',
+        // 'objective-c',
         'bat',
         'c',
         'cpp',
         'csharp',
         'css',
-        'dart',
-        'docker',
+        // 'dart',
+        // 'docker',
         // 'git-commit',
         'glsl',
         'go',
@@ -48,16 +48,16 @@ function loadShiki() {
         'scss',
         'shellscript',
         'sql',
-        'svelte',
-        'swift',
-        'toml',
+        // 'svelte',
+        // 'swift',
+        // 'toml',
         'typescript',
         'viml',
         'vue-html',
         'vue',
         // 'wasm',
-        'yaml',
-        'xml'
+        'yaml'
+        // 'xml'
 
     ];
 

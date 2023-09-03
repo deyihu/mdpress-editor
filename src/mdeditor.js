@@ -169,7 +169,7 @@ export class MDEditor extends Eventable(Base) {
         this.frameId = null;
         let time = now();
         const loop = () => {
-            if (now() - time > 500) {
+            if (now() - time > 250) {
                 this.updatePreview();
                 time = now();
             }
