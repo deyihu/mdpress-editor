@@ -123,6 +123,7 @@ function checkLinks(dom) {
         }
     });
 }
+
 const OPTIONS = {
     preview: true,
     monacoOptions: {
@@ -212,11 +213,7 @@ export class MDEditor extends Eventable(Base) {
         this.editor = monaco.editor.create(this.editorDom, Object.assign({}, OPTIONS.monacoOptions, monacoOptions));
         this.editor.onDidChangeModelContent(() => {
             const value = this.getValue();
-            checkSnippets(value, (text, hasSnip) => {
-                this.editorUpdateValues.push(text);
-            });
-            // const html = md.render(value);
-            // console.log(html);
+            this.editorUpdateValues.push(value);
         });
     }
 
@@ -266,12 +263,14 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         const value = this.editorUpdateValues[len - 1];
-        const html = md.render(value);
-        this.previewDom.innerHTML = html;
-        this.editorUpdateValues = [];
-        checkCodeGroup(this.previewDom);
-        checkLinks(this.previewDom);
-        initMermaid(this.previewDom);
+        checkSnippets(value, (text) => {
+            const html = md.render(text);
+            this.previewDom.innerHTML = html;
+            this.editorUpdateValues = [];
+            checkCodeGroup(this.previewDom);
+            checkLinks(this.previewDom);
+            initMermaid(this.previewDom);
+        });
     }
 
     // https://github.com/microsoft/monaco-editor/issues/639
