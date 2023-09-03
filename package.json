@@ -23,8 +23,8 @@
   "files": [
     "src/",
     "dist/",
-    "./index.js",
-    "./index.css"
+    "index.js",
+    "index.css"
   ],
   "devDependencies": {
     "cross-env": "^5.1.4",
