@@ -15,6 +15,8 @@ npm i maptalks
 :tada:  
 :100:
 
+<<< @./snip.md
+
 ## container
 
 ::: info

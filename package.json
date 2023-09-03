@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "dayjs": "^1.11.9",
+    "fetch-scheduler": "^0.4.0",
     "highlight.js": "^11.8.0",
     "katex": "^0.16.8",
     "markdown-it": "^13.0.1",
