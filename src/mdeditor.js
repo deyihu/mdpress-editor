@@ -5,6 +5,7 @@ import { createMarkdown } from './markdown';
 import { initMermaid } from '../plugins/mermaid';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
+import Viewer from 'viewerjs';
 import {
     FetchScheduler
 } from 'fetch-scheduler';
@@ -274,6 +275,10 @@ export class MDEditor extends Eventable(Base) {
             checkCodeGroup(this.previewDom);
             checkLinks(this.previewDom);
             initMermaid(this.previewDom);
+            if (this.imageViewer) {
+                this.imageViewer.destroy();
+            }
+            this.imageViewer = new Viewer(this.previewDom);
         });
     }
 
