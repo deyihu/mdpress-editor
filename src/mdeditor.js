@@ -215,6 +215,10 @@ export class MDEditor extends Eventable(Base) {
             const value = this.getValue();
             this.editorUpdateValues.push(value);
         });
+        this.editor.onDidScrollChange((e) => {
+            this._scrollEvent = e;
+            this._syncScroll();
+        });
     }
 
     initTools() {
@@ -270,6 +274,22 @@ export class MDEditor extends Eventable(Base) {
             checkCodeGroup(this.previewDom);
             checkLinks(this.previewDom);
             initMermaid(this.previewDom);
+        });
+    }
+
+    _syncScroll() {
+        if (!this._scrollEvent) {
+            return this;
+        }
+        if (!this.preview) {
+            return this;
+        }
+        const { scrollHeight, scrollTop } = this._scrollEvent;
+        const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
+        this.previewDom.scroll({
+            top: scrollTop / scrollHeight * previewHeight,
+            left: 0,
+            behavior: 'smooth'
         });
     }
 
