@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mdeditor test</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+        font-family: 微软雅黑;
+        overflow: hidden;
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        margin: auto;
+        /* margin-top: 10px; */
+    }
+
+    .red {
+        color: red !important;
+    }
+</style>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/an-old-hope.min.css"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.5/viewer.min.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_xjcq610jjcl.css">
+<link rel="stylesheet" href="./../index.css">
+<script
+    src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/shiki/dist/index.jsdelivr.iife.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script> -->
+<script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/mdpress-editor/dist/mdpress-editor.min.js"></script>
+<script type="text/javascript" src="./base.js"></script>
+<script>
+    var require = { paths: { vs: './lib/monaco-editor/min/vs' } };
+</script>
+<script src="./lib/monaco-editor/min/vs/loader.js"></script>
+<script src="./lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+<script src="./lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+
+<body>
+
+    <div id="map" class="container"></div>
+
+    <script>
+
+        let mEditor;
+        function createEditor() {
+            mEditor = new mdpress.MDEditor('#map', {
+                monacoOptions: {
+                    // language: 'markdown-math'
+                    // theme: 'vs-dark'
+                }
+            })
+            loadData();
+            // customIcons();
+        }
+
+        function loadData() {
+            fetch('./drei-readme.md').then(res => res.text()).then(text => {
+                mEditor.setValue(text);
+            })
+        }
+
+        mdpress.showLoading();
+        init().then(() => {
+            createEditor();
+            mdpress.hideLoading();
+        })
+
+        function customIcons() {
+            const data = {
+                icon: 'icon-file-markdown1',
+                title: '我是自定义按钮-导入markdown',
+                className: 'red'
+            }
+            const icon = new mdpress.ToolIcon(data);
+            icon.addTo(mEditor);
+            icon.on('click', () => {
+                const parseMd = (file) => {
+                    const fileRender = new FileReader();
+                    fileRender.onload = () => {
+                        if (mEditor && fileRender.result) {
+                            mEditor.setValue(fileRender.result);
+                        }
+                    };
+                    fileRender.readAsText(file);
+                };
+                const inputFile = document.createElement('input');
+                inputFile.type = 'file';
+                inputFile.accept = '.md';
+                inputFile.addEventListener('change', () => {
+                    if (inputFile.files.length) {
+                        parseMd(inputFile.files[0]);
+                    } else {
+                        alert('没有发现上传文件');
+                    }
+                });
+                inputFile.click();
+            })
+
+        }
+
+    </script>
+</body>
+
+</html>
