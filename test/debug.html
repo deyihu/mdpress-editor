@@ -31,6 +31,8 @@
     src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/shiki/dist/index.jsdelivr.iife.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 <script src="https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/mermaid.min.js"></script>
+<script src="./lib/prettier/standalone.js"></script>
+<script src="./lib/prettier/plugins/markdown.js"></script>
 <script type="text/javascript" src="./../dist/mdpress-editor.js"></script>
 <script type="text/javascript" src="./base.js"></script>
 <script>
@@ -47,6 +49,8 @@
     <script>
 
         let mEditor;
+        prettier.prettierPlugins = prettierPlugins;
+        mdpress.registerPrettier(prettier);
         function createEditor() {
             mEditor = new mdpress.MDEditor('#map', {
                 monacoOptions: {
