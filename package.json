@@ -54,6 +54,7 @@
     "mermaid": "^10.4.0",
     "mini-toastr": "^0.8.1",
     "monaco-editor": "^0.41.0",
+    "prettier": "^3.0.3",
     "shiki": "^0.14.3",
     "viewerjs": "^1.11.5"
   }

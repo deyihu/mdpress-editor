@@ -2,6 +2,7 @@ export {
     registerShikiHighlighter,
     registerMonaco,
     registerHightLight,
+    registerPrettier,
     showLoading,
     hideLoading
 } from './src/util';

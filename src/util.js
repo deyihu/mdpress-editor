@@ -154,6 +154,15 @@ export function getHightLight() {
     return hlsjs;
 }
 
+let prettierjs;
+export function registerPrettier(prettier) {
+    prettierjs = prettier;
+}
+
+export function getPrettier() {
+    return prettierjs;
+}
+
 const LOADING_ID = 'mdeditor-loading-container';
 export function showLoading() {
     const dom = document.getElementById(LOADING_ID);

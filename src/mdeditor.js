@@ -1,6 +1,6 @@
 
 import miniToastr from 'mini-toastr';
-import { createDom, domSizeByWindow, getDom, getMonaco, now, on } from './util';
+import { createDom, domSizeByWindow, getDom, getMonaco, getPrettier, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from '../plugins/mermaid';
 import { createDefaultIcons } from './icons';
@@ -9,6 +9,7 @@ import Viewer from 'viewerjs';
 import {
     FetchScheduler
 } from 'fetch-scheduler';
+
 const fetchScheduler = new FetchScheduler({
     requestCount: 6 // Concurrent number of fetch requests
 });
@@ -220,6 +221,36 @@ export class MDEditor extends Eventable(Base) {
             this._scrollEvent = e;
             this._syncScroll();
         });
+        this.editor.addAction({
+            id: '', // 菜单项 id
+            label: 'Format Code', // 菜单项名称
+            // keybindings: [this.monaco.KeyMod.CtrlCmd | this.monaco.KeyCode.KEY_J], // 绑定快捷键
+            contextMenuGroupId: '9_cutcopypaste', // 所属菜单的分组
+            run: () => {
+                const prettier = getPrettier();
+                if (!prettier) {
+                    console.warn('not find prettier');
+                    return;
+                }
+                if (!prettier.prettierPlugins) {
+                    console.warn('not find prettier plugins');
+                    return;
+                }
+                prettier.format(this.getValue(), {
+                    parser: 'markdown',
+                    plugins: prettier.prettierPlugins
+                }).then(text => {
+                    // console.log(text);
+                    const [range] = this.getWholeRange();
+                    this.editor.executeEdits('', [
+                        {
+                            range,
+                            text
+                        }
+                    ]);
+                });
+            }// 点击后执行的操作
+        });
     }
 
     initTools() {
@@ -342,6 +373,20 @@ export class MDEditor extends Eventable(Base) {
             endColumn: position.column
         };
         return [range];
+    }
+
+    getWholeRange() {
+
+        const model = this.editor.getModel();
+        const linesNumber = model.getLineCount();
+        const range = {
+            startLineNumber: 1,
+            endLineNumber: linesNumber,
+            startColumn: 1,
+            endColumn: 100000
+        };
+        return [range];
+
     }
 
     isPreview() {
