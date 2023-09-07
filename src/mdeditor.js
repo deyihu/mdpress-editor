@@ -144,10 +144,12 @@ function Base() {
 
 export class MDEditor extends Eventable(Base) {
     constructor(dom, options) {
+        initToastr();
         super();
         dom = getDom(dom);
         if (!dom || !(dom instanceof HTMLElement)) {
             console.error('dom is not HTMLElement', dom);
+            miniToastr.error('dom is not HTMLElement');
             return;
         }
         dom.classList.add('mdeditor-container');
@@ -166,7 +168,6 @@ export class MDEditor extends Eventable(Base) {
         setTimeout(() => {
             this.checkPreviewState();
         }, 16);
-        initToastr();
 
         this.frameId = null;
         let time = now();
@@ -209,7 +210,9 @@ export class MDEditor extends Eventable(Base) {
         mainDom.appendChild(previewDom);
         const monaco = getMonaco();
         if (!monaco) {
-            console.error('not find monaco editor namespace');
+            const message = 'not find monaco editor namespace';
+            console.error(message);
+            miniToastr.error(message);
             return;
         }
         this.editor = monaco.editor.create(this.editorDom, Object.assign({}, OPTIONS.monacoOptions, monacoOptions));
@@ -229,11 +232,15 @@ export class MDEditor extends Eventable(Base) {
             run: () => {
                 const prettier = getPrettier();
                 if (!prettier) {
-                    console.warn('not find prettier');
+                    const message = 'not find prettier';
+                    console.warn(message);
+                    miniToastr.warn(message);
                     return;
                 }
                 if (!prettier.prettierPlugins) {
-                    console.warn('not find prettier plugins');
+                    const message = 'not find prettier plugins';
+                    console.warn(message);
+                    miniToastr.warn(message);
                     return;
                 }
                 prettier.format(this.getValue(), {

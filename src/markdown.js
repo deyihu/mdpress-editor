@@ -32,7 +32,7 @@ export function createMarkdown() {
                 } catch (__) { }
             }
 
-            return ''; // use external default escaping
+            return str; // use external default escaping
         }
     });
     installPlugins(md);
