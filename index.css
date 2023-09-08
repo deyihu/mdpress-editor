@@ -1090,5 +1090,5 @@
   content: "";
 }
 .viewer-open{
-  overflow: auto;
+  overflow: auto !important;
 }
