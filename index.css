@@ -1089,3 +1089,6 @@
 .vp-external-link-icon::after {
   content: "";
 }
+.viewer-open{
+  overflow: auto;
+}
