@@ -2198,7 +2198,7 @@ Html can hide behind geometry using the `occlude` prop.
 ```
 
 When the Html object hides it sets the opacity prop on the innermost div. If you want to animate or control the transition yourself then you can use `onOcclude`.
-
+<!-- 
 ```jsx
 const [hidden, set] = useState()
 
@@ -2211,7 +2211,7 @@ const [hidden, set] = useState()
     transform: `scale(${hidden ? 0.5 : 1})`
   }}
 />
-```
+``` -->
 
 **Blending occlusion**
 
