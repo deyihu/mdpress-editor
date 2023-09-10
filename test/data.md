@@ -15,7 +15,7 @@ npm i maptalks
 :tada:  
 :100:
 
-<<< @./snip.md
+include@./snip.md
 
 ## container
 

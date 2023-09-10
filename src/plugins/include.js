@@ -6,56 +6,56 @@ const fetchScheduler = new FetchScheduler({
     requestCount: 6 // Concurrent number of fetch requests
 });
 
-const SNIP_FLAG = '<<< @';
-export function checkSnippets(text, callback) {
-    if (text.indexOf(SNIP_FLAG) === -1) {
+const INCLUDE_FLAG = 'include@';
+export function checkInclude(text, callback) {
+    if (text.indexOf(INCLUDE_FLAG) === -1) {
         callback(text, false);
         return;
     }
-    const array = text.split(SNIP_FLAG);
-    const snips = [];
+    const array = text.split(INCLUDE_FLAG);
+    const texts = [];
     for (let i = 1, len = array.length; i < len; i++) {
         const line = array[i];
-        let snipUrl = '';
+        let url = '';
         for (let j = 0, len1 = line.length; j < len1; j++) {
             const char = line[j];
             if (char === ' ' || char === '\n' || char === '\r') {
-                snips.push({
+                texts.push({
                     start: 0,
                     end: j,
-                    url: snipUrl,
+                    url: url,
                     line
                 });
                 break;
             }
-            snipUrl += char;
+            url += char;
         }
     }
     let idx = 0;
     const end = () => {
         idx++;
-        if (idx === snips.length) {
-            snips.forEach(snip => {
-                const { text, end, url } = snip;
+        if (idx === texts.length) {
+            texts.forEach(singleText => {
+                const { text, end, url } = singleText;
                 if (!text) {
-                    snip.line = `<p style="color:red">fetch snip file error,url:${url}</p>` + snip.line.substring(end, Infinity);
+                    singleText.line = `<p style="color:red">fetch snip file error,url:${url}</p>` + singleText.line.substring(end, Infinity);
                 } else {
-                    snip.line = `${text}\n` + snip.line.substring(end, Infinity);
+                    singleText.line = `${text}\n` + singleText.line.substring(end, Infinity);
                 }
             });
             let value = array[0];
-            snips.forEach(snip => {
-                value += snip.line;
+            texts.forEach(singleText => {
+                value += singleText.line;
             });
             callback(value, true);
         }
     };
-    snips.forEach(snip => {
-        const promise = fetchScheduler.createFetch(snip.url, {
+    texts.forEach(singleText => {
+        const promise = fetchScheduler.createFetch(singleText.url, {
             // ...
         });
         promise.then(res => res.text()).then(text => {
-            snip.text = text;
+            singleText.text = text;
             end();
         }).catch(err => {
             console.error(err);

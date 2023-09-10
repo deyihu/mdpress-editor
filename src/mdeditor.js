@@ -7,8 +7,8 @@ import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
 import Viewer from 'viewerjs';
 import { checkCodeGroup } from './plugins/container';
-import { checkSnippets } from './plugins/snippet';
 import { checkIframe } from './plugins/iframe';
+import { checkInclude } from './plugins/include';
 
 const md = createMarkdown();
 
@@ -212,7 +212,7 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         const value = this.editorUpdateValues[len - 1];
-        checkSnippets(value, (text) => {
+        checkInclude(value, (text) => {
             const html = md.render(text);
             this.previewDom.innerHTML = html;
             this.editorUpdateValues = [];
