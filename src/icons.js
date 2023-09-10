@@ -637,7 +637,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         editor.executeEdits('', [
             {
                 range,
-                text: '\n<<< @//mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
+                text: '\ninclude@//mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
             }
         ]);
     };

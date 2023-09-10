@@ -46,16 +46,16 @@
 }
 
 .mdeditor-tools {
-  height: 38px;
+  height: 30px;
   border: 1px solid whitesmoke;
   background-color: white;
 }
 
 .mdeditor-tools .item {
-  line-height: 38px;
-  font-size: 22px;
-  margin-right: 4px;
-  margin-left: 4px;
+  line-height: 30px;
+  font-size: 20px;
+  margin-right: 2px;
+  margin-left: 2px;
   color: #6b6666;
   cursor: pointer;
   padding: 4px;
@@ -69,7 +69,7 @@
 }
 
 .mdeditor-main {
-  height: calc(100% - 40px);
+  height: calc(100% - 32px);
   display: flex;
 }
 
