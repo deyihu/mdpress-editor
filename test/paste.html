@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mdeditor test</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+        font-family: 微软雅黑;
+        overflow: hidden;
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        margin: auto;
+        /* margin-top: 10px; */
+    }
+</style>
+
+<body>
+
+    <div class="source" contenteditable="true">从这个盒子复制文字</div>
+    <div class="target" contenteditable="true">在这里粘贴</div>
+
+    <script>
+
+        document.querySelector('.target').addEventListener('paste', (e) => {
+            e.preventDefault();
+        })
+        document.querySelector('.target').addEventListener('paste', (e) => {
+            console.log(e);
+        })
+
+    </script>
+</body>
+
+</html>
