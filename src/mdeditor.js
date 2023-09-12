@@ -9,6 +9,7 @@ import Viewer from 'viewerjs';
 import { checkCodeGroup } from './plugins/container';
 import { checkIframe } from './plugins/iframe';
 import { checkInclude } from './plugins/include';
+import { scrollTop } from './plugins/scrolltop';
 
 const md = createMarkdown();
 
@@ -214,17 +215,19 @@ export class MDEditor extends Eventable(Base) {
         const value = this.editorUpdateValues[len - 1];
         checkInclude(value, (text) => {
             const html = md.render(text);
-            this.previewDom.innerHTML = html;
+            const dom = this.previewDom;
+            dom.innerHTML = html;
             this.editorUpdateValues = [];
-            checkCodeGroup(this.previewDom);
-            checkLinks(this.previewDom);
-            checkIframe(this.previewDom);
-            initMermaid(this.previewDom);
+            checkCodeGroup(dom);
+            checkLinks(dom);
+            checkIframe(dom);
+            initMermaid(dom);
 
             if (this.imageViewer) {
                 this.imageViewer.destroy();
             }
-            this.imageViewer = new Viewer(this.previewDom);
+            this.imageViewer = new Viewer(dom);
+            scrollTop(dom);
         });
     }
 
