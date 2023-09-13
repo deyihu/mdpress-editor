@@ -10,6 +10,7 @@ import { checkCodeGroup } from './plugins/container';
 import { checkIframe } from './plugins/iframe';
 import { checkInclude } from './plugins/include';
 import { scrollTop } from './plugins/scrolltop';
+import { calScroll } from './scrollsync';
 
 const md = createMarkdown();
 
@@ -238,13 +239,22 @@ export class MDEditor extends Eventable(Base) {
         if (!this.preview) {
             return this;
         }
-        const { scrollHeight, scrollTop } = this._scrollEvent;
-        const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
-        this.previewDom.scroll({
-            top: scrollTop / scrollHeight * previewHeight,
-            left: 0,
-            behavior: 'smooth'
-        });
+        const top = calScroll(this.editor, this.previewDom);
+        if (top) {
+            this.previewDom.scroll({
+                top,
+                left: 0,
+                behavior: 'smooth'
+            });
+        } else {
+            const { scrollHeight, scrollTop } = this._scrollEvent;
+            const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
+            this.previewDom.scroll({
+                top: scrollTop / scrollHeight * previewHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
     }
 
     // https://github.com/microsoft/monaco-editor/issues/639
