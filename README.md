@@ -1,1 +1,1 @@
-# mdeditor
+# mdpress-editor
