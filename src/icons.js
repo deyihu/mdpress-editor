@@ -1,6 +1,7 @@
 import { ToolIcon } from './toolicon';
 import { createDialog, domSizeByWindow, getTableMdText, on } from './util';
 import dayjs from 'dayjs';
+import { computePosition } from '@floating-ui/dom';
 
 const ICONS = [
     {
@@ -153,6 +154,10 @@ const ICONS = [
     {
         name: 'icon-quanping',
         title: '全屏'
+    },
+    {
+        name: 'icon-zhuti_tiaosepan_o',
+        title: '主题'
     }
 ];
 
@@ -227,6 +232,8 @@ export function createDefaultIcons(mdEditor, miniToastr) {
     const icons = ICONS.map(d => {
         return new ToolIcon(Object.assign(d, { icon: d.name }));
     });
+
+    const themeIconDom = icons[34].getDom(), themeDom = mdEditor.themeDom;
 
     const validateSelect = (result) => {
         if (result && result.length) {
@@ -679,6 +686,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
             domSizeByWindow(container);
             mdEditor.fire('openfullscreen', { fullScreen: mdEditor.fullScreen });
         }
+        updateTheme();
         // const isFullScreen = document.mozFullScreen || document.webkitIsFullScreen;
         // const dom = mdEditor.dom;
         // if (dom.requestFullscreen && !isFullScreen) {
@@ -695,4 +703,31 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         }
         icon.addTo(mdEditor);
     });
+
+    // for theme icon
+
+    function updateTheme() {
+        computePosition(themeIconDom, themeDom, {
+            placement: 'bottom'
+        }).then(({ x, y }) => {
+            Object.assign(themeDom.style, {
+                left: `${x}px`,
+                top: `${y}px`
+            });
+        });
+    }
+
+    function showTheme() {
+        let display = themeDom.style.display;
+        if (display === 'none') {
+            display = 'block';
+        } else if (display === 'block') {
+            display = 'none';
+        } else {
+            display = 'block';
+        }
+        themeDom.style.display = display;
+        updateTheme();
+    }
+    themeIconDom.addEventListener('click', showTheme);
 }

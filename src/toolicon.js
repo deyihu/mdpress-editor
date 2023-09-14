@@ -30,6 +30,10 @@ export class ToolIcon {
         return true;
     }
 
+    getDom() {
+        return this.dom;
+    }
+
     on(event, handler) {
         on(this.dom, event, handler);
         return this;

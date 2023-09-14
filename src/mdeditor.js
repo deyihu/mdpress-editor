@@ -1,6 +1,6 @@
 
 import miniToastr from 'mini-toastr';
-import { createDom, domSizeByWindow, getDom, getMonaco, getPrettier, now } from './util';
+import { createDom, domSizeByWindow, getDom, getMonaco, getPrettier, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from './plugins/mermaid';
 import { createDefaultIcons } from './icons';
@@ -11,7 +11,10 @@ import { checkIframe } from './plugins/iframe';
 import { checkInclude } from './plugins/include';
 import { scrollTop } from './plugins/scrolltop';
 import { calScroll } from './scrollsync';
-
+import { removePreBgColor } from './plugins/prebackground';
+import { themes } from '../theme';
+import { fetchScheduler } from './fetchScheduler';
+const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
 let miniToastrInit = false;
@@ -36,6 +39,8 @@ function checkLinks(dom) {
 
 const OPTIONS = {
     preview: true,
+    theme: 'vitepress',
+    themeURL: './../theme/',
     monacoOptions: {
         language: 'markdown',
         value: '',
@@ -71,8 +76,11 @@ export class MDEditor extends Eventable(Base) {
         this.preview = this.options.preview;
         this.fullScreen = false;
         this.editorUpdateValues = [];
+        this.themeName = '';
         this.initDoms();
+        this.initTheme();
         this.initTools();
+        this.setTheme(options.theme);
         setTimeout(() => {
             this.checkPreviewState();
         }, 16);
@@ -104,12 +112,12 @@ export class MDEditor extends Eventable(Base) {
         editorDom.className = 'mdeditor-editor';
 
         const previewDom = this.previewDom = createDom('div');
-        previewDom.className = 'mdeditor-preview vp-doc';
+        previewDom.className = 'mdeditor-preview vp-doc markdown-body';
 
         const toolsDom = this.toolsDom = createDom('div');
         toolsDom.className = 'mdeditor-tools';
 
-        const mainDom = createDom('div');
+        const mainDom = this.mainDom = createDom('div');
         mainDom.className = 'mdeditor-main';
 
         this.dom.appendChild(toolsDom);
@@ -173,6 +181,26 @@ export class MDEditor extends Eventable(Base) {
         createDefaultIcons(this, miniToastr);
     }
 
+    initTheme() {
+        const themeDom = createDom('div');
+        this.themeDom = themeDom;
+        themeDom.className = 'mdeditor-theme-container';
+        this.mainDom.appendChild(themeDom);
+
+        const selectDom = this.selectDom = createDom('select');
+        selectDom.className = 'mdeitor-theme-select';
+        const optionList = themes.map(name => {
+            return `<option class="mdeitor-theme-select-item" value="${name}">${name}</option>`;
+        }).join('').toString();
+        selectDom.innerHTML = optionList;
+        themeDom.appendChild(selectDom);
+        on(selectDom, 'change', (e) => {
+            const theme = selectDom.options[selectDom.selectedIndex].value;
+            this.setTheme(theme);
+        });
+
+    }
+
     checkPreviewState() {
         const { preview } = this;
         if (preview) {
@@ -223,6 +251,7 @@ export class MDEditor extends Eventable(Base) {
             checkLinks(dom);
             checkIframe(dom);
             initMermaid(dom);
+            removePreBgColor(dom);
 
             if (this.imageViewer) {
                 this.imageViewer.destroy();
@@ -327,5 +356,46 @@ export class MDEditor extends Eventable(Base) {
 
     getContainer() {
         return this.dom;
+    }
+
+    setTheme(themeName) {
+        if (themeName === this.themeName) {
+            return this;
+        }
+        const children = document.head.children;
+        let styleLink;
+        for (let i = 0, len = children.length; i < len; i++) {
+            if (children[i].id === THEME_ID) {
+                styleLink = children[i];
+            }
+        }
+        if (styleLink) {
+            document.head.removeChild(styleLink);
+        }
+        const url = `${this.options.themeURL}${themeName}.css`;
+        // get theme style
+        const promise = fetchScheduler.createFetch(url, {
+            // ...
+        });
+        promise.then(res => res.text()).then(text => {
+            const style = createDom('style');
+            style.id = THEME_ID;
+            style.type = 'text/css';
+            style.innerHTML = text;
+            document.head.appendChild(style);
+            this.themeName = themeName;
+            themes.forEach((theme, index) => {
+                if (theme === this.themeName) {
+                    this.selectDom.selectedIndex = index;
+                }
+            });
+        }).catch(err => {
+            console.error(`not fetch theme：${themeName} from:${url}`);
+            console.error(err);
+        });
+    }
+
+    getTheme() {
+        return this.themeName;
     }
 }

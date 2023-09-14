@@ -1,0 +1,21 @@
+export const themes = [
+    'vitepress',
+    'serene-rose',
+    'awesome-green',
+    'channing-cyan',
+    'chocolate',
+    'condensed-night-purple',
+    'nico',
+    'rude-crab',
+    'fancy',
+    'jzman',
+    'cyanosis',
+    'devui-blue',
+    'geek-black',
+    'mk-cute',
+    'scrolls',
+    'smart-blue',
+    'z-blue',
+    'arknights',
+    'Chinese-red'
+];

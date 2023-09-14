@@ -1,10 +1,4 @@
-
-import {
-    FetchScheduler
-} from 'fetch-scheduler';
-const fetchScheduler = new FetchScheduler({
-    requestCount: 6 // Concurrent number of fetch requests
-});
+import { fetchScheduler } from '../fetchScheduler';
 
 const INCLUDE_FLAG = 'include@';
 export function checkInclude(text, callback) {
