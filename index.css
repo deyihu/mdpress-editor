@@ -163,6 +163,13 @@
   z-index: 1;
   display: none;
 }
+.mdeditor-theme-select{
+  height: 25px;
+}
+.mdeditor-theme-select-item{
+  height: 20px;
+  font-size: 14px;
+}
 
 /* copy from https://github.com/vuejs/vitepress/blob/v1.0.0-beta.6/src/client/theme-default/styles/vars.css */
 :root {

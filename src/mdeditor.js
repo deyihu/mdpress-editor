@@ -188,9 +188,9 @@ export class MDEditor extends Eventable(Base) {
         this.mainDom.appendChild(themeDom);
 
         const selectDom = this.selectDom = createDom('select');
-        selectDom.className = 'mdeitor-theme-select';
+        selectDom.className = 'mdeditor-theme-select';
         const optionList = themes.map(name => {
-            return `<option class="mdeitor-theme-select-item" value="${name}">${name}</option>`;
+            return `<option class="mdeditor-theme-select-item" value="${name}">${name}</option>`;
         }).join('').toString();
         selectDom.innerHTML = optionList;
         themeDom.appendChild(selectDom);
@@ -369,15 +369,15 @@ export class MDEditor extends Eventable(Base) {
                 styleLink = children[i];
             }
         }
-        if (styleLink) {
-            document.head.removeChild(styleLink);
-        }
         const url = `${this.options.themeURL}${themeName}.css`;
         // get theme style
         const promise = fetchScheduler.createFetch(url, {
             // ...
         });
         promise.then(res => res.text()).then(text => {
+            if (styleLink) {
+                document.head.removeChild(styleLink);
+            }
             const style = createDom('style');
             style.id = THEME_ID;
             style.type = 'text/css';
@@ -389,6 +389,7 @@ export class MDEditor extends Eventable(Base) {
                     this.selectDom.selectedIndex = index;
                 }
             });
+            this.fire('themechange', { theme: themeName, value: text });
         }).catch(err => {
             console.error(`not fetch theme：${themeName} from:${url}`);
             console.error(err);
