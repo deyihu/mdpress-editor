@@ -156,7 +156,7 @@ const ICONS = [
         title: '全屏'
     },
     {
-        name: 'icon-zhuti_tiaosepan_o',
+        name: 'icon-pifuzhuti-xianxing',
         title: '主题'
     }
 ];
