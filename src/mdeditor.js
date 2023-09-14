@@ -174,6 +174,9 @@ export class MDEditor extends Eventable(Base) {
                 });
             }// 点击后执行的操作
         });
+        this.editor.onMouseDown(() => {
+            this.themeDom.style.display = 'none';
+        });
     }
 
     initTools() {
@@ -187,17 +190,33 @@ export class MDEditor extends Eventable(Base) {
         themeDom.className = 'mdeditor-theme-container';
         this.mainDom.appendChild(themeDom);
 
-        const selectDom = this.selectDom = createDom('select');
-        selectDom.className = 'mdeditor-theme-select';
-        const optionList = themes.map(name => {
-            return `<option class="mdeditor-theme-select-item" value="${name}">${name}</option>`;
-        }).join('').toString();
-        selectDom.innerHTML = optionList;
-        themeDom.appendChild(selectDom);
-        on(selectDom, 'change', (e) => {
-            const theme = selectDom.options[selectDom.selectedIndex].value;
-            this.setTheme(theme);
+        // const selectDom = this.selectDom = createDom('select');
+        // selectDom.className = 'mdeditor-theme-select';
+        // const optionList = themes.map(name => {
+        //     return `<option class="mdeditor-theme-select-item" value="${name}">${name}</option>`;
+        // }).join('').toString();
+        // selectDom.innerHTML = optionList;
+        const lis = themes.map(name => {
+            const li = createDom('div');
+            li.className = 'mdeditor-theme-select-item';
+            li.dataset.theme = name;
+            li.innerHTML = `<i class="iconfont icon-31liebiao"></i>&nbsp;&nbsp;${name}`;
+            themeDom.appendChild(li);
+            return li;
         });
+        lis.forEach(li => {
+            on(li, 'click', e => {
+                const theme = e.target.dataset.theme;
+                this._activeThemeItem(e.target);
+                this.setTheme(theme);
+            });
+        });
+
+        // themeDom.appendChild(selectDom);
+        // on(selectDom, 'change', (e) => {
+        //     const theme = selectDom.options[selectDom.selectedIndex].value;
+        //     this.setTheme(theme);
+        // });
 
     }
 
@@ -358,6 +377,25 @@ export class MDEditor extends Eventable(Base) {
         return this.dom;
     }
 
+    _activeThemeItem(item) {
+        const items = this.themeDom.querySelectorAll('.mdeditor-theme-select-item');
+        if (typeof item === 'string') {
+            for (let i = 0, len = items.length; i < len; i++) {
+                if (items[i].dataset.theme === item) {
+                    item = items[i];
+                    break;
+                }
+            }
+        }
+        if (!item) {
+            return;
+        }
+        items.forEach(item => {
+            item.classList.remove('active');
+        });
+        item.classList.add('active');
+    }
+
     setTheme(themeName) {
         if (themeName === this.themeName) {
             return this;
@@ -384,11 +422,7 @@ export class MDEditor extends Eventable(Base) {
             style.innerHTML = text;
             document.head.appendChild(style);
             this.themeName = themeName;
-            themes.forEach((theme, index) => {
-                if (theme === this.themeName) {
-                    this.selectDom.selectedIndex = index;
-                }
-            });
+            this._activeThemeItem(themeName);
             this.fire('themechange', { theme: themeName, value: text });
         }).catch(err => {
             console.error(`not fetch theme：${themeName} from:${url}`);
