@@ -117,7 +117,7 @@
   line-height: 1.75;
   background: #fef6e1;
   border-radius: 4px;
-  box-shadow: 0 0px 8px #787878;
+  box-shadow: 0 0px 4px #787878;
 }
 .markdown-body pre:before {
   content: "";

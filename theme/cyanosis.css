@@ -353,7 +353,7 @@
 .markdown-body details > summary {
   outline: none;
   color: var(--cyanosis-title-color);
-  font-size: 20px;
+  /* font-size: 20px; */
   font-weight: bolder;
   border-bottom: 1px solid var(--cyanosis-border-color);
   cursor: pointer;
