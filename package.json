@@ -1,6 +1,6 @@
 {
   "name": "mdpress-editor",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "markdown editor base monaco",
   "main": "./dist/mdpress-editor.js",
   "module": "./index.js",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/deyihu/mdeditor#readme",
   "files": [
     "src/",
+    "theme/",
     "dist/",
     "index.js",
     "index.css"
