@@ -1,6 +1,6 @@
 
 import miniToastr from 'mini-toastr';
-import { ACTIVE_CLASS, createDom, domSizeByWindow, getDom, getMonaco, getPrettier, now, on } from './util';
+import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, getMonaco, getPrettier, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from './plugins/mermaid';
 import { createDefaultIcons } from './icons';
@@ -93,11 +93,12 @@ export class MDEditor extends Eventable(Base) {
                 this.updatePreview();
                 time = now();
             }
+            this._checkThemeClickOutSide();
             this.frameId = requestAnimationFrame(loop);
         };
 
         this.frameId = requestAnimationFrame(loop);
-        window.addEventListener('resize', () => {
+        on(window, 'resize', () => {
             if (!this.fullScreen) {
                 return;
             }
@@ -175,9 +176,9 @@ export class MDEditor extends Eventable(Base) {
                 });
             }// 点击后执行的操作
         });
-        this.editor.onMouseDown(() => {
-            this.themeDom.style.display = 'none';
-        });
+        // this.editor.onMouseDown(() => {
+        //     domHide(this.themeDom);
+        // });
     }
 
     initTools() {
@@ -212,35 +213,42 @@ export class MDEditor extends Eventable(Base) {
                 this.setTheme(theme);
             });
         });
-        // on(document.body, 'click', e => {
-        //     console.log(e);
-        //     const { clientX, clientY } = e;
-        //     const rect = this.themeDom.getBoundingClientRect();
-        //     const { left, top, right, bottom } = rect;
-        //     console.log(this.themeDom.style.display);
-        //     if ((clientX < left || clientX > right || clientY < top || clientY > bottom) && this.themeDom.style.display === 'block') {
-        //         this.themeDom.style.display = 'none';
-        //     }
-        // });
+        on(document.body, 'click', e => {
+            this.bodyClickEvents = this.bodyClickEvents || [];
+            this.bodyClickEvents.push({
+                display: getDomDisplay(this.themeDom),
+                event: e
+            });
+        });
+    }
 
-        // themeDom.appendChild(selectDom);
-        // on(selectDom, 'change', (e) => {
-        //     const theme = selectDom.options[selectDom.selectedIndex].value;
-        //     this.setTheme(theme);
-        // });
-
+    _checkThemeClickOutSide() {
+        if (!this.bodyClickEvents || this.bodyClickEvents.length === 0) {
+            return this;
+        }
+        const len = this.bodyClickEvents.length;
+        const { event, display } = this.bodyClickEvents[len - 1];
+        if (display === 'block') {
+            const { clientX, clientY } = event;
+            const rect = this.themeDom.getBoundingClientRect();
+            const { left, top, right, bottom } = rect;
+            if ((clientX < left || clientX > right || clientY < top || clientY > bottom)) {
+                domHide(this.themeDom);
+            }
+        }
+        this.bodyClickEvents = [];
     }
 
     checkPreviewState() {
         const { preview } = this;
         if (preview) {
             this.editorDom.style.width = '50%';
-            this.previewDom.style.display = 'block';
+            domShow(this.previewDom);
             // this.editorUpdateValues.push(this.getValue());
             // this.previewDom.style.width = '50%';
         } else {
             this.editorDom.style.width = '100%';
-            this.previewDom.style.display = 'none';
+            domHide(this.previewDom);
             // this.previewDom.style.width = '50%';
         }
         this.fire(preview ? 'openpreview' : 'closepreview', { preview });

@@ -1,5 +1,5 @@
 import { ToolIcon } from './toolicon';
-import { createDialog, domSizeByWindow, getTableMdText, on } from './util';
+import { createDialog, domSizeByWindow, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
 import dayjs from 'dayjs';
 import { computePosition } from '@floating-ui/dom';
 
@@ -718,7 +718,7 @@ export function createDefaultIcons(mdEditor, miniToastr) {
     }
 
     function showTheme() {
-        let display = themeDom.style.display;
+        let display = getDomDisplay(themeDom);
         if (display === 'none') {
             display = 'block';
         } else if (display === 'block') {
@@ -726,8 +726,10 @@ export function createDefaultIcons(mdEditor, miniToastr) {
         } else {
             display = 'block';
         }
-        themeDom.style.display = display;
-        updateTheme();
+        setTimeout(() => {
+            setDomDisplay(themeDom, display);
+            updateTheme();
+        }, 16);
     }
-    themeIconDom.addEventListener('click', showTheme);
+    on(themeIconDom, 'click', showTheme);
 }

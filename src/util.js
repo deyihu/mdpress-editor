@@ -119,6 +119,22 @@ export function getTableMdText(rows, cols) {
     return `${head}${headLine}${rowsText}`;
 }
 
+export function getDomDisplay(dom) {
+    return dom.style.display;
+}
+
+export function setDomDisplay(dom, display) {
+    dom.style.display = display;
+}
+
+export function domShow(dom) {
+    dom.style.display = 'block';
+}
+
+export function domHide(dom) {
+    dom.style.display = 'none';
+}
+
 export function now() {
     return new Date().getTime();
 }
