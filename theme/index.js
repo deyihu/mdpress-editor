@@ -1,5 +1,7 @@
 export const themes = [
     'vitepress',
+    'github',
+    'github-dark',
     'serene-rose',
     'awesome-green',
     'channing-cyan',

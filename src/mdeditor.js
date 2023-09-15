@@ -1,6 +1,6 @@
 
 import miniToastr from 'mini-toastr';
-import { createDom, domSizeByWindow, getDom, getMonaco, getPrettier, now, on } from './util';
+import { ACTIVE_CLASS, createDom, domSizeByWindow, getDom, getMonaco, getPrettier, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from './plugins/mermaid';
 import { createDefaultIcons } from './icons';
@@ -61,8 +61,9 @@ export class MDEditor extends Eventable(Base) {
         super();
         dom = getDom(dom);
         if (!dom || !(dom instanceof HTMLElement)) {
-            console.error('dom is not HTMLElement', dom);
-            miniToastr.error('dom is not HTMLElement');
+            const message = 'dom is not HTMLElement';
+            console.error(message, dom);
+            miniToastr.error(message);
             return;
         }
         dom.classList.add('mdeditor-container');
@@ -211,6 +212,16 @@ export class MDEditor extends Eventable(Base) {
                 this.setTheme(theme);
             });
         });
+        // on(document.body, 'click', e => {
+        //     console.log(e);
+        //     const { clientX, clientY } = e;
+        //     const rect = this.themeDom.getBoundingClientRect();
+        //     const { left, top, right, bottom } = rect;
+        //     console.log(this.themeDom.style.display);
+        //     if ((clientX < left || clientX > right || clientY < top || clientY > bottom) && this.themeDom.style.display === 'block') {
+        //         this.themeDom.style.display = 'none';
+        //     }
+        // });
 
         // themeDom.appendChild(selectDom);
         // on(selectDom, 'change', (e) => {
@@ -287,22 +298,17 @@ export class MDEditor extends Eventable(Base) {
         if (!this.preview) {
             return this;
         }
-        const top = calScroll(this.editor, this.previewDom);
-        if (top) {
-            this.previewDom.scroll({
-                top,
-                left: 0,
-                behavior: 'smooth'
-            });
-        } else {
+        let top = calScroll(this.editor, this.previewDom);
+        if (!top) {
             const { scrollHeight, scrollTop } = this._scrollEvent;
             const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
-            this.previewDom.scroll({
-                top: scrollTop / scrollHeight * previewHeight,
-                left: 0,
-                behavior: 'smooth'
-            });
+            top = scrollTop / scrollHeight * previewHeight;
         }
+        this.previewDom.scroll({
+            top,
+            left: 0,
+            behavior: 'smooth'
+        });
     }
 
     // https://github.com/microsoft/monaco-editor/issues/639
@@ -387,13 +393,13 @@ export class MDEditor extends Eventable(Base) {
                 }
             }
         }
-        if (!item) {
+        if (!item || typeof item === 'string') {
             return;
         }
         items.forEach(item => {
-            item.classList.remove('active');
+            item.classList.remove(ACTIVE_CLASS);
         });
-        item.classList.add('active');
+        item.classList.add(ACTIVE_CLASS);
     }
 
     setTheme(themeName) {

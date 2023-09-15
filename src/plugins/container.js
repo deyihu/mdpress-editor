@@ -7,7 +7,7 @@ import {
     extractTitle,
     getAdaptiveThemeMarker
 } from './preWrapper';
-import { on } from '../util';
+import { ACTIVE_CLASS, on } from '../util';
 
 const CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
 function uuid(prefix = '') {
@@ -105,7 +105,7 @@ function createCodeGroup(options) {
                                 const id = uuid(7);
                                 tabs += `<input type="radio" name="group-${name}" id="tab-${id}" ${checked}><label for="tab-${id}">${title}</label>`;
 
-                                if (checked && !isHtml) tokens[i].info += ' active';
+                                if (checked && !isHtml) tokens[i].info += ` ${ACTIVE_CLASS}`;
                                 checked = '';
                             }
                         }
@@ -128,9 +128,9 @@ export function checkCodeGroup(dom) {
             return;
         }
         if (active) {
-            dom.classList.add('active');
+            dom.classList.add(ACTIVE_CLASS);
         } else {
-            dom.classList.remove('active');
+            dom.classList.remove(ACTIVE_CLASS);
         }
     };
     codeGroups.forEach(codeGroup => {

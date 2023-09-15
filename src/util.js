@@ -1,4 +1,6 @@
 
+export const ACTIVE_CLASS = 'active';
+
 /**
  * Merges the properties of sources into destination object.
  * @param  {Object} dest   - object to extend
