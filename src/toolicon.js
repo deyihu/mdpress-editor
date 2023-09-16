@@ -19,6 +19,9 @@ export class ToolIcon {
         }
         dom.className = clazzName;
         dom.title = title;
+        dom.getEditor = () => {
+            return this.getEditor();
+        };
         this.dom = dom;
         this.editor = null;
     }

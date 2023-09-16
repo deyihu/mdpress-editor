@@ -1,5 +1,4 @@
 
-import miniToastr from 'mini-toastr';
 import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, getMonaco, getPrettier, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { initMermaid } from './plugins/mermaid';
@@ -14,19 +13,10 @@ import { calScroll } from './scrollsync';
 import { removePreBgColor } from './plugins/prebackground';
 import { themes } from '../theme';
 import { fetchScheduler } from './fetchScheduler';
+import { getToastr, initToastr } from './toast';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
-let miniToastrInit = false;
-
-function initToastr() {
-    if (!miniToastrInit) {
-        miniToastr.init({
-            appendTarget: document.body
-        });
-        miniToastrInit = true;
-    }
-}
 function checkLinks(dom) {
     const links = dom.querySelectorAll('a');
     links.forEach(link => {
@@ -63,7 +53,7 @@ export class MDEditor extends Eventable(Base) {
         if (!dom || !(dom instanceof HTMLElement)) {
             const message = 'dom is not HTMLElement';
             console.error(message, dom);
-            miniToastr.error(message);
+            getToastr().error(message);
             return;
         }
         dom.classList.add('mdeditor-container');
@@ -127,6 +117,7 @@ export class MDEditor extends Eventable(Base) {
         mainDom.appendChild(editorDom);
         mainDom.appendChild(previewDom);
         const monaco = getMonaco();
+        const miniToastr = getToastr();
         if (!monaco) {
             const message = 'not find monaco editor namespace';
             console.error(message);
@@ -183,7 +174,7 @@ export class MDEditor extends Eventable(Base) {
 
     initTools() {
         // const toolsDom = this.toolsDom;
-        createDefaultIcons(this, miniToastr);
+        createDefaultIcons(this);
     }
 
     initTheme() {
