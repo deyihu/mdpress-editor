@@ -50,10 +50,11 @@
   height: 30px;
   border: 1px solid whitesmoke;
   background-color: white;
+  /* padding-top: 3px; */
+  /* line-height: 30px; */
 }
 
 .mdeditor-tools .item {
-  line-height: 30px;
   font-size: 20px;
   margin-right: 2px;
   margin-left: 2px;
@@ -64,6 +65,13 @@
   /* border-right: 1px solid gray; */
 }
 
+.mdeditor-tools .icon-left {
+  float: left;
+}
+.mdeditor-tools .icon-right {
+  float: right;
+}
+
 .mdeditor-tools .item:hover {
   background-color: #d7d6d6;
   color: black;
@@ -72,6 +80,7 @@
 .mdeditor-main {
   height: calc(100% - 32px);
   display: flex;
+  width: 100%;
 }
 
 .mdeditor-editor {
