@@ -318,7 +318,7 @@ const ICONS = [
     {
         name: 'icon-31liebiao',
         title: '无序列表',
-        click: function (text) {
+        click: function () {
             const [mdEditor, editor] = getEditors(this);
             const result = mdEditor.getCurrentRange();
             if (!validateSelect(result)) {
@@ -336,7 +336,7 @@ const ICONS = [
     {
         name: 'icon-orderedList',
         title: '有序列表',
-        click: function (text) {
+        click: function () {
             const [mdEditor, editor] = getEditors(this);
             const result = mdEditor.getCurrentRange();
             if (!validateSelect(result)) {
@@ -360,7 +360,7 @@ const ICONS = [
         name: 'icon-hr',
         title: '横线',
         // enable: false,
-        click: function (text) {
+        click: function () {
             const [mdEditor, editor] = getEditors(this);
             const result = mdEditor.getCurrentRange();
             if (!validateSelect(result)) {
@@ -378,7 +378,7 @@ const ICONS = [
     {
         name: 'icon-lianjie',
         title: '插入链接',
-        click: function (text) {
+        click: function () {
             const [mdEditor, editor] = getEditors(this);
             const result = mdEditor.getCurrentRange();
             if (!validateSelect(result)) {
@@ -396,7 +396,7 @@ const ICONS = [
     {
         name: 'icon-tupiantianjia',
         title: '插入图片',
-        click: function (text) {
+        click: function () {
             const [mdEditor, editor] = getEditors(this);
             const result = mdEditor.getCurrentRange();
             if (!validateSelect(result)) {
@@ -610,7 +610,7 @@ const ICONS_RIGHT = [
         click: function () {
             const mdEditor = this.getEditor();
             const themeDom = mdEditor.themeDom;
-            const themeIconDom = this;
+            const themeIconDom = this.getDom();
             let display = getDomDisplay(themeDom);
             if (display === 'none') {
                 display = 'block';

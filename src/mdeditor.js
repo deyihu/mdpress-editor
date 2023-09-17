@@ -1,31 +1,22 @@
 
 import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, getMonaco, getPrettier, now, on } from './util';
 import { createMarkdown } from './markdown';
-import { initMermaid } from './plugins/mermaid';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
 import Viewer from 'viewerjs';
-import { checkCodeGroup } from './plugins/container';
-import { checkIframe } from './plugins/iframe';
+import { checkIframe } from './preview/iframe';
 import { checkInclude } from './plugins/include';
-import { scrollTop } from './plugins/scrolltop';
+import { scrollTop } from './preview/scrolltop';
 import { calScroll } from './scrollsync';
-import { removePreBgColor } from './plugins/prebackground';
+import { removePreBgColor } from './preview/prebackground';
 import { themes } from '../theme';
 import { fetchScheduler } from './fetchScheduler';
 import { getToastr, initToastr } from './toast';
+import { checkLinks } from './preview/link';
+import { checkCodeGroup } from './preview/codegroup';
+import { initMermaid } from './preview/initmermaid';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
-
-function checkLinks(dom) {
-    const links = dom.querySelectorAll('a');
-    links.forEach(link => {
-        const href = link.getAttribute('href') || '';
-        if (href.indexOf('http:') > -1 || href.indexOf('https://') > -1 || href.indexOf('//') > -1) {
-            link.setAttribute('target', '_blank');
-        }
-    });
-}
 
 const OPTIONS = {
     preview: true,
@@ -437,5 +428,11 @@ export class MDEditor extends Eventable(Base) {
 
     getTheme() {
         return this.themeName;
+    }
+
+    getIcons() {
+        return Array.prototype.map.call(this.toolsDom.children, c => {
+            return c.parent;
+        });
     }
 }

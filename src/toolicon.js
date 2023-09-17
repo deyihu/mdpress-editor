@@ -1,4 +1,4 @@
-import { createDom, on } from './util';
+import { createDom, extend, on } from './util';
 
 const OPTIONS = {
     icon: 'icon-zitijiacu',
@@ -26,9 +26,10 @@ export class ToolIcon {
         }
         dom.className = clazzName;
         dom.title = title;
-        dom.getEditor = () => {
-            return this.getEditor();
-        };
+        dom.parent = this;
+        // dom.getEditor = () => {
+        //     return this.getEditor();
+        // };
         this.dom = dom;
         this.editor = null;
     }
@@ -45,7 +46,10 @@ export class ToolIcon {
     }
 
     on(event, handler) {
-        on(this.dom, event, handler);
+        on(this.dom, event, (e) => {
+            e = extend({}, e, { target: this });
+            handler.call(this, e);
+        });
         return this;
     }
 
