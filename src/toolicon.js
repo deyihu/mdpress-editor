@@ -3,17 +3,24 @@ import { createDom, on } from './util';
 const OPTIONS = {
     icon: 'icon-zitijiacu',
     title: '加粗',
-    className: ''
+    className: '',
+    position: 'left'
 };
 
 export class ToolIcon {
     constructor(options) {
         options = Object.assign({}, OPTIONS, options);
         this.options = options;
-        const { icon, title } = options;
+        const { icon, title, position } = options;
         const dom = createDom('i');
         const className = options.className || '';
         let clazzName = `item iconfont ${icon}`;
+        if (position === 'right') {
+            clazzName += ' icon-right';
+        }
+        if (position === 'left') {
+            clazzName += ' icon-left';
+        }
         if (className) {
             clazzName = `${className} ${clazzName}`;
         }

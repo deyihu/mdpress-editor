@@ -598,10 +598,37 @@ const ICONS = [
         click: function () {
             // editor.getAction('editor.action.formatDocument').run();
         }
+    }
+
+];
+
+const ICONS_RIGHT = [
+    {
+        name: 'icon-pifuzhuti-xianxing',
+        title: '主题',
+        position: 'right',
+        click: function () {
+            const mdEditor = this.getEditor();
+            const themeDom = mdEditor.themeDom;
+            const themeIconDom = this;
+            let display = getDomDisplay(themeDom);
+            if (display === 'none') {
+                display = 'block';
+            } else if (display === 'block') {
+                display = 'none';
+            } else {
+                display = 'block';
+            }
+            setTimeout(() => {
+                setDomDisplay(themeDom, display);
+                updateTheme(themeIconDom, themeDom);
+            }, 16);
+        }
     },
     {
         name: 'icon-yulan',
         title: '预览',
+        position: 'right',
         click: function () {
             const mdEditor = this.getEditor();
             mdEditor.preview = !mdEditor.preview;
@@ -611,6 +638,7 @@ const ICONS = [
     {
         name: 'icon-quanping',
         title: '全屏',
+        position: 'right',
         click: function () {
             const mdEditor = this.getEditor();
             const container = mdEditor.getContainer();
@@ -638,30 +666,17 @@ const ICONS = [
         }
     },
     {
-        name: 'icon-pifuzhuti-xianxing',
-        title: '主题',
+        name: 'icon-github',
+        title: 'github',
+        position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
-            const themeDom = mdEditor.themeDom;
-            const themeIconDom = this;
-            let display = getDomDisplay(themeDom);
-            if (display === 'none') {
-                display = 'block';
-            } else if (display === 'block') {
-                display = 'none';
-            } else {
-                display = 'block';
-            }
-            setTimeout(() => {
-                setDomDisplay(themeDom, display);
-                updateTheme(themeIconDom, themeDom);
-            }, 16);
+            window.open('https://github.com/deyihu/mdpress-editor');
         }
     }
 ];
 
 export function createDefaultIcons(mdEditor) {
-    const icons = ICONS.map(d => {
+    const icons = ICONS.concat(ICONS_RIGHT.reverse()).map(d => {
         return new ToolIcon(Object.assign(d, { icon: d.name }));
     });
     icons.forEach(icon => {
