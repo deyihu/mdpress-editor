@@ -627,7 +627,7 @@ const ICONS_RIGHT = [
             setTimeout(() => {
                 setDomDisplay(themeDom, display);
                 updateDomPosition(iconDom, themeDom);
-            }, 16);
+            }, 32);
         }
     },
     {
@@ -642,7 +642,7 @@ const ICONS_RIGHT = [
             setTimeout(() => {
                 setDomDisplay(exportFileDom, display);
                 updateDomPosition(iconDom, exportFileDom);
-            }, 16);
+            }, 32);
         }
     },
     {
