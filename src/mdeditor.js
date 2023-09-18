@@ -15,8 +15,22 @@ import { getToastr, initToastr } from './toast';
 import { checkLinks } from './preview/link';
 import { checkCodeGroup } from './preview/codegroup';
 import { initMermaid } from './preview/initmermaid';
+import { saveAs } from 'file-saver';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
+
+const exportFilesData = [
+    {
+        icon: 'icon-file-markdown1',
+        label: '导出Markdown',
+        type: 'markdown'
+    },
+    {
+        icon: 'icon-html',
+        label: '导出HTML',
+        type: 'html'
+    }
+];
 
 const OPTIONS = {
     preview: true,
@@ -61,8 +75,10 @@ export class MDEditor extends Eventable(Base) {
         this.themeName = '';
         this.initDoms();
         this.initTheme();
+        this.initExportFile();
         this.initTools();
         this.setTheme(options.theme);
+        this._bindBodyClickEvent();
         setTimeout(() => {
             this.checkPreviewState();
         }, 16);
@@ -74,7 +90,7 @@ export class MDEditor extends Eventable(Base) {
                 this.updatePreview();
                 time = now();
             }
-            this._checkThemeClickOutSide();
+            this._checkDomClickOutSide();
             this.frameId = requestAnimationFrame(loop);
         };
 
@@ -173,13 +189,6 @@ export class MDEditor extends Eventable(Base) {
         this.themeDom = themeDom;
         themeDom.className = 'mdeditor-theme-container';
         this.mainDom.appendChild(themeDom);
-
-        // const selectDom = this.selectDom = createDom('select');
-        // selectDom.className = 'mdeditor-theme-select';
-        // const optionList = themes.map(name => {
-        //     return `<option class="mdeditor-theme-select-item" value="${name}">${name}</option>`;
-        // }).join('').toString();
-        // selectDom.innerHTML = optionList;
         const lis = themes.map(name => {
             const li = createDom('div');
             li.className = 'mdeditor-theme-select-item';
@@ -195,30 +204,80 @@ export class MDEditor extends Eventable(Base) {
                 this.setTheme(theme);
             });
         });
+    }
+
+    initExportFile() {
+        const exportFileDom = createDom('div');
+        this.exportFileDom = exportFileDom;
+        exportFileDom.className = 'mdeditor-theme-container';
+        this.mainDom.appendChild(exportFileDom);
+        const lis = exportFilesData.map(d => {
+            const li = createDom('div');
+            li.className = 'mdeditor-theme-select-item';
+            li.dataset.type = d.type;
+            li.innerHTML = `<i class="iconfont ${d.icon}"></i>&nbsp;&nbsp;${d.label}`;
+            exportFileDom.appendChild(li);
+            return li;
+        });
+        lis.forEach(li => {
+            on(li, 'click', e => {
+                const theme = e.target.dataset.type;
+                this._exportFile(theme);
+            });
+        });
+    }
+
+    _bindBodyClickEvent() {
         on(document.body, 'click', e => {
             this.bodyClickEvents = this.bodyClickEvents || [];
             this.bodyClickEvents.push({
-                display: getDomDisplay(this.themeDom),
+                themeDisplay: getDomDisplay(this.themeDom),
+                exportFileDisplay: getDomDisplay(this.exportFileDom),
                 event: e
             });
         });
     }
 
-    _checkThemeClickOutSide() {
+    _checkDomClickOutSide() {
         if (!this.bodyClickEvents || this.bodyClickEvents.length === 0) {
             return this;
         }
         const len = this.bodyClickEvents.length;
-        const { event, display } = this.bodyClickEvents[len - 1];
-        if (display === 'block') {
-            const { clientX, clientY } = event;
-            const rect = this.themeDom.getBoundingClientRect();
-            const { left, top, right, bottom } = rect;
-            if ((clientX < left || clientX > right || clientY < top || clientY > bottom)) {
-                domHide(this.themeDom);
+        const { event, themeDisplay, exportFileDisplay } = this.bodyClickEvents[len - 1];
+        const doms = [
+            [themeDisplay, this.themeDom],
+            [exportFileDisplay, this.exportFileDom]
+        ];
+        doms.forEach(d => {
+            const [display, dom] = d;
+            if (display === 'block') {
+                const { clientX, clientY } = event;
+                const rect = dom.getBoundingClientRect();
+                const { left, top, right, bottom } = rect;
+                if ((clientX < left || clientX > right || clientY < top || clientY > bottom)) {
+                    domHide(dom);
+                }
             }
-        }
+        });
+
         this.bodyClickEvents = [];
+    }
+
+    _exportFile(type) {
+        // console.log(type);
+        let text, fileType;
+        if (type === 'markdown') {
+            text = this.editor.getValue();
+            fileType = 'md';
+        } else if (type === 'html') {
+            text = this.previewDom.outerHTML;
+            fileType = type;
+        }
+        if (!text) {
+            return;
+        }
+        const blob = new Blob([text], { type: `text/${text};charset=utf-8` });
+        saveAs(blob, `${now()}.${fileType}`);
     }
 
     checkPreviewState() {

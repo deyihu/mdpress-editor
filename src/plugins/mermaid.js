@@ -59,11 +59,13 @@ export function mermaidPlugin(md, config) {
 
 function render(code) {
     return `
-   <pre class="mermaid">
+   <div class="mermaid">
      ${code}
-   </pre>
+   </div>
    `;
 }
+
+export const mermaidRender = render;
 
 function preProcess(source) {
     return source

@@ -3,8 +3,8 @@ import emojiPlugin from 'markdown-it-emoji';
 import markdownAnchor from 'markdown-it-anchor';
 import markdownToc from 'markdown-it-toc-done-right';
 import { containerPlugin } from './plugins/container';
-import { katexPlugin } from './plugins/katex';
-import { mermaidPlugin } from './plugins/mermaid';
+import { katexPlugin, ketexRender } from './plugins/katex';
+import { mermaidPlugin, mermaidRender } from './plugins/mermaid';
 import { getHightLight, getShikiHighlighter } from './util';
 
 export function installPlugins(md) {
@@ -20,6 +20,13 @@ export function createMarkdown() {
     const md = MarkdownIt({
         html: true,
         highlight: function (str, lang) {
+            lang = lang || '';
+            lang = lang.toLowerCase();
+            if (lang === 'ketex') {
+                return ketexRender(str);
+            } else if (lang === 'mermaid') {
+                return mermaidRender(str);
+            }
             // console.log(str);
             const shikiHighlighter = getShikiHighlighter();
             if (shikiHighlighter && shikiHighlighter.codeToHtml) {

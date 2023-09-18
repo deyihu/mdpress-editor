@@ -143,7 +143,7 @@ const containerClick = function (mdEditor, text) {
     ]);
 };
 
-function updateTheme(themeIconDom, themeDom) {
+function updateDomPosition(themeIconDom, themeDom) {
     computePosition(themeIconDom, themeDom, {
         placement: 'bottom'
     }).then(({ x, y }) => {
@@ -602,6 +602,18 @@ const ICONS = [
 
 ];
 
+function checkDomDisplay(dom) {
+    let display = getDomDisplay(dom);
+    if (display === 'none') {
+        display = 'block';
+    } else if (display === 'block') {
+        display = 'none';
+    } else {
+        display = 'block';
+    }
+    return display;
+}
+
 const ICONS_RIGHT = [
     {
         name: 'icon-pifuzhuti-xianxing',
@@ -610,18 +622,26 @@ const ICONS_RIGHT = [
         click: function () {
             const mdEditor = this.getEditor();
             const themeDom = mdEditor.themeDom;
-            const themeIconDom = this.getDom();
-            let display = getDomDisplay(themeDom);
-            if (display === 'none') {
-                display = 'block';
-            } else if (display === 'block') {
-                display = 'none';
-            } else {
-                display = 'block';
-            }
+            const iconDom = this.getDom();
+            const display = checkDomDisplay(themeDom);
             setTimeout(() => {
                 setDomDisplay(themeDom, display);
-                updateTheme(themeIconDom, themeDom);
+                updateDomPosition(iconDom, themeDom);
+            }, 16);
+        }
+    },
+    {
+        name: 'icon-pos_nav_icon_implements',
+        title: 'export file',
+        position: 'right',
+        click: function () {
+            const mdEditor = this.getEditor();
+            const exportFileDom = mdEditor.exportFileDom;
+            const iconDom = this.getDom();
+            const display = checkDomDisplay(exportFileDom);
+            setTimeout(() => {
+                setDomDisplay(exportFileDom, display);
+                updateDomPosition(iconDom, exportFileDom);
             }, 16);
         }
     },

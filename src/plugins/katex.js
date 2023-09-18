@@ -69,6 +69,13 @@ function render(code) {
    `;
 }
 
+export const ketexRender = (code) => {
+    const html = katex.renderToString(code, {
+        throwOnError: false
+    });
+    return html;
+};
+
 // eslint-disable-next-line no-unused-vars
 function preProcess(source) {
     // return source
