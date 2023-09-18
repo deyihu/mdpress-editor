@@ -412,6 +412,24 @@ const ICONS = [
         }
     },
     {
+        name: 'icon-wangyelianjie',
+        title: '插入iframe',
+        click: function () {
+            const [mdEditor, editor] = getEditors(this);
+            const result = mdEditor.getCurrentRange();
+            if (!validateSelect(result)) {
+                return;
+            }
+            const [range] = result;
+            editor.executeEdits('', [
+                {
+                    range,
+                    text: '<iframe src="https://markdown.com.cn/cheat-sheet.html#%E6%80%BB%E8%A7%88"></iframe>'
+                }
+            ]);
+        }
+    },
+    {
         name: 'icon-biaodanzujian-biaoge',
         title: '表格',
         click: function () {
