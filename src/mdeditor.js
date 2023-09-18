@@ -17,6 +17,7 @@ import { checkCodeGroup } from './preview/codegroup';
 import { initMermaid } from './preview/initmermaid';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
+import { checkMarkMap, initMarkMap } from './preview/markmap';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
@@ -337,6 +338,7 @@ export class MDEditor extends Eventable(Base) {
         }
         const value = this.editorUpdateValues[len - 1];
         checkInclude(value, (text) => {
+            text = checkMarkMap(text);
             const html = md.render(text);
             const dom = this.previewDom;
             dom.innerHTML = html;
@@ -346,6 +348,7 @@ export class MDEditor extends Eventable(Base) {
             checkIframe(dom);
             initMermaid(dom);
             removePreBgColor(dom);
+            initMarkMap(dom);
 
             if (this.imageViewer) {
                 this.imageViewer.destroy();

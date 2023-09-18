@@ -198,6 +198,10 @@
   color: #fff;
 }
 
+.markmap-render{
+  width:100%;
+  min-height: 500px;
+}
 /* copy from https://github.com/vuejs/vitepress/blob/v1.0.0-beta.6/src/client/theme-default/styles/vars.css */
 :root {
   --vp-c-white: #ffffff;

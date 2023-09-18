@@ -181,6 +181,15 @@ export function getPrettier() {
     return prettierjs;
 }
 
+let markMapJS;
+export function registerMarkMap(markmap) {
+    markMapJS = markmap;
+}
+
+export function getMarkMap() {
+    return markMapJS;
+}
+
 const LOADING_ID = 'mdeditor-loading-container';
 export function showLoading() {
     const dom = document.getElementById(LOADING_ID);

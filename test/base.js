@@ -80,6 +80,7 @@ function init() {
     return new Promise((resolve) => {
         loadMonaco().then(() => {
             loadShiki().then(() => {
+                mdpress.registerMarkMap(window.markmap);
                 resolve();
             });
         });

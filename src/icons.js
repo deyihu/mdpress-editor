@@ -592,6 +592,24 @@ const ICONS = [
         }
     },
     {
+        name: 'icon-naotu',
+        title: 'markmap',
+        click: function () {
+            const [mdEditor, editor] = getEditors(this);
+            const result = mdEditor.getCurrentRange();
+            if (!validateSelect(result)) {
+                return;
+            }
+            const [range] = result;
+            editor.executeEdits('', [
+                {
+                    range,
+                    text: '\n[[markmap]]\n'
+                }
+            ]);
+        }
+    },
+    {
         name: 'icon-daoruwenjian',
         title: 'include a markdown file',
         click: function () {

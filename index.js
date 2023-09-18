@@ -3,6 +3,7 @@ export {
     registerMonaco,
     registerHightLight,
     registerPrettier,
+    registerMarkMap,
     showLoading,
     hideLoading
 } from './src/util';
