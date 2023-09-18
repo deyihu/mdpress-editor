@@ -16,6 +16,7 @@ import { checkLinks } from './preview/link';
 import { checkCodeGroup } from './preview/codegroup';
 import { initMermaid } from './preview/initmermaid';
 import { saveAs } from 'file-saver';
+import { create } from 'domclickoutside';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
@@ -31,6 +32,13 @@ const exportFilesData = [
         type: 'html'
     }
 ];
+
+function hideDomByDisplay(dom) {
+    const display = getDomDisplay(dom);
+    if (display === 'block') {
+        domHide(dom);
+    }
+}
 
 const OPTIONS = {
     preview: true,
@@ -73,12 +81,12 @@ export class MDEditor extends Eventable(Base) {
         this.fullScreen = false;
         this.editorUpdateValues = [];
         this.themeName = '';
+        this.clickOutSide = create();
         this.initDoms();
         this.initTheme();
         this.initExportFile();
         this.initTools();
         this.setTheme(options.theme);
-        this._bindBodyClickEvent();
         setTimeout(() => {
             this.checkPreviewState();
         }, 16);
@@ -90,7 +98,6 @@ export class MDEditor extends Eventable(Base) {
                 this.updatePreview();
                 time = now();
             }
-            this._checkDomClickOutSide();
             this.frameId = requestAnimationFrame(loop);
         };
 
@@ -204,6 +211,10 @@ export class MDEditor extends Eventable(Base) {
                 this.setTheme(theme);
             });
         });
+        this.clickOutSide.addDom(this.themeDom);
+        on(themeDom, 'clickoutside', e => {
+            hideDomByDisplay(e.target);
+        });
     }
 
     initExportFile() {
@@ -225,43 +236,47 @@ export class MDEditor extends Eventable(Base) {
                 this._exportFile(theme);
             });
         });
-    }
-
-    _bindBodyClickEvent() {
-        on(document.body, 'click', e => {
-            this.bodyClickEvents = this.bodyClickEvents || [];
-            this.bodyClickEvents.push({
-                themeDisplay: getDomDisplay(this.themeDom),
-                exportFileDisplay: getDomDisplay(this.exportFileDom),
-                event: e
-            });
+        this.clickOutSide.addDom(this.exportFileDom);
+        on(exportFileDom, 'clickoutside', e => {
+            hideDomByDisplay(e.target);
         });
     }
 
-    _checkDomClickOutSide() {
-        if (!this.bodyClickEvents || this.bodyClickEvents.length === 0) {
-            return this;
-        }
-        const len = this.bodyClickEvents.length;
-        const { event, themeDisplay, exportFileDisplay } = this.bodyClickEvents[len - 1];
-        const doms = [
-            [themeDisplay, this.themeDom],
-            [exportFileDisplay, this.exportFileDom]
-        ];
-        doms.forEach(d => {
-            const [display, dom] = d;
-            if (display === 'block') {
-                const { clientX, clientY } = event;
-                const rect = dom.getBoundingClientRect();
-                const { left, top, right, bottom } = rect;
-                if ((clientX < left || clientX > right || clientY < top || clientY > bottom)) {
-                    domHide(dom);
-                }
-            }
-        });
+    // _bindBodyClickEvent() {
+    //     on(document.body, 'click', e => {
+    //         this.bodyClickEvents = this.bodyClickEvents || [];
+    //         this.bodyClickEvents.push({
+    //             themeDisplay: getDomDisplay(this.themeDom),
+    //             exportFileDisplay: getDomDisplay(this.exportFileDom),
+    //             event: e
+    //         });
+    //     });
+    // }
 
-        this.bodyClickEvents = [];
-    }
+    // _checkDomClickOutSide() {
+    //     if (!this.bodyClickEvents || this.bodyClickEvents.length === 0) {
+    //         return this;
+    //     }
+    //     const len = this.bodyClickEvents.length;
+    //     const { event, themeDisplay, exportFileDisplay } = this.bodyClickEvents[len - 1];
+    //     const doms = [
+    //         [themeDisplay, this.themeDom],
+    //         [exportFileDisplay, this.exportFileDom]
+    //     ];
+    //     doms.forEach(d => {
+    //         const [display, dom] = d;
+    //         if (display === 'block') {
+    //             const { clientX, clientY } = event;
+    //             const rect = dom.getBoundingClientRect();
+    //             const { left, top, right, bottom } = rect;
+    //             if ((clientX < left || clientX > right || clientY < top || clientY > bottom)) {
+    //                 domHide(dom);
+    //             }
+    //         }
+    //     });
+
+    //     this.bodyClickEvents = [];
+    // }
 
     _exportFile(type) {
         // console.log(type);
@@ -347,11 +362,14 @@ export class MDEditor extends Eventable(Base) {
         if (!this.preview) {
             return this;
         }
-        let top = calScroll(this.editor, this.previewDom);
-        if (!top) {
-            const { scrollHeight, scrollTop } = this._scrollEvent;
-            const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
-            top = scrollTop / scrollHeight * previewHeight;
+        const { scrollHeight, scrollTop } = this._scrollEvent;
+        let top = 0;
+        if (scrollTop > 10) {
+            top = calScroll(this.editor, this.previewDom);
+            if (!top) {
+                const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
+                top = scrollTop / scrollHeight * previewHeight;
+            }
         }
         this.previewDom.scroll({
             top,
