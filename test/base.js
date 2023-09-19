@@ -81,6 +81,7 @@ function init() {
         loadMonaco().then(() => {
             loadShiki().then(() => {
                 mdpress.registerMarkMap(window.markmap);
+                mdpress.registerSwiper(window.Swiper);
                 resolve();
             });
         });

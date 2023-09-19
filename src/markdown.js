@@ -6,6 +6,7 @@ import { containerPlugin } from './plugins/container';
 import { katexPlugin, ketexRender } from './plugins/katex';
 import { mermaidPlugin, mermaidRender } from './plugins/mermaid';
 import { getHightLight, getShikiHighlighter } from './util';
+import { swiperPlugin } from './plugins/swiper';
 
 export function installPlugins(md) {
     md.use(emojiPlugin, {});
@@ -14,6 +15,7 @@ export function installPlugins(md) {
     containerPlugin(md, { hasSingleTheme: false });
     katexPlugin(md);
     mermaidPlugin(md);
+    swiperPlugin(md);
 }
 
 export function createMarkdown() {

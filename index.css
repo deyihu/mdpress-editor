@@ -120,12 +120,14 @@
 }
 
 .mdeditor-preview img {
-  background-image: linear-gradient(45deg,
+  background-image: linear-gradient(
+      45deg,
       #eee 25%,
       transparent 25%,
       transparent 75%,
       #eee 75%,
-      #eee 100%),
+      #eee 100%
+    ),
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
   background-position:
     0 0,
@@ -198,14 +200,15 @@
   color: #fff;
 }
 
-.markmap-render{
-  width:100%;
+.markmap-render {
+  width: 100%;
   min-height: 500px;
 }
 
-.markmap-foreign code{
+.markmap-foreign code {
   background: none !important;
 }
+
 /* copy from https://github.com/vuejs/vitepress/blob/v1.0.0-beta.6/src/client/theme-default/styles/vars.css */
 :root {
   --vp-c-white: #ffffff;
@@ -391,7 +394,7 @@
 }
 
 .custom-block.custom-block th,
-.custom-block.custom-block blockquote>p {
+.custom-block.custom-block blockquote > p {
   font-size: var(--vp-custom-block-font-size);
   color: inherit;
 }
@@ -444,7 +447,7 @@
   font-weight: 600;
 }
 
-.custom-block p+p {
+.custom-block p + p {
   margin: 8px 0;
 }
 
@@ -454,7 +457,7 @@
   cursor: pointer;
 }
 
-.custom-block.details summary+p {
+.custom-block.details summary + p {
   margin: 8px 0;
 }
 
@@ -588,11 +591,11 @@
   color: var(--vp-code-tab-hover-text-color);
 }
 
-.vp-code-group input:checked+label {
+.vp-code-group input:checked + label {
   color: var(--vp-code-tab-active-text-color);
 }
 
-.vp-code-group input:checked+label::after {
+.vp-code-group input:checked + label::after {
   background-color: var(--vp-code-tab-active-bar-color);
 }
 

@@ -4,6 +4,7 @@ export {
     registerHightLight,
     registerPrettier,
     registerMarkMap,
+    registerSwiper,
     showLoading,
     hideLoading
 } from './src/util';

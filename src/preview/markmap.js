@@ -1,4 +1,5 @@
 import { Transformer } from 'markmap-lib';
+import { getToastr } from '../toast';
 import { getMarkMap } from '../util';
 const transformer = new Transformer();
 
@@ -30,16 +31,18 @@ export function checkMarkMap(text) {
 }
 
 export function initMarkMap(dom) {
-    const markmap = getMarkMap();
-    if (!markmap) {
-        console.error('not find markmap,please registerMarkMap');
-        return;
-    }
-    const { Markmap } = markmap;
     const els = dom.querySelectorAll('.markmap');
     if (!els.length) {
         return;
     }
+    const markmap = getMarkMap();
+    if (!markmap) {
+        const message = 'not find markmap,please registerMarkMap';
+        console.error(message);
+        getToastr().error(message);
+        return;
+    }
+    const { Markmap } = markmap;
     els.forEach(el => {
         if (el.dataset.inited) {
             return;

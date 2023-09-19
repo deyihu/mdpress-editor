@@ -68,6 +68,34 @@ const CODEGROUP = '::: code-group\n\n' +
     `${TSCODE}` +
     '```\n' +
     ':::';
+
+const SWIPER = `
+::: swiper\n
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div class="swiper-slide">
+       <img src="//mdpress.glicon.design/p/files/2023-09-19/zJpVutDCoVy9xJgI9IoNT.webp"/>
+    </div>
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/3NUM1xIjTbAhYk5vZXKSV.webp"/>
+   </div>
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/sZL0pyVOFfB21H9fPFMGX.webp"/>
+   </div>
+    ...more
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+:::\n`;
+
 const FULLSCREENCLASS = 'mdeditor-fullscreen';
 
 function getEditors(iconDom) {
@@ -535,6 +563,13 @@ const ICONS = [
         title: 'mermaid',
         click: function () {
             containerClick(this.getEditor(), MERMAID);
+        }
+    },
+    {
+        name: 'icon-shouyelunbotu',
+        title: 'swiper',
+        click: function () {
+            containerClick(this.getEditor(), SWIPER);
         }
     },
     {

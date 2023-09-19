@@ -18,6 +18,7 @@ import { initMermaid } from './preview/initmermaid';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
 import { checkMarkMap, initMarkMap } from './preview/markmap';
+import { initSwiper } from './preview/swiper';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
@@ -349,6 +350,12 @@ export class MDEditor extends Eventable(Base) {
             initMermaid(dom);
             removePreBgColor(dom);
             initMarkMap(dom);
+            if (this.swipers) {
+                this.swipers.forEach(swiper => {
+                    swiper.destroy();
+                });
+            }
+            this.swipers = initSwiper(dom);
 
             if (this.imageViewer) {
                 this.imageViewer.destroy();

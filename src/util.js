@@ -190,6 +190,16 @@ export function getMarkMap() {
     return markMapJS;
 }
 
+let swiperJS;
+
+export function registerSwiper(swiper) {
+    swiperJS = swiper;
+}
+
+export function getSwiper() {
+    return swiperJS;
+}
+
 const LOADING_ID = 'mdeditor-loading-container';
 export function showLoading() {
     const dom = document.getElementById(LOADING_ID);
