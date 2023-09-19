@@ -1,4 +1,4 @@
-# mdedtor
+# mdpress-editor
 
 **markdown editor base monaco**
 
@@ -101,6 +101,46 @@ pie
     "喜欢宅" : 15
     "天气太热或太冷" : 20
     "穷" : 500
+
+:::
+
+## swiper
+
+
+::: swiper
+
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+
+    <!-- Slides -->
+    <div class="swiper-slide">
+       <img src="//mdpress.glicon.design/p/files/2023-09-19/zJpVutDCoVy9xJgI9IoNT.webp"/>
+    </div>
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/3NUM1xIjTbAhYk5vZXKSV.webp"/>
+
+   </div>
+
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/sZL0pyVOFfB21H9fPFMGX.webp"/>
+
+   </div>
+    <div class="swiper-slide">
+      <img src="https://mdpress.glicon.design/p/files/2023-09-19/A8sZGw4jumI5aIFiPMcTB.webp"/>
+
+   </div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+ <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <!-- <div class="swiper-scrollbar"></div> -->
+</div>
 
 :::
 
