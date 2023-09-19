@@ -1,11 +1,11 @@
-.mdeditor-preview pre {
+.markdown-body pre {
   padding: 20px;
   background: #1e1e1e;
   color: #dcdcdc;
   font-size: 1em;
 }
 
-.mdeditor-preview pre code {
+.markdown-body pre code {
   font-family:
     ui-monospace,
     SFMono-Regular,

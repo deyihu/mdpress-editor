@@ -483,7 +483,7 @@ export class MDEditor extends Eventable(Base) {
                 styleLink = children[i];
             }
         }
-        const url = `${this.options.themeURL}${themeName}.css`;
+        const url = `${this.options.themeURL}${themeName}.css?t=${now}`;
         // get theme style
         const promise = fetchScheduler.createFetch(url, {
             // ...

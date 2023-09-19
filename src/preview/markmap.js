@@ -1,39 +1,31 @@
 import { Transformer } from 'markmap-lib';
-import { createDom, getMarkMap } from '../util';
+import { getMarkMap } from '../util';
 const transformer = new Transformer();
 
 const FLAG = '[[markmap]]';
 
 function formatMarkMapData(text) {
     const { root, features } = transformer.transform(text);
-    return JSON.stringify({
+    return encodeURIComponent(JSON.stringify({
         root,
         features
-    });
+    }));
 }
 
-function createContainer(text) {
-    const dom = createDom('div');
-    dom.className = 'markemap';
-    const pre = createDom('pre');
-    pre.className = 'markmap-data';
-    dom.appendChild(pre);
-    const svg = createDom('svg');
-    svg.className = 'markmap-render';
-    dom.appendChild(svg);
-    return dom;
+function getMarkMapDom(code) {
+    return `<div class="markmap">
+              <pre class="markmap-data">${code}</pre>
+              <svg class="markmap-render"></svg>
+            </div>
+    `;
 }
 
 export function checkMarkMap(text) {
     if (text.indexOf(FLAG) === -1) {
         return text;
     }
-
     const code = formatMarkMapData(text);
-    // const textArray = text.split(FLAG);
-    const dom = createContainer();
-    dom.children[0].textContent = code;
-    const html = dom.outerHTML;
+    const html = getMarkMapDom(code);
     return text.replaceAll(FLAG, html);
 }
 
@@ -44,15 +36,19 @@ export function initMarkMap(dom) {
         return;
     }
     const { Markmap } = markmap;
-    const els = dom.querySelectorAll('.markemap');
+    const els = dom.querySelectorAll('.markmap');
+    if (!els.length) {
+        return;
+    }
     els.forEach(el => {
         if (el.dataset.inited) {
             return;
         }
-        const code = el.children[0].textContent;
+        let code = el.children[0].textContent;
         if (!code) {
             return;
         }
+        code = decodeURIComponent(code);
         let data;
         try {
             data = JSON.parse(code);
