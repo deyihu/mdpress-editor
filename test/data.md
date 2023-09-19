@@ -115,20 +115,19 @@ pie
 
     <!-- Slides -->
     <div class="swiper-slide">
-       <img src="//mdpress.glicon.design/p/files/2023-09-19/zJpVutDCoVy9xJgI9IoNT.webp"/>
+       <img src="//mdpress.glicon.design/p/files/2023-09-19/_97Umejwi3DfuOlGYg7iE.jpg"/>
     </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/3NUM1xIjTbAhYk5vZXKSV.webp"/>
-
-   </div>
-
-    <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/sZL0pyVOFfB21H9fPFMGX.webp"/>
-
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/Viaaga99bu_9v4OGJ-Idk.jpg"/>
    </div>
     <div class="swiper-slide">
-      <img src="https://mdpress.glicon.design/p/files/2023-09-19/A8sZGw4jumI5aIFiPMcTB.webp"/>
-
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/ttkWmxXd0mjrhQp1k195D.jpg"/>
+   </div>
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/GmZdx5wpsgF-wcl1AO2ec.jpg"/>
+   </div>
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/87hQUHXwwa77rhPaWQORV.jpg"/>
    </div>
   </div>
   <!-- If we need pagination -->

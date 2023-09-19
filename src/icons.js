@@ -71,29 +71,38 @@ const CODEGROUP = '::: code-group\n\n' +
 
 const SWIPER = `
 ::: swiper\n
+
 <div class="swiper">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
+
     <!-- Slides -->
     <div class="swiper-slide">
-       <img src="//mdpress.glicon.design/p/files/2023-09-19/zJpVutDCoVy9xJgI9IoNT.webp"/>
+       <img src="//mdpress.glicon.design/p/files/2023-09-19/_97Umejwi3DfuOlGYg7iE.jpg"/>
     </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/3NUM1xIjTbAhYk5vZXKSV.webp"/>
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/Viaaga99bu_9v4OGJ-Idk.jpg"/>
    </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/sZL0pyVOFfB21H9fPFMGX.webp"/>
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/ttkWmxXd0mjrhQp1k195D.jpg"/>
    </div>
-    ...more
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/GmZdx5wpsgF-wcl1AO2ec.jpg"/>
+   </div>
+    <div class="swiper-slide">
+      <img src="//mdpress.glicon.design/p/files/2023-09-19/87hQUHXwwa77rhPaWQORV.jpg"/>
+   </div>
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
 
   <!-- If we need navigation buttons -->
   <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-</div>
+ <div class="swiper-button-next"></div>
 
+  <!-- If we need scrollbar -->
+  <!-- <div class="swiper-scrollbar"></div> -->
+</div>
 :::\n`;
 
 const FULLSCREENCLASS = 'mdeditor-fullscreen';
@@ -566,7 +575,7 @@ const ICONS = [
         }
     },
     {
-        name: 'icon-shouyelunbotu',
+        name: 'icon-swiper',
         title: 'swiper',
         click: function () {
             containerClick(this.getEditor(), SWIPER);
