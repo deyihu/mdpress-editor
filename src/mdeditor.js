@@ -341,6 +341,9 @@ export class MDEditor extends Eventable(Base) {
     }
 
     _initTocData() {
+        if (!this.tocOpen) {
+            return this;
+        }
         const allDoms = this.previewDom.children;
         const findChildren = (dom) => {
             const parentTag = dom.tagName.toLowerCase();
@@ -470,6 +473,7 @@ export class MDEditor extends Eventable(Base) {
             }
             this.imageViewer = new Viewer(dom);
             scrollTop(dom);
+            this._initTocData();
         });
     }
 
