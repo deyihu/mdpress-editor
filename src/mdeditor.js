@@ -1,5 +1,5 @@
 
-import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, getMonaco, getPrettier, now, on } from './util';
+import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, now, on } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
@@ -19,6 +19,8 @@ import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
 import { checkMarkMap, initMarkMap } from './preview/markmap';
 import { initSwiper } from './preview/swiper';
+import { checkFullScreen } from './fullscreen';
+import { getMonaco, getPrettier } from './deps';
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
@@ -202,7 +204,6 @@ export class MDEditor extends Eventable(Base) {
     }
 
     initTools() {
-        // const toolsDom = this.toolsDom;
         createDefaultIcons(this);
     }
 
@@ -256,42 +257,6 @@ export class MDEditor extends Eventable(Base) {
             hideDomByDisplay(e.target);
         });
     }
-
-    // _bindBodyClickEvent() {
-    //     on(document.body, 'click', e => {
-    //         this.bodyClickEvents = this.bodyClickEvents || [];
-    //         this.bodyClickEvents.push({
-    //             themeDisplay: getDomDisplay(this.themeDom),
-    //             exportFileDisplay: getDomDisplay(this.exportFileDom),
-    //             event: e
-    //         });
-    //     });
-    // }
-
-    // _checkDomClickOutSide() {
-    //     if (!this.bodyClickEvents || this.bodyClickEvents.length === 0) {
-    //         return this;
-    //     }
-    //     const len = this.bodyClickEvents.length;
-    //     const { event, themeDisplay, exportFileDisplay } = this.bodyClickEvents[len - 1];
-    //     const doms = [
-    //         [themeDisplay, this.themeDom],
-    //         [exportFileDisplay, this.exportFileDom]
-    //     ];
-    //     doms.forEach(d => {
-    //         const [display, dom] = d;
-    //         if (display === 'block') {
-    //             const { clientX, clientY } = event;
-    //             const rect = dom.getBoundingClientRect();
-    //             const { left, top, right, bottom } = rect;
-    //             if ((clientX < left || clientX > right || clientY < top || clientY > bottom)) {
-    //                 domHide(dom);
-    //             }
-    //         }
-    //     });
-
-    //     this.bodyClickEvents = [];
-    // }
 
     _exportFile(type) {
         // console.log(type);
@@ -568,6 +533,10 @@ export class MDEditor extends Eventable(Base) {
         return this.fullScreen;
     }
 
+    isToc() {
+        return this.tocOpen;
+    }
+
     getContainer() {
         return this.dom;
     }
@@ -633,5 +602,57 @@ export class MDEditor extends Eventable(Base) {
         return Array.prototype.map.call(this.toolsDom.children, c => {
             return c.parent;
         });
+    }
+
+    openPreview() {
+        if (this.isPreview()) {
+            return this;
+        }
+        this.preview = true;
+        this.checkPreviewState();
+        return this;
+    }
+
+    closePreview() {
+        if (!this.isPreview()) {
+            return this;
+        }
+        this.preview = false;
+        this.checkPreviewState();
+        return this;
+    }
+
+    openFullScreen() {
+        if (this.isFullScreen()) {
+            return this;
+        }
+        checkFullScreen(this);
+        return this;
+    }
+
+    closeFullScreen() {
+        if (!this.isFullScreen()) {
+            return this;
+        }
+        checkFullScreen(this);
+        return this;
+    }
+
+    openToc() {
+        if (this.isToc()) {
+            return this;
+        }
+        this.tocOpen = true;
+        this.checkTocState();
+        return this;
+    }
+
+    closeToc() {
+        if (!this.isToc()) {
+            return this;
+        }
+        this.tocOpen = false;
+        this.checkTocState();
+        return this;
     }
 }

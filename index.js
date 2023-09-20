@@ -1,13 +1,15 @@
 export {
+    showLoading,
+    hideLoading
+} from './src/util';
+export {
     registerShikiHighlighter,
     registerMonaco,
     registerHightLight,
     registerPrettier,
     registerMarkMap,
-    registerSwiper,
-    showLoading,
-    hideLoading
-} from './src/util';
+    registerSwiper
+} from './src/deps';
 export * from './src/mdeditor';
 export * from './src/toolicon';
 export * from './theme/index';

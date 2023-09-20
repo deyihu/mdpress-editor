@@ -5,7 +5,7 @@ import markdownToc from 'markdown-it-toc-done-right';
 import { containerPlugin } from './plugins/container';
 import { katexPlugin, ketexRender } from './plugins/katex';
 import { mermaidPlugin, mermaidRender } from './plugins/mermaid';
-import { getHightLight, getShikiHighlighter } from './util';
+import { getHightLight, getShikiHighlighter } from './deps';
 import { swiperPlugin } from './plugins/swiper';
 
 export function installPlugins(md) {

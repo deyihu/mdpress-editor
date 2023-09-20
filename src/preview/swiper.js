@@ -1,5 +1,5 @@
 import { getToastr } from '../toast';
-import { getSwiper } from '../util';
+import { getSwiper } from '../deps';
 
 export function initSwiper(dom) {
     const els = dom.querySelectorAll('.swiper');

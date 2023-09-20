@@ -1,6 +1,6 @@
 import { Transformer } from 'markmap-lib';
 import { getToastr } from '../toast';
-import { getMarkMap } from '../util';
+import { getMarkMap } from '../deps';
 const transformer = new Transformer();
 
 const FLAG = '[[markmap]]';

@@ -145,61 +145,6 @@ export function domSizeByWindow(dom) {
     dom.style.height = `${innerHeight}px`;
 }
 
-let shikiHighlighter;
-export function registerShikiHighlighter(highlighter) {
-    shikiHighlighter = highlighter;
-}
-
-export function getShikiHighlighter() {
-    return shikiHighlighter;
-}
-
-let monaco;
-export function registerMonaco(monacoObj) {
-    monaco = monacoObj;
-}
-
-export function getMonaco() {
-    return monaco;
-}
-
-let hlsjs;
-export function registerHightLight(hls) {
-    hlsjs = hls;
-}
-
-export function getHightLight() {
-    return hlsjs;
-}
-
-let prettierjs;
-export function registerPrettier(prettier) {
-    prettierjs = prettier;
-}
-
-export function getPrettier() {
-    return prettierjs;
-}
-
-let markMapJS;
-export function registerMarkMap(markmap) {
-    markMapJS = markmap;
-}
-
-export function getMarkMap() {
-    return markMapJS;
-}
-
-let swiperJS;
-
-export function registerSwiper(swiper) {
-    swiperJS = swiper;
-}
-
-export function getSwiper() {
-    return swiperJS;
-}
-
 const LOADING_ID = 'mdeditor-loading-container';
 export function showLoading() {
     const dom = document.getElementById(LOADING_ID);

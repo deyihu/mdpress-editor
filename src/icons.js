@@ -1,8 +1,9 @@
 import { ToolIcon } from './toolicon';
-import { createDialog, domSizeByWindow, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
+import { createDialog, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
 import dayjs from 'dayjs';
 import { computePosition } from '@floating-ui/dom';
 import { getToastr } from './toast';
+import { checkFullScreen } from './fullscreen';
 
 const INFOBOX = `
 ::: info\n
@@ -104,8 +105,6 @@ const SWIPER = `
   <!-- <div class="swiper-scrollbar"></div> -->
 </div>
 :::\n`;
-
-const FULLSCREENCLASS = 'mdeditor-fullscreen';
 
 function getEditors(iconDom) {
     const mdEditor = iconDom.getEditor();
@@ -751,28 +750,7 @@ const ICONS_RIGHT = [
         position: 'right',
         click: function () {
             const mdEditor = this.getEditor();
-            const container = mdEditor.getContainer();
-            container.oldStyle = container.oldStyle || {};
-            const oldStyle = container.oldStyle;
-            const classList = container.classList;
-            if (classList.contains(FULLSCREENCLASS)) {
-                classList.remove(FULLSCREENCLASS);
-                mdEditor.fullScreen = false;
-                for (const key in oldStyle) {
-                    container.style[key] = oldStyle[key];
-                }
-                mdEditor.fire('closefullscreen', { fullScreen: mdEditor.fullScreen });
-            } else {
-                classList.add(FULLSCREENCLASS);
-                container.oldStyle = {
-                    width: container.style.width,
-                    height: container.style.height
-                };
-                mdEditor.fullScreen = true;
-                domSizeByWindow(container);
-                mdEditor.fire('openfullscreen', { fullScreen: mdEditor.fullScreen });
-            }
-            // updateTheme();
+            checkFullScreen(mdEditor);
         }
     },
     {
