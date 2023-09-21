@@ -1,13 +1,7 @@
-
-function isTitle(title) {
-    // title = title.replace('#', '');
-    title = title.trim();
-    return title[0] === '#';
-}
+import { isTitle, trimTitle } from './util';
 
 function getTitleDom(dom, title) {
-    title = title.replaceAll('#', '');
-    title = title.trim();
+    title = trimTitle(title);
     title = title.replaceAll(' ', '-');
     title = title.toLowerCase();
     title = encodeURIComponent(title);

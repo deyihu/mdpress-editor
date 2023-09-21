@@ -1,5 +1,5 @@
 
-import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, now, on } from './util';
+import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, isTitle, now, on, trimTitle } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
@@ -359,14 +359,6 @@ export class MDEditor extends Eventable(Base) {
         nodes.forEach(node => {
             find(node);
         });
-
-        const trimTitle = (text) => {
-            if (text[0] === '#') {
-                text = text.substring(1, Infinity);
-            }
-            return text.trim();
-        };
-
         const toHTML = (node) => {
             const { dom, children } = node;
             let html = `<li><a href="javascript:void(0)"/>${trimTitle(dom.textContent)}</a>`;
@@ -391,9 +383,12 @@ export class MDEditor extends Eventable(Base) {
         const lineCount = model.getLineCount();
         const findTitleRow = (text) => {
             for (let i = 1; i <= lineCount; i++) {
-                const content = model.getLineContent(i);
-                if (content.indexOf(text) > -1) {
-                    return i;
+                let content = model.getLineContent(i);
+                if (isTitle(content)) {
+                    content = trimTitle(content);
+                    if (content.indexOf(text) === 0) {
+                        return i;
+                    }
                 }
             }
         };

@@ -165,3 +165,15 @@ export function hideLoading() {
     }
     document.body.removeChild(dom);
 }
+
+export function isTitle(title) {
+    // title = title.replace('#', '');
+    title = title.trim();
+    return title[0] === '#';
+}
+
+export function trimTitle(title) {
+    title = title.replaceAll('#', '');
+    title = title.trim();
+    return title;
+}
