@@ -190,6 +190,13 @@ function updateDomPosition(themeIconDom, themeDom) {
     });
 }
 
+export function rangeEqual(range1, range2) {
+    return range1.endColumn === range2.endColumn &&
+        range1.startColumn === range2.startColumn &&
+        range1.startLineNumber === range2.startLineNumber &&
+        range1.endLineNumber === range2.endLineNumber;
+}
+
 const ICONS = [
     {
         name: 'icon-zitijiacu',
@@ -201,6 +208,9 @@ const ICONS = [
                 return;
             }
             const [starRange, endRange] = result;
+            if (rangeEqual(starRange, endRange)) {
+                return;
+            }
             editor.executeEdits('', [
                 {
                     range: starRange,
@@ -223,6 +233,9 @@ const ICONS = [
                 return;
             }
             const [starRange, endRange] = result;
+            if (rangeEqual(starRange, endRange)) {
+                return;
+            }
             editor.executeEdits('', [
                 {
                     range: starRange,
@@ -245,6 +258,9 @@ const ICONS = [
                 return;
             }
             const [starRange, endRange] = result;
+            if (rangeEqual(starRange, endRange)) {
+                return;
+            }
             editor.executeEdits('', [
                 {
                     range: starRange,

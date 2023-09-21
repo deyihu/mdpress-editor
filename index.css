@@ -50,6 +50,9 @@
   height: 30px;
   border: 1px solid whitesmoke;
   background-color: white;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
   /* padding-top: 3px; */
   /* line-height: 30px; */
 }
@@ -99,7 +102,7 @@
   color: #5f5d5d;
   font-size: 12px;
 }
-.mdeditor-toc a:hover{
+.mdeditor-toc a:hover {
   text-decoration: underline;
   color: #10b981;
   font-size: 12px;
