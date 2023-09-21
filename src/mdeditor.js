@@ -369,7 +369,7 @@ export class MDEditor extends Eventable(Base) {
 
         const toHTML = (node) => {
             const { dom, children } = node;
-            let html = `<li><a href="#${dom.id}"/>${trimTitle(dom.textContent)}</a>`;
+            let html = `<li><a href="javascript:void(0)"/>${trimTitle(dom.textContent)}</a>`;
             if (children && children.length) {
                 html += '<ul>';
                 html += children.map(child => {
@@ -386,6 +386,29 @@ export class MDEditor extends Eventable(Base) {
         }).join('');
         html += '</ul>';
         this.tocDom.innerHTML = html;
+        const liDoms = this.tocDom.querySelectorAll('li');
+        const model = this.editor.getModel();
+        const lineCount = model.getLineCount();
+        const findTitleRow = (text) => {
+            for (let i = 1; i <= lineCount; i++) {
+                const content = model.getLineContent(i);
+                if (content.indexOf(text) > -1) {
+                    return i;
+                }
+            }
+        };
+
+        const liClick = (e) => {
+            const title = e.target.textContent;
+            const row = findTitleRow(title);
+            if (row) {
+                const top = this.editor.getTopForLineNumber(row);
+                this.editor.setScrollTop(top);
+            }
+        };
+        liDoms.forEach(li => {
+            on(li, 'click', liClick);
+        });
     }
 
     setValue(value) {
