@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint ./*.js",
     "dev": "npm run lint && cross-env NODE_ENV=dev  rollup -w -c --bundleConfigAsCjs",
-    "build": "npm run lint && cross-env NODE_ENV=prd  rollup -c --bundleConfigAsCjs",
+    "build": "npm run lint && cross-env NODE_ENV=prd  rollup -c --bundleConfigAsCjs && node build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
