@@ -8,6 +8,7 @@ import { mermaidPlugin, mermaidRender } from './plugins/mermaid';
 import { getHightLight, getShikiHighlighter } from './deps';
 import { swiperPlugin } from './plugins/swiper';
 import mk from 'markdown-it-katex';
+import taskLists from 'markdown-it-task-lists';
 
 export function installPlugins(md) {
     md.use(emojiPlugin, {});
@@ -18,6 +19,7 @@ export function installPlugins(md) {
     mermaidPlugin(md);
     swiperPlugin(md);
     md.use(mk);
+    md.use(taskLists);
 }
 
 export function createMarkdown() {

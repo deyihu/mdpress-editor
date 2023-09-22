@@ -1,14 +1,64 @@
 # mdpress-editor
 
-**markdown editor base monaco**
+**markdown editor base monaco and markdown-it**
 
 hello world
+
+[[toc]]
+
+## syntax higilight
+
+```js
+
+let shikiHighlighter;
+export function registerShikiHighlighter(highlighter) {
+    shikiHighlighter = highlighter;
+}
+
+export function getShikiHighlighter() {
+    return shikiHighlighter;
+}
+
+let monaco;
+export function registerMonaco(monacoObj) {
+    monaco = monacoObj;
+}
+
+export function getMonaco() {
+    return monaco;
+}
+
+let hlsjs;
+export function registerHightLight(hls) {
+    hlsjs = hls;
+}
+
+export function getHightLight() {
+    return hlsjs;
+}
+
+
+```
 
 ```shell
 npm i maptalks
 ```
 
-[[toc]]
+```java
+Class.forName(driverClass)
+//加载MySql驱动
+Class.forName("com.mysql.jdbc.Driver")
+//加载Oracle驱动
+Class.forName("oracle.jdbc.driver.OracleDriver")
+
+```
+
+## task list test
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+
 
 ## github emoji
 
@@ -117,6 +167,61 @@ pie
     "喜欢宅" : 15
     "天气太热或太冷" : 20
     "穷" : 500
+
+:::
+
+::: mermaid
+sequenceDiagram    
+participant User    
+participant System    
+User->>System: 发送请求    
+System->>User: 返回响应 
+
+:::
+
+::: mermaid
+stateDiagram
+[*] --> 暂停
+    暂停 --> 播放
+    暂停 --> 停止
+    播放 --> 暂停
+    播放 --> 停止
+    停止 --> [*] 
+
+:::
+
+::: mermaid
+gantt
+title 甘特图示例
+dateFormat  YYYY-MM-DD
+section 项目A    
+任务1           :a1, 2023-05-01, 10d    
+任务2           :after a1  , 20d
+section 项目B    
+任务3           :2023-05-15  , 12d    
+任务4           :2023-05-20  , 10d
+
+:::
+
+::: mermaid
+classDiagram
+class Animal {
+        +name: string
+        +age: int
+        +eat(food: string): void
+    }
+
+class Dog {
+        +sound: string
+        +bark(): void
+    }
+
+class Cat {
+        +climb(): void
+    }
+
+    Animal <|-- Dog
+    Animal <|-- Cat
 
 :::
 

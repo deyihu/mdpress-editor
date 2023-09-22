@@ -102,6 +102,12 @@ const SWIPER = `
 </div>
 :::\n`;
 
+const TASKLIST = `
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+`;
+
 function getEditors(iconDom) {
     const mdEditor = iconDom.getEditor();
     return [mdEditor, mdEditor.editor];
@@ -402,7 +408,21 @@ const ICONS = [
     {
         name: 'icon-wodezhuanti',
         title: '任务列表',
-        enable: false
+        // enable: false,
+        click: function () {
+            const [mdEditor, editor] = getEditors(this);
+            const result = mdEditor.getCurrentRange();
+            if (!validateSelect(result)) {
+                return;
+            }
+            const [range] = result;
+            editor.executeEdits('', [
+                {
+                    range,
+                    text: TASKLIST
+                }
+            ]);
+        }
     },
     {
         name: 'icon-hr',
