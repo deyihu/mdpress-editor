@@ -41,11 +41,7 @@ flowchart LR
 `;
 
 const KATEX = `
-::: katex
-
-\\sqrt{3x-1}+(1+x)^2
-
-:::\n
+$\\sqrt{3x-1}+(1+x)^2$\n
 `;
 
 const JSCODE = `

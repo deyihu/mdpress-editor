@@ -21,6 +21,8 @@ import { checkMarkMap, initMarkMap } from './preview/markmap';
 import { initSwiper } from './preview/swiper';
 import { checkFullScreen } from './fullscreen';
 import { getMonaco, getPrettier } from './deps';
+import { makeToc } from './maketoc';
+
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
 
@@ -309,75 +311,76 @@ export class MDEditor extends Eventable(Base) {
         if (!this.tocOpen) {
             return this;
         }
-        const allDoms = this.previewDom.children;
-        const findChildren = (dom) => {
-            const parentTag = dom.tagName.toLowerCase();
-            const parentType = parentTag[0];
-            const parentLevel = parentTag[1];
-            const children = [];
-            let findParent = false;
-            for (let i = 0, len = allDoms.length; i < len; i++) {
-                if (allDoms[i] === dom) {
-                    findParent = true;
-                    continue;
-                }
-                if (!findParent) {
-                    continue;
-                }
-                const tagName = allDoms[i].tagName.toLowerCase();
-                if (tagName === parentTag) {
-                    break;
-                }
-                if (tagName[0] !== parentType) {
-                    continue;
-                }
-                const level = parseInt(tagName[1]);
-                if ((level - 1).toString() === parentLevel) {
-                    children.push({
-                        dom: allDoms[i]
-                    });
-                }
-            }
-            return children;
-        };
-        const titles = this.previewDom.querySelectorAll('h1');
-        const nodes = Array.prototype.map.call(titles, (node) => {
-            return {
-                dom: node
-            };
-        });
+        makeToc(this.previewDom, '.mdeditor-toc');
+        // const allDoms = this.previewDom.children;
+        // const findChildren = (dom) => {
+        //     const parentTag = dom.tagName.toLowerCase();
+        //     const parentType = parentTag[0];
+        //     const parentLevel = parentTag[1];
+        //     const children = [];
+        //     let findParent = false;
+        //     for (let i = 0, len = allDoms.length; i < len; i++) {
+        //         if (allDoms[i] === dom) {
+        //             findParent = true;
+        //             continue;
+        //         }
+        //         if (!findParent) {
+        //             continue;
+        //         }
+        //         const tagName = allDoms[i].tagName.toLowerCase();
+        //         if (tagName === parentTag) {
+        //             break;
+        //         }
+        //         if (tagName[0] !== parentType) {
+        //             continue;
+        //         }
+        //         const level = parseInt(tagName[1]);
+        //         if ((level - 1).toString() === parentLevel) {
+        //             children.push({
+        //                 dom: allDoms[i]
+        //             });
+        //         }
+        //     }
+        //     return children;
+        // };
+        // const titles = this.previewDom.querySelectorAll('h1');
+        // const nodes = Array.prototype.map.call(titles, (node) => {
+        //     return {
+        //         dom: node
+        //     };
+        // });
 
-        const find = (node) => {
-            const children = findChildren(node.dom);
-            node.children = children;
-            if (children.length) {
-                children.forEach(child => {
-                    find(child);
-                });
-            }
-        };
-        nodes.forEach(node => {
-            find(node);
-        });
-        const toHTML = (node) => {
-            const { dom, children } = node;
-            let html = `<li><a href="javascript:void(0)"/>${trimTitle(dom.textContent)}</a>`;
-            if (children && children.length) {
-                html += '<ul>';
-                html += children.map(child => {
-                    return toHTML(child);
-                }).join('');
-                html += '</ul>';
-            }
-            html += '</li>';
-            return html;
-        };
-        let html = '<ul>';
-        html += nodes.map(node => {
-            return toHTML(node);
-        }).join('');
-        html += '</ul>';
-        this.tocDom.innerHTML = html;
+        // const find = (node) => {
+        //     const children = findChildren(node.dom);
+        //     node.children = children;
+        //     if (children.length) {
+        //         children.forEach(child => {
+        //             find(child);
+        //         });
+        //     }
+        // };
+        // nodes.forEach(node => {
+        //     find(node);
+        // });
+        // const toHTML = (node) => {
+        //     const { dom, children } = node;
+        //     let html = `<li><a href="javascript:void(0)"/>${trimTitle(dom.textContent)}</a>`;
+        //     if (children && children.length) {
+        //         html += '<ul>';
+        //         html += children.map(child => {
+        //             return toHTML(child);
+        //         }).join('');
+        //         html += '</ul>';
+        //     }
+        //     html += '</li>';
+        //     return html;
+        // };
+        // let html = '<ul>';
+        // html += nodes.map(node => {
+        //     return toHTML(node);
+        // }).join('');
+        // html += '</ul>';
+        // this.tocDom.innerHTML = html;
         const liDoms = this.tocDom.querySelectorAll('li');
         const model = this.editor.getModel();
         const lineCount = model.getLineCount();
@@ -394,7 +397,8 @@ export class MDEditor extends Eventable(Base) {
         };
 
         const liClick = (e) => {
-            const title = e.target.textContent;
+            let title = e.target.textContent;
+            title = trimTitle(title);
             const row = findTitleRow(title);
             if (row) {
                 const top = this.editor.getTopForLineNumber(row);
