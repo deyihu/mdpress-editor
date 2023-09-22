@@ -147,6 +147,14 @@ export class MDEditor extends Eventable(Base) {
         toolsDom.className = 'mdeditor-tools';
         this.dom.appendChild(toolsDom);
         this.dom.appendChild(mainDom);
+
+        const scrollTopDom = createDom('div');
+        scrollTopDom.className = 'mdeditor-scrolltop editor-scrolltop';
+        scrollTopDom.innerHTML = '<i class="iconfont icon-huidaodingbu"></i>';
+        this.dom.appendChild(scrollTopDom);
+        on(scrollTopDom, 'click', () => {
+            this.editor.setScrollTop(0, 0);
+        });
         // mainDom.appendChild(editorDom);
         // mainDom.appendChild(previewDom);
         const monaco = getMonaco();

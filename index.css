@@ -184,6 +184,10 @@
   font-size: 24px;
 }
 
+.editor-scrolltop {
+  margin-left: 0px;
+}
+
 .viewer-open {
   overflow: auto !important;
 }
