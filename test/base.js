@@ -82,6 +82,7 @@ function init() {
             loadShiki().then(() => {
                 mdpress.registerMarkMap(window.markmap);
                 mdpress.registerSwiper(window.Swiper);
+                mdpress.registerQRCode(window.QRCode);
                 resolve();
             });
         });

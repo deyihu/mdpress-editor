@@ -6,6 +6,13 @@ hello world
 
 [[toc]]
 
+## qrcode test
+
+@qrcodehttp://www.baidu.com
+------------
+@qrcodehttp://www.baidu.com
+
+
 ## syntax higilight
 
 ```js
@@ -65,7 +72,7 @@ Class.forName("oracle.jdbc.driver.OracleDriver")
 :tada:  
 :100:
 
-include@./snip.md
+@include./snip.md
 
 ## container
 
