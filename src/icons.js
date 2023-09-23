@@ -625,7 +625,7 @@ const ICONS = [
             editor.executeEdits('', [
                 {
                     range,
-                    text: '\n@qrcodehttps://developer.mozilla.org/zh-CN/\n'
+                    text: '\nqrcode:https://developer.mozilla.org/zh-CN/\n'
                 }
             ]);
         }
@@ -715,7 +715,7 @@ const ICONS = [
             editor.executeEdits('', [
                 {
                     range,
-                    text: '\n@include//mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
+                    text: '\ninclude://mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
                 }
             ]);
         }

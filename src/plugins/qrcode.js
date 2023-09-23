@@ -1,4 +1,4 @@
-const TAG = '@qrcode';
+const TAG = 'qrcode:';
 const RQCODE = 'qrcode';
 function inline(state, startLine, endLine) {
     const pos = state.bMarks[startLine] + state.tShift[startLine];

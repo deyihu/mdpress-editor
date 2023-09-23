@@ -8,9 +8,9 @@ hello world
 
 ## qrcode test
 
-@qrcodehttp://www.baidu.com
+qrcode:http://www.baidu.com
 ------------
-@qrcodehttp://www.baidu.com
+qrcode:http://www.baidu.com
 
 
 ## syntax higilight
@@ -72,7 +72,7 @@ Class.forName("oracle.jdbc.driver.OracleDriver")
 :tada:  
 :100:
 
-@include./snip.md
+include:./snip.md
 
 ## container
 

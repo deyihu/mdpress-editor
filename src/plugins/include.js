@@ -1,6 +1,6 @@
 import { fetchScheduler } from '../fetchScheduler';
 
-const INCLUDE_FLAG = '@include';
+const INCLUDE_FLAG = 'include:';
 export function checkInclude(text, callback) {
     if (text.indexOf(INCLUDE_FLAG) === -1) {
         callback(text, false);
