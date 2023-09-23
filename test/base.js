@@ -10,6 +10,7 @@ function loadMonaco() {
     });
 }
 
+// eslint-disable-next-line no-unused-vars
 function loadShiki() {
     // shiki.setCDN('https://microget-1300406971.cos.ap-shanghai.myqcloud.com/glicon/lib/shiki');
     const languages = [
@@ -79,12 +80,13 @@ function loadShiki() {
 function init() {
     return new Promise((resolve) => {
         loadMonaco().then(() => {
-            loadShiki().then(() => {
+            // loadShiki().then(() => {
+                // mdpress.registerHightLight(window.hljs);
                 mdpress.registerMarkMap(window.markmap);
                 mdpress.registerSwiper(window.Swiper);
                 mdpress.registerQRCode(window.QRCode);
                 resolve();
             });
-        });
+        // });
     });
 }
