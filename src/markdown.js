@@ -9,6 +9,7 @@ import { getHightLight, getShikiHighlighter } from './deps';
 import { swiperPlugin } from './plugins/swiper';
 import mk from 'markdown-it-katex';
 import taskLists from 'markdown-it-task-lists';
+import { qrCodePlugin } from './plugins/qrcode';
 
 export function installPlugins(md) {
     md.use(emojiPlugin, {});
@@ -20,6 +21,7 @@ export function installPlugins(md) {
     swiperPlugin(md);
     md.use(mk);
     md.use(taskLists);
+    md.use(qrCodePlugin);
 }
 
 export function createMarkdown() {

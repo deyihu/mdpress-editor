@@ -613,6 +613,24 @@ const ICONS = [
         }
     },
     {
+        name: 'icon-erweima',
+        title: '二维码',
+        click: function () {
+            const [mdEditor, editor] = getEditors(this);
+            const result = mdEditor.getCurrentRange();
+            if (!validateSelect(result)) {
+                return;
+            }
+            const [range] = result;
+            editor.executeEdits('', [
+                {
+                    range,
+                    text: '\n@qrcodehttps://developer.mozilla.org/zh-CN/\n'
+                }
+            ]);
+        }
+    },
+    {
         name: 'icon-shijian',
         title: '时间',
         click: function () {
@@ -697,7 +715,7 @@ const ICONS = [
             editor.executeEdits('', [
                 {
                     range,
-                    text: '\ninclude@//mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
+                    text: '\n@include//mdpress.glicon.design/p/files/2023-09-03/t83dlckX52cWiNtzBHkOL.md\n'
                 }
             ]);
         }

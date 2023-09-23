@@ -22,6 +22,7 @@ import { initSwiper } from './preview/swiper';
 import { checkFullScreen } from './fullscreen';
 import { getMonaco, getPrettier } from './deps';
 import { makeToc } from './maketoc';
+import { initQRCode } from './preview/qrcode';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -456,6 +457,7 @@ export class MDEditor extends Eventable(Base) {
             initMermaid(dom);
             removePreBgColor(dom);
             initMarkMap(dom);
+            initQRCode(dom);
             if (this.swipers) {
                 this.swipers.forEach(swiper => {
                     swiper.destroy();

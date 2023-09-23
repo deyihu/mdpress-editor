@@ -53,3 +53,13 @@ export function registerSwiper(swiper) {
 export function getSwiper() {
     return swiperJS;
 }
+
+let qrcodeJS;
+
+export function registerQRCode(qrcode) {
+    qrcodeJS = qrcode;
+}
+
+export function getQRCode() {
+    return qrcodeJS;
+}

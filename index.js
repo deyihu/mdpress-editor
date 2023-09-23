@@ -8,7 +8,8 @@ export {
     registerHightLight,
     registerPrettier,
     registerMarkMap,
-    registerSwiper
+    registerSwiper,
+    registerQRCode
 } from './src/deps';
 export * from './src/mdeditor';
 export * from './src/toolicon';
