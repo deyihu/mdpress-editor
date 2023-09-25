@@ -1,7 +1,7 @@
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
-import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
+import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
@@ -24,6 +24,7 @@ import { getMonaco, getPrettier } from './deps';
 import { makeToc } from './maketoc';
 import { initQRCode } from './preview/qrcode';
 import { exportHTML } from './exporthtml';
+import printJS from 'print-js';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -43,6 +44,11 @@ const exportFilesData = [
         icon: 'icon-tupiantianjia',
         label: '导出图片',
         type: 'png'
+    },
+    {
+        icon: 'icon-dayin',
+        label: '打印',
+        type: 'print'
     }
 ];
 
@@ -136,6 +142,7 @@ export class MDEditor extends Eventable(Base) {
 
         const previewDom = this.previewDom = createDom('div');
         previewDom.className = 'mdeditor-preview vp-doc markdown-body';
+        previewDom.id = domId();
 
         const editorContainer = this.editorContainer = createDom('div');
         editorContainer.className = 'mdeditor-editor-container';
@@ -277,26 +284,40 @@ export class MDEditor extends Eventable(Base) {
 
     _exportFile(type) {
         // console.log(type);
+        const previewDom = this.previewDom;
+        const children = this.previewDom.children;
+        const scrollTopDom = children[children.length - 1];
+        const addScroll = () => {
+            previewDom.appendChild(scrollTopDom);
+        };
+
+        const removeScroll = () => {
+            previewDom.removeChild(scrollTopDom);
+        };
         let text, fileType;
         if (type === 'markdown') {
             text = this.editor.getValue();
             fileType = 'md';
         } else if (type === 'html') {
-            text = exportHTML(this.previewDom.outerHTML, this.styleText);
+            removeScroll();
+            text = exportHTML(previewDom.outerHTML, this.styleText);
             fileType = type;
+            addScroll();
         } else if (type === 'png') {
             fileType = type;
             showLoading();
-            const rect = this.previewDom.getBoundingClientRect();
+            removeScroll();
+            const rect = previewDom.getBoundingClientRect();
             const { scrollHeight, scrollWidth } = this.previewDom;
             const { width, height } = rect;
             const { innerWidth, innerHeight } = window;
-            html2canvas(this.previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) })
+            html2canvas(previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) + 10 })
                 .then((canvas) => {
                     canvas.toBlob((blob) => {
                         saveAs(blob, `${now()}.${fileType}`);
                     });
                     hideLoading();
+                    addScroll();
                 }).catch(err => {
                     console.error(err);
                 })
@@ -304,6 +325,8 @@ export class MDEditor extends Eventable(Base) {
 
                 });
             return;
+        } else if (type === 'print') {
+            printJS(this.previewDom.id, 'html');
         }
         if (!text) {
             return;

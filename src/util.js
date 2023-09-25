@@ -177,3 +177,8 @@ export function trimTitle(title) {
     title = title.trim();
     return title;
 }
+
+let idx = 1;
+export function domId() {
+    return `dom-${idx++}`;
+}
