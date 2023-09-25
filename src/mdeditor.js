@@ -1,5 +1,7 @@
-
-import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, isTitle, now, on, trimTitle } from './util';
+import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
+import { create } from 'domclickoutside';
+import { ACTIVE_CLASS, createDom, domHide, domShow, domSizeByWindow, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
@@ -15,8 +17,6 @@ import { getToastr, initToastr } from './toast';
 import { checkLinks } from './preview/link';
 import { checkCodeGroup } from './preview/codegroup';
 import { initMermaid } from './preview/initmermaid';
-import { saveAs } from 'file-saver';
-import { create } from 'domclickoutside';
 import { checkMarkMap, initMarkMap } from './preview/markmap';
 import { initSwiper } from './preview/swiper';
 import { checkFullScreen } from './fullscreen';
@@ -38,6 +38,11 @@ const exportFilesData = [
         icon: 'icon-html',
         label: '导出HTML',
         type: 'html'
+    },
+    {
+        icon: 'icon-tupiantianjia',
+        label: '导出图片',
+        type: 'png'
     }
 ];
 
@@ -279,6 +284,26 @@ export class MDEditor extends Eventable(Base) {
         } else if (type === 'html') {
             text = exportHTML(this.previewDom.outerHTML, this.styleText);
             fileType = type;
+        } else if (type === 'png') {
+            fileType = type;
+            showLoading();
+            const rect = this.previewDom.getBoundingClientRect();
+            const { scrollHeight, scrollWidth } = this.previewDom;
+            const { width, height } = rect;
+            const { innerWidth, innerHeight } = window;
+            html2canvas(this.previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) })
+                .then((canvas) => {
+                    canvas.toBlob((blob) => {
+                        saveAs(blob, `${now()}.${fileType}`);
+                    });
+                    hideLoading();
+                }).catch(err => {
+                    console.error(err);
+                })
+                .finally(() => {
+
+                });
+            return;
         }
         if (!text) {
             return;
