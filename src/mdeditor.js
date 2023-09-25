@@ -23,6 +23,7 @@ import { checkFullScreen } from './fullscreen';
 import { getMonaco, getPrettier } from './deps';
 import { makeToc } from './maketoc';
 import { initQRCode } from './preview/qrcode';
+import { exportHTML } from './exporthtml';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -276,7 +277,7 @@ export class MDEditor extends Eventable(Base) {
             text = this.editor.getValue();
             fileType = 'md';
         } else if (type === 'html') {
-            text = this.previewDom.outerHTML;
+            text = exportHTML(this.previewDom.outerHTML, this.styleText);
             fileType = type;
         }
         if (!text) {
@@ -612,6 +613,7 @@ export class MDEditor extends Eventable(Base) {
             if (styleLink) {
                 document.head.removeChild(styleLink);
             }
+            this.styleText = text;
             const style = createDom('style');
             style.id = THEME_ID;
             style.type = 'text/css';

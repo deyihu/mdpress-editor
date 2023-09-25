@@ -243,19 +243,19 @@ class Cat {
 
     <!-- Slides -->
     <div class="swiper-slide">
-       <img src="//mdpress.glicon.design/p/files/2023-09-19/_97Umejwi3DfuOlGYg7iE.jpg"/>
+       <img src="https://mdpress.glicon.design/p/files/2023-09-19/_97Umejwi3DfuOlGYg7iE.jpg"/>
     </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/Viaaga99bu_9v4OGJ-Idk.jpg"/>
+      <img src="https://mdpress.glicon.design/p/files/2023-09-19/Viaaga99bu_9v4OGJ-Idk.jpg"/>
    </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/ttkWmxXd0mjrhQp1k195D.jpg"/>
+      <img src="https://mdpress.glicon.design/p/files/2023-09-19/ttkWmxXd0mjrhQp1k195D.jpg"/>
    </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/GmZdx5wpsgF-wcl1AO2ec.jpg"/>
+      <img src="https://mdpress.glicon.design/p/files/2023-09-19/GmZdx5wpsgF-wcl1AO2ec.jpg"/>
    </div>
     <div class="swiper-slide">
-      <img src="//mdpress.glicon.design/p/files/2023-09-19/87hQUHXwwa77rhPaWQORV.jpg"/>
+      <img src="https://mdpress.glicon.design/p/files/2023-09-19/87hQUHXwwa77rhPaWQORV.jpg"/>
    </div>
   </div>
   <!-- If we need pagination -->
@@ -276,7 +276,7 @@ hello world
 HELLO WORLD
 
 地图是整个引擎里的核心，万物基于此，其是个非常复杂的对象，其组织结构如下
-![](//mdpress.glicon.design/p/files/2023-08-02/hiQhsN4m4V6HbFNCOm6NH.png)
+![](https://mdpress.glicon.design/p/files/2023-08-02/hiQhsN4m4V6HbFNCOm6NH.png)
 * 一个地图上可以多个图层
 * 每个图层里有多个图形数据
 * 地图上加些UI元素, 比如气泡和弹窗等
@@ -378,7 +378,7 @@ map.remove();
 **地图是个非常复杂的对象，非常吃资源, 不断的创建和销毁也不是个好的方法**
 建议的做法：
 将地图创建为个全局变量或者dom元素，路由等切换只是改变页面的非地图模块和要素
-![](//mdpress.glicon.design/p/files/2023-08-02/YJKP-rMIuSnCSym6EDgQh.png)
+![](https://mdpress.glicon.design/p/files/2023-08-02/YJKP-rMIuSnCSym6EDgQh.png)
 比如这样的一个页面，路由切换的仅仅切换地图上面的菜单和面板等, 而地图是独立的元素，是不包含在路由里的
 
 * 路由切换时只切换非地图的东西
