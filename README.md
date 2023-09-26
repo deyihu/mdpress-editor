@@ -39,13 +39,13 @@ or
 
 ## Notes
 
-- [highlight.js](https://github.com/highlightjs/highlight.js) is external you need:
+* [highlight.js](https://github.com/highlightjs/highlight.js) is external you need:
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 ```
 
-- It contains a large number of plugins, and packaging all plugins can result in a very large volume, so some plugin packages require you to dynamically register them
+* It contains a large number of plugins, and packaging all plugins can result in a very large volume, so some plugin packages require you to dynamically register them
 
 * [monaco-editor](https://github.com/microsoft/monaco-editor)
 * [Prettier](https://github.com/prettier/prettier)
@@ -67,7 +67,7 @@ registerPrettier(prettier);
 ...
 ```
 
-- The icons from [iconfont](https://www.iconfont.cn/)
+* The icons from [iconfont](https://www.iconfont.cn/)
 
 ```html
 <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_sk4bdegrdn.css" crossorigin="anonymous">
@@ -112,6 +112,17 @@ or
 ```
 
 ## API
+### themes
+all theme list
+
+```js
+import 'mdpress-editor/index.css';
+import {
+    themes
+} from 'mdpress-editor';
+console.log(themes);
+
+```
 
 ### showLoading
 
@@ -252,7 +263,7 @@ const mdEditor = new MDEditor(dom, {
   + setTheme()
 
 ```js
-   const [range] = mdEditor.setTheme('vitepress');
+  mdEditor.setTheme('vitepress');
 ```
 
   + getTheme()
