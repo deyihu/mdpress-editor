@@ -1,4 +1,4 @@
-import html2canvas from 'html2canvas';
+// import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
 import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
@@ -25,6 +25,7 @@ import { makeToc } from './maketoc';
 import { initQRCode } from './preview/qrcode';
 import { exportHTML } from './exporthtml';
 import printJS from 'print-js';
+import { toBlob } from 'html-to-image';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -307,23 +308,38 @@ export class MDEditor extends Eventable(Base) {
             fileType = type;
             showLoading();
             removeScroll();
+            // let w = 0;
+            // Array.prototype.forEach.call(children, element => {
+            //     const rect = element.getBoundingClientRect();
+            //     w = Math.max(rect.width, w);
+            // });
             const rect = previewDom.getBoundingClientRect();
-            const { scrollHeight, scrollWidth } = this.previewDom;
-            const { width, height } = rect;
-            const { innerWidth, innerHeight } = window;
-            html2canvas(previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) + 10 })
-                .then((canvas) => {
-                    canvas.toBlob((blob) => {
-                        saveAs(blob, `${now()}.${fileType}`);
-                    });
-                    hideLoading();
-                    addScroll();
-                }).catch(err => {
-                    console.error(err);
-                })
-                .finally(() => {
+            const { scrollHeight } = this.previewDom;
+            const { height } = rect;
+            const { innerHeight } = window;
+            // const w = Math.max(width, scrollWidth, innerWidth);
+            const h = Math.max(height, scrollHeight, innerHeight) + 10;
+            const w = rect.width + 10;
+            toBlob(previewDom, { width: w, height: h }).then(blob => {
+                saveAs(blob, `${now()}.${fileType}`);
+                hideLoading();
+                addScroll();
+            }).catch(err => {
+                console.error(err);
+            });
+            // html2canvas(previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) + 10 })
+            //     .then((canvas) => {
+            //         canvas.toBlob((blob) => {
+            //             saveAs(blob, `${now()}.${fileType}`);
+            //         });
+            //         hideLoading();
+            //         addScroll();
+            //     }).catch(err => {
+            //         console.error(err);
+            //     })
+            //     .finally(() => {
 
-                });
+            //     });
             return;
         } else if (type === 'print') {
             printJS(this.previewDom.id, 'html');

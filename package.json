@@ -49,6 +49,7 @@
     "fetch-scheduler": "^0.4.0",
     "file-saver": "^2.0.5",
     "highlight.js": "^11.8.0",
+    "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "katex": "^0.6.0",
     "markdown-it": "^13.0.1",
