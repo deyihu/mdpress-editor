@@ -326,6 +326,9 @@ export class MDEditor extends Eventable(Base) {
                 addScroll();
             }).catch(err => {
                 console.error(err);
+                getToastr().error(err);
+                hideLoading();
+                addScroll();
             });
             // html2canvas(previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) + 10 })
             //     .then((canvas) => {
