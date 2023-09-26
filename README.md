@@ -112,7 +112,9 @@ or
 ```
 
 ## API
+
 ### themes
+
 all theme list
 
 ```js
@@ -121,7 +123,6 @@ import {
     themes
 } from 'mdpress-editor';
 console.log(themes);
-
 ```
 
 ### showLoading
@@ -135,7 +136,9 @@ import {
 } from 'mdpress-editor';
 ```
 
-### registerMonaco   [monaco-editor](https://github.com/microsoft/monaco-editor)
+### registerMonaco   
+
+[monaco-editor](https://github.com/microsoft/monaco-editor)
 
 ```js
      require(['vs/editor/editor.main'], function() {
@@ -143,7 +146,9 @@ import {
      });
 ```
 
-### registerShikiHighlighter [shiki](https://github.com/shikijs/shiki)
+### registerShikiHighlighter
+
+ [shiki](https://github.com/shikijs/shiki)
 
 ```js
  shiki
@@ -156,32 +161,42 @@ import {
      });
 ```
 
-### registerPrettier [Prettier](https://github.com/prettier/prettier)
+### registerPrettier 
+
+[Prettier](https://github.com/prettier/prettier)
 
 ```js
  prettier.prettierPlugins = prettierPlugins;
  registerPrettier(prettier);
 ```
 
-### registerMarkMap [Markmap](https://github.com/markmap/markmap)
+### registerMarkMap 
+
+[Markmap](https://github.com/markmap/markmap)
 
 ```js
    registerMarkMap(markmap);
 ```
 
-### registerSwiper [Swiper](https://github.com/nolimits4web/swiper)
+### registerSwiper
+
+ [Swiper](https://github.com/nolimits4web/swiper)
 
 ```js
    registerSwiper(Swiper);
 ```
 
-### registerQRCode [Qrcode](https://github.com/davidshimjs/qrcodejs)
+### registerQRCode
+
+ [Qrcode](https://github.com/davidshimjs/qrcodejs)
 
 ```js
 registerQRCode(QRCode);
 ```
 
-### registerMermaid [Mermaid](https://github.com/mermaid-js/mermaid)
+### registerMermaid 
+
+[Mermaid](https://github.com/mermaid-js/mermaid)
 
 ```js
 registerMermaid(mermaid);
