@@ -269,7 +269,7 @@ class Cat {
 
 [Markdown 官方教程](https://markdown.com.cn/)
 
-![Markdown 官方教程](https://markdown.com.cn/hero.png)
+![Markdown 官方教程](//mdpress.glicon.design/p/files/2023-09-26/Y_Ys6nU4FzFso9D4hIXUO.png)
 
 hello world
 
