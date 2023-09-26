@@ -26,6 +26,7 @@ import { initQRCode } from './preview/qrcode';
 import { exportHTML } from './exporthtml';
 import printJS from 'print-js';
 import { toBlob } from 'html-to-image';
+import { setHeadLineNumber } from './preview/headlinenumber';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -461,32 +462,56 @@ export class MDEditor extends Eventable(Base) {
         // }).join('');
         // html += '</ul>';
         // this.tocDom.innerHTML = html;
-        const liDoms = this.tocDom.querySelectorAll('li');
+        const aLinks = this.tocDom.querySelectorAll('a');
+        aLinks.forEach(dom => {
+            dom.id = dom.id || domId();
+        });
+        const findDomPosition = (a, currentTitle) => {
+            const result = [];
+            aLinks.forEach(dom => {
+                let title = dom.textContent;
+                title = trimTitle(title);
+                if (title === currentTitle) {
+                    result.push(dom);
+                }
+            });
+            const index = result.indexOf(a);
+            return Math.max(index, 0) + 1;
+        };
         const model = this.editor.getModel();
         const lineCount = model.getLineCount();
-        const findTitleRow = (text) => {
-            for (let i = 1; i <= lineCount; i++) {
-                let content = model.getLineContent(i);
+        const findTitleRow = (a) => {
+            let title = a.textContent;
+            title = trimTitle(title);
+            const index = findDomPosition(a, title);
+            let idx = 0;
+            for (let lineNum = 1; lineNum <= lineCount; lineNum++) {
+                let content = model.getLineContent(lineNum);
                 if (isTitle(content)) {
                     content = trimTitle(content);
-                    if (content.indexOf(text) === 0) {
-                        return i;
+                    if (content.indexOf(title) === 0) {
+                        idx++;
+                        if (idx === index) {
+                            return lineNum;
+                        }
                     }
                 }
             }
         };
 
-        const liClick = (e) => {
-            let title = e.target.textContent;
-            title = trimTitle(title);
-            const row = findTitleRow(title);
+        const linkClick = (e) => {
+            const a = e.target;
+            if (!a.id) {
+                return;
+            }
+            const row = findTitleRow(a);
             if (row) {
                 const top = this.editor.getTopForLineNumber(row);
                 this.editor.setScrollTop(top);
             }
         };
-        liDoms.forEach(li => {
-            on(li, 'click', liClick);
+        aLinks.forEach(a => {
+            on(a, 'click', linkClick);
         });
     }
 
@@ -540,6 +565,7 @@ export class MDEditor extends Eventable(Base) {
                 this.imageViewer.destroy();
             }
             this.imageViewer = new Viewer(dom);
+            setHeadLineNumber(this.editor, dom);
             scrollTop(dom);
             this._initTocData();
         });

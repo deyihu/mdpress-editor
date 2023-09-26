@@ -1,11 +1,21 @@
 import { isTitle, trimTitle } from './util';
 
-function getTitleDom(dom, title) {
+function getTitleDom(dom, title, lineNumber) {
+    lineNumber += '';
+    const nodes = dom.children;
+    for (let i = 0, len = nodes.length; i < len; i++) {
+        const node = nodes[i];
+        if (node.dataset.lineNumber === lineNumber) {
+            return {
+                node
+            };
+        }
+    }
     title = trimTitle(title);
     title = title.replaceAll(' ', '-');
     title = title.toLowerCase();
     title = encodeURIComponent(title);
-    const nodes = dom.children;
+    // const nodes = dom.children;
     for (let i = 0, len = nodes.length; i < len; i++) {
         const node = nodes[i];
         if (node.id === title) {
@@ -42,7 +52,7 @@ export function calScroll(editor, dom) {
     if (!title) {
         return;
     }
-    const result = getTitleDom(dom, title);
+    const result = getTitleDom(dom, title, lineNumber);
     if (!result) {
         return;
     }
@@ -62,7 +72,7 @@ export function calScroll(editor, dom) {
         lineNumber++;
     }
     if (nextTitle) {
-        const result = getTitleDom(dom, nextTitle);
+        const result = getTitleDom(dom, nextTitle, lineNumber);
         if (result) {
             nextNode = result.node;
         }
