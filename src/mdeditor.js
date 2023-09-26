@@ -1,7 +1,7 @@
 // import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
-import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
+import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, extend, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
@@ -149,6 +149,9 @@ export class MDEditor extends Eventable(Base) {
         editorContainer.className = 'mdeditor-editor-container';
         editorContainer.appendChild(editorDom);
         editorContainer.appendChild(previewDom);
+        editorContainer.addEventListener('paste', e => {
+            this.fire('paste', extend({}, e, { target: this }));
+        }, true);
 
         const tocDom = this.tocDom = createDom('div');
         tocDom.className = 'mdeditor-toc';
