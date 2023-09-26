@@ -81,12 +81,17 @@ function init() {
     return new Promise((resolve) => {
         loadMonaco().then(() => {
             // loadShiki().then(() => {
-                // mdpress.registerHightLight(window.hljs);
-                mdpress.registerMarkMap(window.markmap);
-                mdpress.registerSwiper(window.Swiper);
-                mdpress.registerQRCode(window.QRCode);
-                resolve();
-            });
+            // mdpress.registerHightLight(window.hljs);
+            mdpress.registerMarkMap(window.markmap);
+            mdpress.registerSwiper(window.Swiper);
+            mdpress.registerQRCode(window.QRCode);
+            mdpress.registerMermaid(window.mermaid);
+            // eslint-disable-next-line no-undef
+            prettier.prettierPlugins = prettierPlugins;
+            // eslint-disable-next-line no-undef
+            mdpress.registerPrettier(prettier);
+            resolve();
+        });
         // });
     });
 }
