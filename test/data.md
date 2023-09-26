@@ -12,6 +12,10 @@ qrcode:http://www.baidu.com
 ------------
 qrcode:http://www.baidu.com
 
+## markmap
+
+[[markmap]]
+
 
 ## syntax higilight
 
@@ -71,6 +75,8 @@ Class.forName("oracle.jdbc.driver.OracleDriver")
 
 :tada:  
 :100:
+
+## include markdown
 
 include:./snip.md
 
@@ -264,6 +270,381 @@ class Cat {
 </div>
 
 :::
+
+## Features
+
+* Code highlighting. by [highlight.js](https://github.com/highlightjs/highlight.js) or [shiki](https://github.com/shikijs/shiki)
+* [Code Group](https://vitepress.dev/guide/markdown#code-groups) support
+* [Custom Container](https://vitepress.dev/guide/markdown#custom-containers) support
+* [KateX](https://github.com/KaTeX/KaTeX) support
+* [Mermaid](https://github.com/mermaid-js/mermaid) support
+* [Swiper](https://github.com/nolimits4web/swiper) support
+* [Qrcode](https://github.com/davidshimjs/qrcodejs) support
+* [github emoji](https://github.com/markdown-it/markdown-it-emoji) support
+* toc support
+* [Markmap](https://github.com/markmap/markmap) support
+* include a remote markdown file
+* Multi theme support, theme from [juejin-markdown-themes](https://github.com/xitu/juejin-markdown-themes)
+* export md, html, png files
+* support custom toolbar
+* [Prettier](https://github.com/prettier/prettier) format support
+
+## Install
+
+```sh
+npm i mdpress-editor
+#or
+yarn add mdpress-editor
+
+```
+
+or
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/mdpress-editor/index.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/mdpress-editor/dist/mdpress-editor.min.js"></script>
+```
+
+## Notes
+
+* [highlight.js](https://github.com/highlightjs/highlight.js) is external you need:
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+```
+
+* It contains a large number of plugins, and packaging all plugins can result in a very large volume, so some plugin packages require you to dynamically register them
+
+* [monaco-editor](https://github.com/microsoft/monaco-editor)
+* [Prettier](https://github.com/prettier/prettier)
+* [shiki](https://github.com/shikijs/shiki)
+* [Swiper](https://github.com/nolimits4web/swiper)
+* [Mermaid](https://github.com/mermaid-js/mermaid)
+* [Qrcode](https://github.com/davidshimjs/qrcodejs)
+* [Markmap](https://github.com/markmap/markmap)
+
+When using these plugins, you need to inject the necessary plugin packages
+
+```js
+require(['vs/editor/editor.main'], function() {
+    registerMonaco(window.monaco);
+});
+
+prettier.prettierPlugins = prettierPlugins;
+registerPrettier(prettier);
+...
+```
+
+* The icons from [iconfont](https://www.iconfont.cn/)
+
+```html
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_sk4bdegrdn.css" crossorigin="anonymous">
+```
+
+## Code highlighting
+
+Built in [highlight.js](https://github.com/highlightjs/highlight.js)  as a Code highlighting tool. If you like [shiki](https://github.com/shikijs/shiki), you can register [shiki](https://github.com/shikijs/shiki) as a Code highlighting tool
+
+## Themes
+
+It is a standalone folder that requires you to manually copy when used in the project
+
+you can:
+
+* copy from `node-moudules/mdress-editor/theme`
+* set theme url from cdn url when create  `MDEditor`
+
+## Use
+
+```js
+import 'mdpress-editor/index.css';
+import {
+    showLoading,
+    hideLoading
+} from 'mdpress-editor';
+```
+
+or
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/mdpress-editor/dist/mdpress-editor.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/mdpress-editor/index.css">
+
+<script>
+    mdpress.registerMonaco(window.monaco);
+    mdpress.showLoading();
+    mdpress.hideLoading();
+    ...
+</script>
+```
+
+## API
+
+### themes
+
+all theme list
+
+```js
+import 'mdpress-editor/index.css';
+import {
+    themes
+} from 'mdpress-editor';
+console.log(themes);
+```
+
+### showLoading
+
+### hideLoading
+
+```js
+import {
+    showLoading,
+    hideLoading
+} from 'mdpress-editor';
+```
+
+### registerMonaco   
+
+[monaco-editor](https://github.com/microsoft/monaco-editor)
+
+```js
+     require(['vs/editor/editor.main'], function() {
+         registerMonaco(window.monaco);
+     });
+```
+
+### registerShikiHighlighter
+
+ [shiki](https://github.com/shikijs/shiki)
+
+```js
+ shiki
+     .getHighlighter({
+         theme: 'material-theme-palenight',
+         langs: languages
+     })
+     .then(highlighter => {
+         registerShikiHighlighter(highlighter);
+     });
+```
+
+### registerPrettier 
+
+[Prettier](https://github.com/prettier/prettier)
+
+```js
+ prettier.prettierPlugins = prettierPlugins;
+ registerPrettier(prettier);
+```
+
+### registerMarkMap 
+
+[Markmap](https://github.com/markmap/markmap)
+
+```js
+   registerMarkMap(markmap);
+```
+
+### registerSwiper
+
+ [Swiper](https://github.com/nolimits4web/swiper)
+
+```js
+   registerSwiper(Swiper);
+```
+
+### registerQRCode
+
+ [Qrcode](https://github.com/davidshimjs/qrcodejs)
+
+```js
+registerQRCode(QRCode);
+```
+
+### registerMermaid 
+
+[Mermaid](https://github.com/mermaid-js/mermaid)
+
+```js
+registerMermaid(mermaid);
+```
+
+### MDEditor  
+
+Editor Core Object
+
+#### constructor
+
+```js
+import {
+    showLoading,
+    hideLoading,
+    MDEditor
+} from 'mdpress-editor';
+
+const mdEditor = new MDEditor(dom, {
+    preview: true, //open preview model
+    theme: 'vitepress',
+    themeURL: './../theme/', //theme files path
+    tocOpen: false, //open toc
+    //monaco config
+    monacoOptions: {
+        language: 'markdown',
+        value: '',
+        automaticLayout: true
+    }
+})
+```
+
+#### methods
+
+  + setValue(value)
+
+  
+
+```js
+   mdEditor.setValue('# hello \n ');
+```
+
+  + getValue()
+  + getSelectText()
+  
+
+```js
+   const [range, text] = mdEditor.getSelectText();
+```
+
+  + getSelectRange()
+  
+
+```js
+   const [starRange, endRange] = mdEditor.getSelectRange();
+```
+
+  + getCurrentRange()
+  
+
+```js
+   const [range] = mdEditor.getCurrentRange();
+```
+
+  + isPreview()
+  + isFullScreen()
+  + isToc()
+  + getContainer()
+  + getEditor() `get monaco editor`
+
+```js
+   const monacoEditor = mdEditor.getEditor();
+   monacoEditor.executeEdits('', [{
+       range,
+       text
+   }]);
+```
+
+  + setTheme()
+
+```js
+  mdEditor.setTheme('vitepress');
+```
+
+  + getTheme()
+  + openPreview()
+  + closePreview()
+  + openFullScreen()
+  + closeFullScreen()
+  + openToc()
+  + closeToc()
+
+#### events
+
+* openfullscreen
+* closefullscreen
+* openpreview
+* closepreview
+* themechange
+* opentoc
+* closetoc
+* paste
+
+```js
+mdEditor.on('paste', e => {
+    console.log(e);
+    let files = e.clipboardData.files || [];
+})
+```
+
+you can listen `paste` for get  files for upload images or other files
+
+### ToolIcon
+
+the icon for toolbar
+
+#### constructor
+
+```js
+const icon = new ToolIcon({
+    icon: 'icon-zitijiacu', //iconfont icon name
+    title: '加粗',
+    className: '', //custom className
+    position: 'left' //the postion,left or right
+});
+icon.on('click', e => {
+    console.log(e);
+    const mdEditor = e.target.getEditor();
+});
+icon.addTo(mdEditor);
+```
+
+#### methods
+
+* getDom()
+* on(event, handler)
+* getEditor() 
+* addTo(mdEditor)
+* remove()
+
+#### example
+
+ custom a toolicon for upload markdown file
+
+```js
+  function customIcons() {
+      const data = {
+          icon: 'icon-file-markdown1',
+          title: '我是自定义按钮-导入markdown',
+          className: 'red'
+      }
+      const icon = new ToolIcon(data);
+      icon.addTo(mEditor);
+      icon.on('click', () => {
+          const parseMd = (file) => {
+              const fileRender = new FileReader();
+              fileRender.onload = () => {
+                  if (mEditor && fileRender.result) {
+                      mEditor.setValue(fileRender.result);
+                  }
+              };
+              fileRender.readAsText(file);
+          };
+          const inputFile = document.createElement('input');
+          inputFile.type = 'file';
+          inputFile.accept = '.md';
+          inputFile.addEventListener('change', () => {
+              if (inputFile.files.length) {
+                  parseMd(inputFile.files[0]);
+              } else {
+                  alert('没有发现上传文件');
+              }
+          });
+          inputFile.click();
+      })
+
+  }
+```
+
 
 ## links
 
