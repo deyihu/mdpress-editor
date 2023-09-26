@@ -644,6 +644,10 @@ export class MDEditor extends Eventable(Base) {
         return this.dom;
     }
 
+    getEditor() {
+        return this.editor;
+    }
+
     _activeThemeItem(item) {
         const items = this.themeDom.querySelectorAll('.mdeditor-theme-select-item');
         if (typeof item === 'string') {

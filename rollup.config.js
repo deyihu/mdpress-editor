@@ -12,7 +12,7 @@ const FILEMANE = pkg.name;
 const sourceMap = isDEV;
 
 const banner = `/*!\n * ${pkg.name} v${pkg.version}\n  */`;
-const external = ['highlight.js', 'mermaid'];
+const external = ['highlight.js'];
 const plugins = [
     json(),
     nodeResolve(),
@@ -30,8 +30,7 @@ function getEntry() {
 const namespace = 'mdpress';
 
 const globals = {
-    'highlight.js': 'hljs',
-    'mermaid': 'mermaid'
+    'highlight.js': 'hljs'
 };
 
 let outs = [

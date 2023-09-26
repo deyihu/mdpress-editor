@@ -1,8 +1,13 @@
 
-import mermaid from 'mermaid';
+// import mermaid from 'mermaid';
+
+import { getMermaid } from '../deps';
+import { getToastr } from '../toast';
 
 export function initMermaid(dom) {
+    const mermaid = getMermaid();
     if (!mermaid) {
+        getToastr().error('not find mermaid,please registerMermaid');
         return;
     }
     mermaid.initialize({ startOnLoad: false });

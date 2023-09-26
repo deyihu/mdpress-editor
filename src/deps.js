@@ -63,3 +63,12 @@ export function registerQRCode(qrcode) {
 export function getQRCode() {
     return qrcodeJS;
 }
+
+let mermaidJS;
+export function registerMermaid(mermaid) {
+    mermaidJS = mermaid;
+}
+
+export function getMermaid() {
+    return mermaidJS;
+}

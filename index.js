@@ -9,7 +9,8 @@ export {
     registerPrettier,
     registerMarkMap,
     registerSwiper,
-    registerQRCode
+    registerQRCode,
+    registerMermaid
 } from './src/deps';
 export * from './src/mdeditor';
 export * from './src/toolicon';
