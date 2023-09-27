@@ -69,6 +69,7 @@
     "print-js": "^1.6.0",
     "shiki": "^0.14.3",
     "swiper": "^10.2.0",
-    "viewerjs": "^1.11.5"
+    "viewerjs": "^1.11.5",
+    "x-data-spreadsheet": "^1.1.9"
   }
 }

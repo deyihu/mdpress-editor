@@ -27,6 +27,7 @@ import { exportHTML } from './exporthtml';
 import printJS from 'print-js';
 import { toBlob } from 'html-to-image';
 import { setHeadLineNumber } from './preview/headlinenumber';
+import { initExcel } from './preview/excel';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -375,7 +376,7 @@ export class MDEditor extends Eventable(Base) {
 
     checkTocState() {
         const { tocOpen } = this;
-        let width = 250;
+        let width = 300;
         if (!tocOpen) {
             width = 0;
         }
@@ -565,6 +566,7 @@ export class MDEditor extends Eventable(Base) {
                 this.imageViewer.destroy();
             }
             this.imageViewer = new Viewer(dom);
+            initExcel(dom, this);
             setHeadLineNumber(this.editor, dom);
             scrollTop(dom);
             this._initTocData();
@@ -704,7 +706,7 @@ export class MDEditor extends Eventable(Base) {
                 styleLink = children[i];
             }
         }
-        const url = `${this.options.themeURL}${themeName}.css?t=${now}`;
+        const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
         // get theme style
         const promise = fetchScheduler.createFetch(url, {
             // ...

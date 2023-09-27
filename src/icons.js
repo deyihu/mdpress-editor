@@ -613,6 +613,24 @@ const ICONS = [
         }
     },
     {
+        name: 'icon-excel',
+        title: 'excel',
+        click: function () {
+            const [mdEditor, editor] = getEditors(this);
+            const result = mdEditor.getCurrentRange();
+            if (!validateSelect(result)) {
+                return;
+            }
+            const [range] = result;
+            editor.executeEdits('', [
+                {
+                    range,
+                    text: '\nexcel:https://sheetjs.com/pres.numbers\n'
+                }
+            ]);
+        }
+    },
+    {
         name: 'icon-erweima',
         title: '二维码',
         click: function () {

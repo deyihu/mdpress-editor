@@ -72,3 +72,21 @@ export function registerMermaid(mermaid) {
 export function getMermaid() {
     return mermaidJS;
 }
+
+let xlsxJS;
+export function registerXLSX(xlsx) {
+    xlsxJS = xlsx;
+}
+
+export function getXLSX() {
+    return xlsxJS;
+}
+
+let x_spreadsheetJS;
+export function registerX_spreadsheet(x_spreadsheet) {
+    x_spreadsheetJS = x_spreadsheet;
+}
+
+export function getX_spreadsheet() {
+    return x_spreadsheetJS;
+}

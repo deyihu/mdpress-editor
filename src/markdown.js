@@ -10,6 +10,8 @@ import { swiperPlugin } from './plugins/swiper';
 import mk from 'markdown-it-katex';
 import taskLists from 'markdown-it-task-lists';
 import { qrCodePlugin } from './plugins/qrcode';
+import { excelPlugin } from './plugins/excel';
+
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import java from 'highlight.js/lib/languages/java';
@@ -47,7 +49,6 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import vim from 'highlight.js/lib/languages/vim';
 import wasm from 'highlight.js/lib/languages/wasm';
 import xml from 'highlight.js/lib/languages/xml';
-
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('java', java);
 hljs.registerLanguage('bash', bash);
@@ -96,6 +97,7 @@ export function installPlugins(md) {
     md.use(mk);
     md.use(taskLists);
     md.use(qrCodePlugin);
+    md.use(excelPlugin);
 }
 
 export function createMarkdown() {

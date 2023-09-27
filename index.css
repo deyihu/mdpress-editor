@@ -237,6 +237,9 @@
   background: none !important;
 }
 
+.excel-container{
+  min-height: 300px;
+}
 /* copy from https://github.com/vuejs/vitepress/blob/v1.0.0-beta.6/src/client/theme-default/styles/vars.css */
 :root {
   --vp-c-white: #ffffff;
