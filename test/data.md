@@ -6,6 +6,10 @@ hello world
 
 [[toc]]
 
+## excel test
+
+excel:https://sheetjs.com/pres.numbers
+
 ## qrcode test
 
 qrcode:http://www.baidu.com

@@ -86,6 +86,8 @@ function init() {
             mdpress.registerSwiper(window.Swiper);
             mdpress.registerQRCode(window.QRCode);
             mdpress.registerMermaid(window.mermaid);
+            mdpress.registerXLSX(window.XLSX);
+            mdpress.registerX_spreadsheet(window.x_spreadsheet);
             // eslint-disable-next-line no-undef
             prettier.prettierPlugins = prettierPlugins;
             // eslint-disable-next-line no-undef
