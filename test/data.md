@@ -2,8 +2,6 @@
 
 **markdown editor base monaco and markdown-it**
 
-hello world
-
 [[toc]]
 
 ## excel test

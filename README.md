@@ -11,6 +11,7 @@ A simple markdown editor base [monaco-editor](https://github.com/microsoft/monac
 * [Mermaid](https://github.com/mermaid-js/mermaid) support
 * [Swiper](https://github.com/nolimits4web/swiper) support
 * [Qrcode](https://github.com/davidshimjs/qrcodejs) support
+* XLSX File view by [x-spreadsheet](https://github.com/myliang/x-spreadsheet) and [sheetjs](https://github.com/SheetJS/sheetjs/tree/master)
 * [github emoji](https://github.com/markdown-it/markdown-it-emoji) support
 * toc support
 * [Markmap](https://github.com/markmap/markmap) support
@@ -197,6 +198,21 @@ registerQRCode(QRCode);
 ### registerMermaid 
 
 [Mermaid](https://github.com/mermaid-js/mermaid)
+
+```js
+registerMermaid(mermaid);
+```
+
+### registerXLSX 
+
+[sheetjs](https://github.com/SheetJS/sheetjs/tree/master)
+
+```js
+registerMermaid(mermaid);
+```
+### registerX_spreadsheet 
+
+[x-spreadsheet](https://github.com/myliang/x-spreadsheet)
 
 ```js
 registerMermaid(mermaid);
