@@ -1,17 +1,4 @@
-import { isTitle, trimTitle } from '../util';
-const HEADTAGS = [
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6'
-];
-
-function isHeadTag(tag) {
-    tag = tag.toLowerCase();
-    return HEADTAGS.indexOf(tag) > -1;
-}
+import { isHeadTag, isTitle, trimTitle } from '../util';
 
 export function setHeadLineNumber(editor, dom) {
     const model = editor.getModel();

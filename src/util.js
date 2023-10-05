@@ -182,3 +182,17 @@ let idx = 1;
 export function domId() {
     return `dom-${idx++}`;
 }
+
+const HEADTAGS = [
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6'
+];
+
+export function isHeadTag(tag) {
+    tag = tag.toLowerCase();
+    return HEADTAGS.indexOf(tag) > -1;
+}

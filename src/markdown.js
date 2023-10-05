@@ -86,6 +86,47 @@ hljs.registerLanguage('vim', vim);
 hljs.registerLanguage('wasm', wasm);
 hljs.registerLanguage('xml', xml);
 
+const HTML_ESCAPE_TEST_RE = /[&<>"]/;
+const HTML_ESCAPE_REPLACE_RE = /[&<>"]/g;
+const HTML_REPLACEMENTS = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;'
+};
+
+function replaceUnsafeChar(ch) {
+    return HTML_REPLACEMENTS[ch];
+}
+
+function escapeHtml(str) {
+    if (HTML_ESCAPE_TEST_RE.test(str)) {
+        return str.replace(HTML_ESCAPE_REPLACE_RE, replaceUnsafeChar);
+    }
+    return str;
+}
+
+function renderAttrs(token) {
+    var i, l, result;
+    if (token.type === 'heading_open') {
+        token.attrs = token.attrs || [];
+        if (token.map) {
+            const [lineNumber] = token.map;
+            token.attrs.push(['lineNumber', lineNumber + 1]);
+        }
+    }
+
+    if (!token.attrs) { return ''; }
+
+    result = '';
+
+    for (i = 0, l = token.attrs.length; i < l; i++) {
+        result += ' ' + escapeHtml(token.attrs[i][0]) + '="' + escapeHtml(token.attrs[i][1]) + '"';
+    }
+
+    return result;
+}
+
 export function installPlugins(md) {
     md.use(emojiPlugin, {});
     md.use(markdownAnchor, { level: 1, permalink: true, permalinkBefore: true, permalinkSymbol: '#' });
@@ -98,6 +139,7 @@ export function installPlugins(md) {
     md.use(taskLists);
     md.use(qrCodePlugin);
     md.use(excelPlugin);
+    md.renderer.renderAttrs = renderAttrs;
 }
 
 export function createMarkdown() {
