@@ -81,8 +81,6 @@ function init() {
     return new Promise((resolve) => {
         loadMonaco().then(() => {
             // loadShiki().then(() => {
-            // mdpress.registerHightLight(window.hljs);
-            mdpress.registerMarkMap(window.markmap);
             mdpress.registerSwiper(window.Swiper);
             mdpress.registerQRCode(window.QRCode);
             mdpress.registerMermaid(window.mermaid);

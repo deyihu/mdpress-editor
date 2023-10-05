@@ -15,10 +15,10 @@ A simple markdown editor base [monaco-editor](https://github.com/microsoft/monac
 * XLSX File view by [x-spreadsheet](https://github.com/myliang/x-spreadsheet) and [sheetjs](https://github.com/SheetJS/sheetjs/tree/master)
 * [github emoji](https://github.com/markdown-it/markdown-it-emoji) support
 * toc support
-* [Markmap](https://github.com/markmap/markmap) support
 * include a remote markdown file
 * Multi theme support, theme from [juejin-markdown-themes](https://github.com/xitu/juejin-markdown-themes)
 * export md, html, png files
+* export [Markmap](https://github.com/markmap/markmap) support
 * support custom toolbar
 * [Prettier](https://github.com/prettier/prettier) format support
 
@@ -55,7 +55,6 @@ or
 * [Swiper](https://github.com/nolimits4web/swiper)
 * [Mermaid](https://github.com/mermaid-js/mermaid)
 * [Qrcode](https://github.com/davidshimjs/qrcodejs)
-* [Markmap](https://github.com/markmap/markmap)
 * ....
 
 When using these plugins, you need to inject the necessary plugin packages
@@ -171,14 +170,6 @@ import {
 ```js
  prettier.prettierPlugins = prettierPlugins;
  registerPrettier(prettier);
-```
-
-### registerMarkMap 
-
-[Markmap](https://github.com/markmap/markmap)
-
-```js
-   registerMarkMap(markmap);
 ```
 
 ### registerSwiper
