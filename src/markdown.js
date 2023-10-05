@@ -11,6 +11,7 @@ import mk from 'markdown-it-katex';
 import taskLists from 'markdown-it-task-lists';
 import { qrCodePlugin } from './plugins/plugin_qrcode';
 import { excelPlugin } from './plugins/plugin_excel';
+import mdPlantUML from 'markdown-it-plantuml';
 
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -139,6 +140,7 @@ export function installPlugins(md) {
     md.use(taskLists);
     md.use(qrCodePlugin);
     md.use(excelPlugin);
+    md.use(mdPlantUML);
     md.renderer.renderAttrs = renderAttrs;
 }
 
