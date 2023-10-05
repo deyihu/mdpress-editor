@@ -1,4 +1,4 @@
-import { fetchScheduler } from '../fetchScheduler';
+import { fetchScheduler } from './fetchScheduler';
 
 const INCLUDE_FLAG = 'include:';
 export function checkInclude(text, callback) {

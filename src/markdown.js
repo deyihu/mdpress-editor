@@ -2,15 +2,15 @@ import MarkdownIt from 'markdown-it';
 import emojiPlugin from 'markdown-it-emoji';
 import markdownAnchor from 'markdown-it-anchor';
 import markdownToc from 'markdown-it-toc-done-right';
-import { containerPlugin } from './plugins/container';
-import { katexPlugin, ketexRender } from './plugins/katex';
-import { mermaidPlugin, mermaidRender } from './plugins/mermaid';
+import { containerPlugin } from './plugins/plugin_container';
+import { katexPlugin, ketexRender } from './plugins/plugin_katex';
+import { mermaidPlugin, mermaidRender } from './plugins/plugin_mermaid';
 import { getShikiHighlighter } from './deps';
-import { swiperPlugin } from './plugins/swiper';
+import { swiperPlugin } from './plugins/plugin_swiper';
 import mk from 'markdown-it-katex';
 import taskLists from 'markdown-it-task-lists';
-import { qrCodePlugin } from './plugins/qrcode';
-import { excelPlugin } from './plugins/excel';
+import { qrCodePlugin } from './plugins/plugin_qrcode';
+import { excelPlugin } from './plugins/plugin_excel';
 
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -107,7 +107,7 @@ function escapeHtml(str) {
 }
 
 function renderAttrs(token) {
-    var i, l, result;
+    let i, l, result;
     if (token.type === 'heading_open') {
         token.attrs = token.attrs || [];
         if (token.map) {
