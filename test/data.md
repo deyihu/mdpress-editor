@@ -5,8 +5,9 @@
 [[toc]]
 
 
-### UML
+## UML
 
+### 时序图 
 @startuml
 Alice -> Bob: Authentication Request
 Bob --> Alice: Authentication Response
@@ -14,6 +15,18 @@ Bob --> Alice: Authentication Response
 Alice -> Bob: Another authentication Request
 Alice <-- Bob: Another authentication Response
 @enduml
+
+
+### 用例图
+
+@startuml
+:First Actor:
+:Another\nactor: as Man2
+actor Woman3
+actor :Last actor: as Person1
+@enduml
+
+### 类图
 
 @startuml
 abstract        abstract
@@ -35,6 +48,24 @@ stereotype      stereotype
 struct          struct
 @enduml
 
+### 对象图
+
+@startuml
+object Object01
+object Object02
+object Object03
+object Object04
+object Object05
+object Object06
+object Object07
+object Object08
+
+Object01 <|-- Object02
+Object03 *-- Object04
+Object05 o-- "4" Object06
+Object07 .. Object08 : some labels
+@enduml
+
 
 <!-- ## excel test
 
@@ -43,12 +74,9 @@ excel:https://sheetjs.com/pres.numbers -->
 ## qrcode test
 
 qrcode:http://www.baidu.com
-------------
+---
 qrcode:http://www.baidu.com
 
-<!-- ## markmap
-
-[[markmap]] -->
 
 
 ## syntax higilight
