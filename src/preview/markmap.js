@@ -5,12 +5,16 @@ const transformer = new Transformer();
 
 const FLAG = '[[markmap]]';
 
-function formatMarkMapData(text) {
+export function fromatMarkMapJSON(text) {
     const { root, features } = transformer.transform(text);
-    return encodeURIComponent(JSON.stringify({
+    return JSON.stringify({
         root,
         features
-    }));
+    });
+}
+
+function formatMarkMapData(text) {
+    return encodeURIComponent(fromatMarkMapJSON(text));
 }
 
 function getMarkMapDom(code) {

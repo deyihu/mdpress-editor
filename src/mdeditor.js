@@ -17,7 +17,7 @@ import { getToastr, initToastr } from './toast';
 import { checkLinks } from './preview/link';
 import { checkCodeGroup } from './preview/codegroup';
 import { initMermaid } from './preview/mermaid';
-import { checkMarkMap, initMarkMap } from './preview/markmap';
+import { fromatMarkMapJSON } from './preview/markmap';
 import { initSwiper } from './preview/swiper';
 import { checkFullScreen } from './fullscreen';
 import { getMonaco, getPrettier } from './deps';
@@ -27,6 +27,7 @@ import { exportHTML } from './exporthtml';
 import printJS from 'print-js';
 import { toBlob } from 'html-to-image';
 import { initExcel } from './preview/excel';
+import { exportMarkMapHTML } from './exportmarkmap';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -46,6 +47,11 @@ const exportFilesData = [
         icon: 'icon-tupiantianjia',
         label: '导出图片',
         type: 'png'
+    },
+    {
+        icon: 'icon-naotu',
+        label: '导出markmap',
+        type: 'markmap'
     },
     {
         icon: 'icon-dayin',
@@ -350,6 +356,10 @@ export class MDEditor extends Eventable(Base) {
             return;
         } else if (type === 'print') {
             printJS(this.previewDom.id, 'html');
+        } else if (type === 'markmap') {
+            const markmap = fromatMarkMapJSON(this.mdText);
+            text = exportMarkMapHTML(markmap);
+            fileType = 'html';
         }
         if (!text) {
             return;
@@ -542,7 +552,8 @@ export class MDEditor extends Eventable(Base) {
         }
         const value = this.editorUpdateValues[len - 1];
         checkInclude(value, (text) => {
-            text = checkMarkMap(text);
+            this.mdText = text;
+            // text = checkMarkMap(text);
             const html = md.render(text);
             const dom = this.previewDom;
             dom.innerHTML = html;
@@ -552,7 +563,7 @@ export class MDEditor extends Eventable(Base) {
             checkIframe(dom);
             initMermaid(dom);
             removePreBgColor(dom);
-            initMarkMap(dom);
+            // initMarkMap(dom);
             initQRCode(dom);
             if (this.swipers) {
                 this.swipers.forEach(swiper => {

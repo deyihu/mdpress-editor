@@ -705,6 +705,7 @@ const ICONS = [
     {
         name: 'icon-naotu',
         title: 'markmap',
+        enable: false,
         click: function () {
             const [mdEditor, editor] = getEditors(this);
             const result = mdEditor.getCurrentRange();
