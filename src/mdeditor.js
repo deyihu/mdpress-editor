@@ -309,12 +309,13 @@ export class MDEditor extends Eventable(Base) {
         this.emojiDom = emojiDom;
 
         const onEmojiSelect = (data) => {
-            const id = data.id;
+            // console.log(data);
+            const native = data.native;
             const [range] = this.getCurrentRange();
             this.editor.executeEdits('', [
                 {
                     range,
-                    text: `:${id}:\n`
+                    text: `${native}\n`
                 }
             ]);
 
@@ -824,5 +825,9 @@ export class MDEditor extends Eventable(Base) {
     closeDark() {
         this.dark = false;
         return this.checkDark();
+    }
+
+    isDark() {
+        return this.dark;
     }
 }

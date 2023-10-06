@@ -145,6 +145,7 @@ Class.forName("oracle.jdbc.driver.OracleDriver")
 :money_mouth_face:
 :cat:
 :bug:
+🙃 🐵 🐒 🐱 🐈 🦁 🐯 🐅 🐆 🐄 🐫 🐐 🐗 🐷 🌶️ 🍞 🍗 🌯 🍖 🧇 🍞 🥬 🍅 🍍 🍎 🎃 🎇 🎖️ 🏐 🏒 🏓
 
 
 ## include markdown
