@@ -122,7 +122,7 @@ export function calScroll(editor, dom) {
     // console.log(title);
     // console.log(node);
     const top = node.offsetTop || 0;
-    const scrollTop = top + offsetLines * lineHeight - 22;
+    const scrollTop = top + offsetLines * lineHeight - 40;
     return scrollTop;
 
 }

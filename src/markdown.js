@@ -113,7 +113,7 @@ function renderAttrs(token) {
         token.attrs = token.attrs || [];
         if (token.map) {
             const [lineNumber] = token.map;
-            token.attrs.push(['lineNumber', lineNumber + 1]);
+            token.attrs.push(['linenumber', lineNumber + 1]);
         }
     }
 

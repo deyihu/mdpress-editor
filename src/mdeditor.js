@@ -28,6 +28,7 @@ import printJS from 'print-js';
 import { toBlob } from 'html-to-image';
 import { initExcel } from './preview/excel';
 import { exportMarkMapHTML } from './exportmarkmap';
+import { lazyLoad } from './preview/layzload';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -554,31 +555,27 @@ export class MDEditor extends Eventable(Base) {
         checkInclude(value, (text) => {
             this.mdText = text;
             // text = checkMarkMap(text);
-            const html = md.render(text);
+            let html = md.render(text);
+            html = lazyLoad(html, this);
             const dom = this.previewDom;
             dom.innerHTML = html;
             this.editorUpdateValues = [];
-            checkCodeGroup(dom);
-            checkLinks(dom);
-            checkIframe(dom);
-            initMermaid(dom);
-            removePreBgColor(dom);
+            checkCodeGroup(dom, this);
+            checkLinks(dom, this);
+            checkIframe(dom, this);
+            initMermaid(dom, this);
+            removePreBgColor(dom, this);
             // initMarkMap(dom);
-            initQRCode(dom);
-            if (this.swipers) {
-                this.swipers.forEach(swiper => {
-                    swiper.destroy();
-                });
-            }
-            this.swipers = initSwiper(dom);
+            initQRCode(dom, this);
+
+            initSwiper(dom, this);
 
             if (this.imageViewer) {
                 this.imageViewer.destroy();
             }
             this.imageViewer = new Viewer(dom);
             initExcel(dom, this);
-            // setHeadLineNumber(this.editor, dom);
-            scrollTop(dom);
+            scrollTop(dom, this);
             this._initTocData();
         });
     }

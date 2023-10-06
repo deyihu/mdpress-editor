@@ -1,7 +1,12 @@
 import { getToastr } from '../toast';
 import { getSwiper } from '../deps';
 
-export function initSwiper(dom) {
+export function initSwiper(dom, mdEditor) {
+    if (mdEditor.swipers) {
+        mdEditor.swipers.forEach(swiper => {
+            swiper.destroy();
+        });
+    }
     const els = dom.querySelectorAll('.swiper');
     if (!els.length) {
         return [];
@@ -29,5 +34,5 @@ export function initSwiper(dom) {
         });
         swipers.push(swiper);
     });
-    return swipers;
+    mdEditor.swipers = swipers;
 }
