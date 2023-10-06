@@ -137,6 +137,15 @@ Class.forName("oracle.jdbc.driver.OracleDriver")
 
 :tada:  
 :100:
+:+1:
+:dog:
+:grin:
+:laughing:
+:neutral_face:
+:money_mouth_face:
+:cat:
+:bug:
+
 
 ## include markdown
 

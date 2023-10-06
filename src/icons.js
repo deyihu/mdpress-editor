@@ -670,18 +670,26 @@ const ICONS = [
         name: 'icon-emoji',
         title: 'github emoji',
         click: function () {
-            const [mdEditor, editor] = getEditors(this);
-            const result = mdEditor.getCurrentRange();
-            if (!validateSelect(result)) {
-                return;
-            }
-            const [range] = result;
-            editor.executeEdits('', [
-                {
-                    range,
-                    text: ':tada: :dog: :cat: '
-                }
-            ]);
+            // const [mdEditor, editor] = getEditors(this);
+            // const result = mdEditor.getCurrentRange();
+            // if (!validateSelect(result)) {
+            //     return;
+            // }
+            // const [range] = result;
+            // editor.executeEdits('', [
+            //     {
+            //         range,
+            //         text: ':tada: :dog: :cat: '
+            //     }
+            // ]);
+            const mdEditor = this.getEditor();
+            const emojiDom = mdEditor.emojiDom;
+            const iconDom = this.getDom();
+            const display = checkDomDisplay(emojiDom);
+            setTimeout(() => {
+                setDomDisplay(emojiDom, display);
+                updateDomPosition(iconDom, emojiDom);
+            }, 32);
         }
     },
     {

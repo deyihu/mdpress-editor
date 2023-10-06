@@ -29,6 +29,8 @@ import { toBlob } from 'html-to-image';
 import { initExcel } from './preview/excel';
 import { exportMarkMapHTML } from './exportmarkmap';
 import { lazyLoad } from './preview/layzload';
+// import emojiData from '@emoji-mart/data'
+import { Picker } from 'emoji-mart';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -66,6 +68,12 @@ function hideDomByDisplay(dom) {
     if (display === 'block') {
         domHide(dom);
     }
+}
+
+function createFloatPanel() {
+    const dom = createDom('div');
+    dom.className = 'mdeditor-float-container';
+    return dom;
 }
 
 const OPTIONS = {
@@ -116,6 +124,7 @@ export class MDEditor extends Eventable(Base) {
         this.initDoms();
         this.initTheme();
         this.initExportFile();
+        this.initEmoji();
         this.initTools();
         this.setTheme(options.theme);
         setTimeout(() => {
@@ -244,9 +253,8 @@ export class MDEditor extends Eventable(Base) {
     }
 
     initTheme() {
-        const themeDom = createDom('div');
+        const themeDom = createFloatPanel();
         this.themeDom = themeDom;
-        themeDom.className = 'mdeditor-theme-container';
         this.mainDom.appendChild(themeDom);
         const lis = themes.map(name => {
             const li = createDom('div');
@@ -270,9 +278,8 @@ export class MDEditor extends Eventable(Base) {
     }
 
     initExportFile() {
-        const exportFileDom = createDom('div');
+        const exportFileDom = createFloatPanel();
         this.exportFileDom = exportFileDom;
-        exportFileDom.className = 'mdeditor-theme-container';
         this.mainDom.appendChild(exportFileDom);
         const lis = exportFilesData.map(d => {
             const li = createDom('div');
@@ -290,6 +297,39 @@ export class MDEditor extends Eventable(Base) {
         });
         this.clickOutSide.addDom(this.exportFileDom);
         on(exportFileDom, 'clickoutside', e => {
+            hideDomByDisplay(e.target);
+        });
+    }
+
+    initEmoji() {
+        const emojiDom = createFloatPanel();
+        this.emojiDom = emojiDom;
+
+        const onEmojiSelect = (data) => {
+            const id = data.id;
+            const [range] = this.getCurrentRange();
+            this.editor.executeEdits('', [
+                {
+                    range,
+                    text: `:${id}:\n`
+                }
+            ]);
+
+        };
+
+        const pickerOptions = {
+            onEmojiSelect,
+            data: async () => {
+                const response = await fetch('https://cdn.jsdelivr.net/npm/@emoji-mart/data');
+                return response.json();
+            }
+        };
+        const picker = new Picker(pickerOptions);
+        emojiDom.appendChild(picker);
+
+        this.mainDom.appendChild(emojiDom);
+        this.clickOutSide.addDom(this.emojiDom);
+        on(emojiDom, 'clickoutside', e => {
             hideDomByDisplay(e.target);
         });
     }
@@ -404,78 +444,10 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         makeToc(this.previewDom, '.mdeditor-toc');
-        // const allDoms = this.previewDom.children;
-        // const findChildren = (dom) => {
-        //     const parentTag = dom.tagName.toLowerCase();
-        //     const parentType = parentTag[0];
-        //     const parentLevel = parentTag[1];
-        //     const children = [];
-        //     let findParent = false;
-        //     for (let i = 0, len = allDoms.length; i < len; i++) {
-        //         if (allDoms[i] === dom) {
-        //             findParent = true;
-        //             continue;
-        //         }
-        //         if (!findParent) {
-        //             continue;
-        //         }
-        //         const tagName = allDoms[i].tagName.toLowerCase();
-        //         if (tagName === parentTag) {
-        //             break;
-        //         }
-        //         if (tagName[0] !== parentType) {
-        //             continue;
-        //         }
-        //         const level = parseInt(tagName[1]);
-        //         if ((level - 1).toString() === parentLevel) {
-        //             children.push({
-        //                 dom: allDoms[i]
-        //             });
-        //         }
-        //     }
-        //     return children;
-        // };
-        // const titles = this.previewDom.querySelectorAll('h1');
-        // const nodes = Array.prototype.map.call(titles, (node) => {
-        //     return {
-        //         dom: node
-        //     };
-        // });
-
-        // const find = (node) => {
-        //     const children = findChildren(node.dom);
-        //     node.children = children;
-        //     if (children.length) {
-        //         children.forEach(child => {
-        //             find(child);
-        //         });
-        //     }
-        // };
-        // nodes.forEach(node => {
-        //     find(node);
-        // });
-        // const toHTML = (node) => {
-        //     const { dom, children } = node;
-        //     let html = `<li><a href="javascript:void(0)"/>${trimTitle(dom.textContent)}</a>`;
-        //     if (children && children.length) {
-        //         html += '<ul>';
-        //         html += children.map(child => {
-        //             return toHTML(child);
-        //         }).join('');
-        //         html += '</ul>';
-        //     }
-        //     html += '</li>';
-        //     return html;
-        // };
-        // let html = '<ul>';
-        // html += nodes.map(node => {
-        //     return toHTML(node);
-        // }).join('');
-        // html += '</ul>';
-        // this.tocDom.innerHTML = html;
         const aLinks = this.tocDom.querySelectorAll('a');
         aLinks.forEach(dom => {
             dom.id = dom.id || domId();
+            dom.textContent = trimTitle(dom.textContent);
         });
         const findDomPosition = (a, currentTitle) => {
             const result = [];
