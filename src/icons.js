@@ -778,7 +778,7 @@ const ICONS_RIGHT = [
         click: function () {
             const mdEditor = this.getEditor();
             mdEditor.tocOpen = !mdEditor.tocOpen;
-            mdEditor.checkTocState();
+            mdEditor._checkTocState();
         }
     },
     {
@@ -818,7 +818,7 @@ const ICONS_RIGHT = [
         click: function () {
             const mdEditor = this.getEditor();
             mdEditor.preview = !mdEditor.preview;
-            mdEditor.checkPreviewState();
+            mdEditor._checkPreviewState();
         }
     },
     {
@@ -828,6 +828,16 @@ const ICONS_RIGHT = [
         click: function () {
             const mdEditor = this.getEditor();
             checkFullScreen(mdEditor);
+        }
+    },
+    {
+        name: 'icon-heisemoshi',
+        title: '暗黑模式',
+        position: 'right',
+        click: function () {
+            const mdEditor = this.getEditor();
+            mdEditor.dark = !mdEditor.dark;
+            mdEditor._checkDark();
         }
     },
     {

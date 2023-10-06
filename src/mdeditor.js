@@ -78,6 +78,7 @@ function createFloatPanel() {
 
 const OPTIONS = {
     preview: true,
+    dark: false,
     theme: 'vitepress',
     themeURL: './../theme/',
     tocOpen: false,
@@ -117,19 +118,21 @@ export class MDEditor extends Eventable(Base) {
         this.options = options;
         this.preview = this.options.preview;
         this.tocOpen = this.options.tocOpen;
+        this.dark = this.options.dark;
         this.fullScreen = false;
         this.editorUpdateValues = [];
         this.themeName = '';
         this.clickOutSide = create();
-        this.initDoms();
-        this.initTheme();
-        this.initExportFile();
-        this.initEmoji();
-        this.initTools();
+        this._initDoms();
+        this._initTheme();
+        this._initExportFile();
+        this._initEmoji();
+        this._initTools();
         this.setTheme(options.theme);
+        this._checkDark();
         setTimeout(() => {
-            this.checkPreviewState();
-            this.checkTocState();
+            this._checkPreviewState();
+            this._checkTocState();
         }, 16);
 
         this.frameId = null;
@@ -152,7 +155,7 @@ export class MDEditor extends Eventable(Base) {
 
     }
 
-    initDoms() {
+    _initDoms() {
         const { monacoOptions } = this.options;
 
         const editorDom = this.editorDom = createDom('div');
@@ -248,11 +251,11 @@ export class MDEditor extends Eventable(Base) {
         // });
     }
 
-    initTools() {
+    _initTools() {
         createDefaultIcons(this);
     }
 
-    initTheme() {
+    _initTheme() {
         const themeDom = createFloatPanel();
         this.themeDom = themeDom;
         this.mainDom.appendChild(themeDom);
@@ -277,7 +280,7 @@ export class MDEditor extends Eventable(Base) {
         });
     }
 
-    initExportFile() {
+    _initExportFile() {
         const exportFileDom = createFloatPanel();
         this.exportFileDom = exportFileDom;
         this.mainDom.appendChild(exportFileDom);
@@ -301,7 +304,7 @@ export class MDEditor extends Eventable(Base) {
         });
     }
 
-    initEmoji() {
+    _initEmoji() {
         const emojiDom = createFloatPanel();
         this.emojiDom = emojiDom;
 
@@ -409,7 +412,7 @@ export class MDEditor extends Eventable(Base) {
         saveAs(blob, `${now()}.${fileType}`);
     }
 
-    checkPreviewState() {
+    _checkPreviewState() {
         const { preview } = this;
         if (preview) {
             this.editorDom.style.width = '50%';
@@ -424,7 +427,7 @@ export class MDEditor extends Eventable(Base) {
         this.fire(preview ? 'openpreview' : 'closepreview', { preview });
     }
 
-    checkTocState() {
+    _checkTocState() {
         const { tocOpen } = this;
         let width = 300;
         if (!tocOpen) {
@@ -678,19 +681,28 @@ export class MDEditor extends Eventable(Base) {
         if (themeName === this.themeName) {
             return this;
         }
-        const children = document.head.children;
-        let styleLink;
-        for (let i = 0, len = children.length; i < len; i++) {
-            if (children[i].id === THEME_ID) {
-                styleLink = children[i];
-            }
+        if (themes.indexOf(themeName) === -1) {
+            getToastr().error(`'${themeName}' theme not exist`);
+            return this;
         }
+        this.themeName = themeName;
         const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
         // get theme style
         const promise = fetchScheduler.createFetch(url, {
             // ...
         });
         promise.then(res => res.text()).then(text => {
+            if (themeName !== this.themeName) {
+                console.warn(`'${themeName}' theme ignored,the new '${this.themeName}' will fetch`);
+                return this;
+            }
+            const children = document.head.children;
+            let styleLink;
+            for (let i = 0, len = children.length; i < len; i++) {
+                if (children[i].id === THEME_ID) {
+                    styleLink = children[i];
+                }
+            }
             if (styleLink) {
                 document.head.removeChild(styleLink);
             }
@@ -700,13 +712,16 @@ export class MDEditor extends Eventable(Base) {
             style.type = 'text/css';
             style.innerHTML = text;
             document.head.appendChild(style);
-            this.themeName = themeName;
             this._activeThemeItem(themeName);
             this.fire('themechange', { theme: themeName, value: text });
+            if (this.dark && themeName.indexOf('dark') === -1) {
+                console.warn(`current model is dark,the '${themeName}' theme is mismatching`);
+            }
         }).catch(err => {
-            console.error(`not fetch theme：${themeName} from:${url}`);
+            console.error(`not fetch theme：'${themeName}' from:${url}`);
             console.error(err);
         });
+        return this;
     }
 
     getTheme() {
@@ -724,7 +739,7 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         this.preview = true;
-        this.checkPreviewState();
+        this._checkPreviewState();
         return this;
     }
 
@@ -733,7 +748,7 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         this.preview = false;
-        this.checkPreviewState();
+        this._checkPreviewState();
         return this;
     }
 
@@ -758,7 +773,7 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         this.tocOpen = true;
-        this.checkTocState();
+        this._checkTocState();
         return this;
     }
 
@@ -767,7 +782,47 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         this.tocOpen = false;
-        this.checkTocState();
+        this._checkTocState();
         return this;
+    }
+
+    _checkDark() {
+        const iconDoms = Array.prototype.map.call(this.toolsDom.children, (dom) => {
+            return dom;
+        });
+        const doms = [this.toolsDom, this.tocDom, this.exportFileDom, this.themeDom];
+        const DARKCLASS = 'mdeditor-dark';
+        const TOOLCLASS = 'mdeditor-panel-dark';
+        doms.forEach(dom => {
+            if (this.dark) {
+                dom.classList.add(DARKCLASS);
+                dom.classList.add(TOOLCLASS);
+            } else {
+                dom.classList.remove(DARKCLASS);
+                dom.classList.remove(TOOLCLASS);
+            }
+        });
+        iconDoms.forEach(dom => {
+            if (this.dark) {
+                dom.classList.add(DARKCLASS);
+            } else {
+                dom.classList.remove(DARKCLASS);
+            }
+        });
+
+        this.editor.updateOptions({
+            theme: this.dark ? 'vs-dark' : 'vs'
+        });
+        this.setTheme(this.dark ? 'github-dark' : 'github');
+    }
+
+    openDark() {
+        this.dark = true;
+        return this.checkDark();
+    }
+
+    closeDark() {
+        this.dark = false;
+        return this.checkDark();
     }
 }

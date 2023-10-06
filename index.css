@@ -211,7 +211,7 @@
   top: 0;
   z-index: 1000;
   display: none;
-  max-height: 500px;
+  max-height: 560px;
   overflow: auto;
 }
 
@@ -251,6 +251,24 @@
   height: 400px;
   overflow: scroll;
 }
+
+.mdeditor-dark {
+  background: #1E1E1E !important;
+  color: #9b9999 !important;
+}
+
+.mdeditor-panel-dark {
+  border: 1px solid #000;
+}
+
+.mdeditor-dark .mdeditor-theme-select-item {
+  border-bottom: 1px solid #000;
+}
+
+.mdeditor-dark .mdeditor-theme-select-item:hover {
+  background-color: #000;
+}
+
 
 /* copy from https://github.com/vuejs/vitepress/blob/v1.0.0-beta.6/src/client/theme-default/styles/vars.css */
 :root {
