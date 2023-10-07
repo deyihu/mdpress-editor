@@ -83,6 +83,7 @@ const OPTIONS = {
     dark: false,
     theme: 'vitepress',
     themeURL: './../theme/',
+    themeCache: true,
     tocOpen: false,
     monacoOptions: {
         language: 'markdown',
@@ -721,7 +722,8 @@ export class MDEditor extends Eventable(Base) {
                 console.warn(`current model is dark,the '${themeName}' theme is mismatching`);
             }
         };
-        if (THEMECACHE.get(themeName)) {
+        const themeCache = this.options.themeCache;
+        if (THEMECACHE.get(themeName) && themeCache) {
             themeChange(THEMECACHE.get(themeName));
         } else {
             const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
@@ -730,7 +732,9 @@ export class MDEditor extends Eventable(Base) {
                 // ...
             });
             promise.then(res => res.text()).then(text => {
-                THEMECACHE.set(themeName, text);
+                if (themeCache) {
+                    THEMECACHE.set(themeName, text);
+                }
                 themeChange(text);
             }).catch(err => {
                 console.error(`not fetch theme：'${themeName}' from:${url}`);
