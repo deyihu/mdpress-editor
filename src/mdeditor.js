@@ -822,7 +822,7 @@ export class MDEditor extends Eventable(Base) {
             theme: dark ? 'vs-dark' : 'vs'
         });
         let previewTheme = 'vitepress';
-        for (let i = 0, len = this.themeHistroy.length; i < len; i++) {
+        for (let len = this.themeHistroy.length, i = len - 1; i >= 0; i--) {
             if (this.themeHistroy[i].indexOf('dark') === -1) {
                 previewTheme = this.themeHistroy[i];
                 break;
