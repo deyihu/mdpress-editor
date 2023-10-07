@@ -846,3 +846,7 @@ export class MDEditor extends Eventable(Base) {
         return this.dark;
     }
 }
+
+export function getMarkdownIt() {
+    return md;
+}

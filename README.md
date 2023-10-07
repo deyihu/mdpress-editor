@@ -115,6 +115,18 @@ or
 
 ## API
 
+### getMarkdownIt
+
+get [markdown-it](https://github.com/markdown-it/markdown-it) instance
+
+```js
+import {
+    getMarkdownIt
+} from 'mdpress-editor';
+const md = getMarkdownIt();
+md.use(/**you plugin**/);
+```
+
 ### themes
 
 all theme list
