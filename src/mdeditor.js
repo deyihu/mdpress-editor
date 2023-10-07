@@ -89,6 +89,9 @@ const OPTIONS = {
         language: 'markdown',
         value: '',
         automaticLayout: true
+    },
+    prettierOptions: {
+        tabWidth: 4
     }
 };
 
@@ -235,10 +238,10 @@ export class MDEditor extends Eventable(Base) {
                     miniToastr.warn(message);
                     return;
                 }
-                prettier.format(this.getValue(), {
+                prettier.format(this.getValue(), Object.assign({}, this.options.prettierOptions, {
                     parser: 'markdown',
                     plugins: prettier.prettierPlugins
-                }).then(text => {
+                })).then(text => {
                     // console.log(text);
                     const [range] = this.getWholeRange();
                     this.editor.executeEdits('', [
