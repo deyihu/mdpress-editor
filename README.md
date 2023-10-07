@@ -124,7 +124,7 @@ import {
     getMarkdownIt
 } from 'mdpress-editor';
 const md = getMarkdownIt();
-md.use(/**you plugin**/);
+md.use( /**you plugin**/ );
 ```
 
 ### themes
@@ -242,6 +242,7 @@ const mdEditor = new MDEditor(dom, {
     theme: 'vitepress',
     dark: false,
     themeURL: './../theme/', //theme files path
+    themeCache: true, //open theme cache
     tocOpen: false, //open toc
     //monaco config
     monacoOptions: {
@@ -284,11 +285,19 @@ const mdEditor = new MDEditor(dom, {
    const [range] = mdEditor.getCurrentRange();
 ```
 
+  + getIcons()
+
+  
+
+```js
+  const icons = mdEditor.getIcons();
+```
+
   + isPreview()
   + isFullScreen()
   + isToc()
   + isDark()
-  + getContainer()
+  + getContainer() `get eidtor container`
   + getEditor() `get monaco editor`
 
 ```js
