@@ -274,6 +274,9 @@ const mdEditor = new MDEditor(dom, {
         language: 'markdown',
         value: '',
         automaticLayout: true
+    },
+    prettierOptions: {
+        tabWidth: 4
     }
 })
 ```
