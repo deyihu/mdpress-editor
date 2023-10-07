@@ -24,6 +24,8 @@ A simple markdown editor base [monaco-editor](https://github.com/microsoft/monac
 
 ## Install
 
+### NPM
+
 ```sh
 npm i mdpress-editor
 #or
@@ -31,7 +33,7 @@ yarn add mdpress-editor
 
 ```
 
-or
+### CDN 
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/mdpress-editor/index.css">
@@ -47,7 +49,9 @@ or
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 ```
 
-* It contains a large number of plugins, and packaging all plugins can result in a very large volume, so some plugin packages require you to dynamically register them
+* It contains a large number of plugins
+
+Considering the size of the packaging, so some plugin packages require you to dynamically register them
 
 * [monaco-editor](https://github.com/microsoft/monaco-editor)
 * [Prettier](https://github.com/prettier/prettier)
@@ -61,7 +65,7 @@ When using these plugins, you need to inject the necessary plugin packages
 
 ```js
 require(['vs/editor/editor.main'], function() {
-    registerMonaco(window.monaco);
+    registerMonaco(monaco);
 });
 
 prettier.prettierPlugins = prettierPlugins;
@@ -87,6 +91,27 @@ you can:
 
 * copy from `node-moudules/mdress-editor/theme`
 * set theme url from cdn url when create  `MDEditor`
+
+## Code format by Prettier
+
+```html
+<script src="./lib/prettier/standalone.js"></script>
+<script src="./lib/prettier/plugins/acorn.js"></script>
+<!-- <script src="./lib/prettier/plugins/angular.js"></script> -->
+<script src="./lib/prettier/plugins/babel.js"></script>
+<script src="./lib/prettier/plugins/estree.js"></script>
+<!-- <script src="./lib/prettier/plugins/flow.js"></script> -->
+<!-- <script src="./lib/prettier/plugins/glimmer.js"></script> -->
+<!-- <script src="./lib/prettier/plugins/graphql.js"></script> -->
+<script src="./lib/prettier/plugins/html.js"></script>
+<script src="./lib/prettier/plugins/markdown.js"></script>
+<!-- <script src="./lib/prettier/plugins/meriyah.js"></script> -->
+<script src="./lib/prettier/plugins/postcss.js"></script>
+<script src="./lib/prettier/plugins/typescript.js"></script>
+<!-- <script src="./lib/prettier/plugins/yaml.js"></script> -->
+```
+
+[more info for prettier in browser](https://prettier.io/docs/en/browser)
 
 ## Use
 

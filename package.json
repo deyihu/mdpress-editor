@@ -28,6 +28,7 @@
     "index.css"
   ],
   "devDependencies": {
+    "@types/markdown-it": "^13.0.2",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.1",
