@@ -34,6 +34,7 @@ import { Picker } from 'emoji-mart';
 import { setHeadLineNumber } from './preview/headlinenumber';
 
 const THEME_ID = 'mdeditor_theme_style';
+const THEMECACHE = new Map();
 const md = createMarkdown();
 
 const exportFilesData = [
@@ -693,12 +694,7 @@ export class MDEditor extends Eventable(Base) {
         }
         this.themeName = themeName;
         this.themeHistroy.push(themeName);
-        const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
-        // get theme style
-        const promise = fetchScheduler.createFetch(url, {
-            // ...
-        });
-        promise.then(res => res.text()).then(text => {
+        const themeChange = (text) => {
             if (themeName !== this.themeName) {
                 console.warn(`'${themeName}' theme ignored,the new '${this.themeName}' will fetch`);
                 return this;
@@ -724,10 +720,23 @@ export class MDEditor extends Eventable(Base) {
             if (this.dark && themeName.indexOf('dark') === -1) {
                 console.warn(`current model is dark,the '${themeName}' theme is mismatching`);
             }
-        }).catch(err => {
-            console.error(`not fetch theme：'${themeName}' from:${url}`);
-            console.error(err);
-        });
+        };
+        if (THEMECACHE.get(themeName)) {
+            themeChange(THEMECACHE.get(themeName));
+        } else {
+            const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
+            // get theme style
+            const promise = fetchScheduler.createFetch(url, {
+                // ...
+            });
+            promise.then(res => res.text()).then(text => {
+                THEMECACHE.set(themeName, text);
+                themeChange(text);
+            }).catch(err => {
+                console.error(`not fetch theme：'${themeName}' from:${url}`);
+                console.error(err);
+            });
+        }
         return this;
     }
 
