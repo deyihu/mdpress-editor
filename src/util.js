@@ -166,10 +166,12 @@ export function hideLoading() {
     document.body.removeChild(dom);
 }
 
-export function isTitle(title) {
-    // title = title.replace('#', '');
+export function isTitle(title, headContents) {
     title = title.trim();
-    return title[0] === '#';
+    if (title[0] === '#') {
+        title = trimTitle(title);
+        return headContents.indexOf(title) > -1;
+    }
 }
 
 export function trimTitle(title) {
@@ -195,4 +197,16 @@ const HEADTAGS = [
 export function isHeadTag(tag) {
     tag = tag.toLowerCase();
     return HEADTAGS.indexOf(tag) > -1;
+}
+
+export function formatHeadContents(dom) {
+    const children = dom.children || [];
+    const contents = [];
+    Array.prototype.forEach.call(children, element => {
+        if (isHeadTag(element.tagName)) {
+            const content = element.textContent;
+            contents.push(trimTitle(content));
+        }
+    });
+    return contents;
 }

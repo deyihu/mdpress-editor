@@ -1,7 +1,7 @@
 // import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
-import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, extend, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
+import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, extend, formatHeadContents, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
 import Eventable from './Eventable';
@@ -31,6 +31,7 @@ import { exportMarkMapHTML } from './exportmarkmap';
 import { lazyLoad } from './preview/layzload';
 // import emojiData from '@emoji-mart/data'
 import { Picker } from 'emoji-mart';
+import { setHeadLineNumber } from './preview/headlinenumber';
 
 const THEME_ID = 'mdeditor_theme_style';
 const md = createMarkdown();
@@ -123,6 +124,7 @@ export class MDEditor extends Eventable(Base) {
         this.editorUpdateValues = [];
         this.themeName = '';
         this.clickOutSide = create();
+        this.themeHistroy = [];
         this._initDoms();
         this._initTheme();
         this._initExportFile();
@@ -467,6 +469,7 @@ export class MDEditor extends Eventable(Base) {
         };
         const model = this.editor.getModel();
         const lineCount = model.getLineCount();
+        const headContents = formatHeadContents(this.previewDom);
         const findTitleRow = (a) => {
             let title = a.textContent;
             title = trimTitle(title);
@@ -474,7 +477,7 @@ export class MDEditor extends Eventable(Base) {
             let idx = 0;
             for (let lineNum = 1; lineNum <= lineCount; lineNum++) {
                 let content = model.getLineContent(lineNum);
-                if (isTitle(content)) {
+                if (isTitle(content, headContents)) {
                     content = trimTitle(content);
                     if (content.indexOf(title) === 0) {
                         idx++;
@@ -551,6 +554,7 @@ export class MDEditor extends Eventable(Base) {
             }
             this.imageViewer = new Viewer(dom);
             initExcel(dom, this);
+            setHeadLineNumber(this.editor, dom);
             scrollTop(dom, this);
             this._initTocData();
         });
@@ -680,6 +684,7 @@ export class MDEditor extends Eventable(Base) {
 
     setTheme(themeName) {
         if (themeName === this.themeName) {
+            console.warn(`'${themeName}' equal current theme '${this.themeName}'`);
             return this;
         }
         if (themes.indexOf(themeName) === -1) {
@@ -687,6 +692,7 @@ export class MDEditor extends Eventable(Base) {
             return this;
         }
         this.themeName = themeName;
+        this.themeHistroy.push(themeName);
         const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
         // get theme style
         const promise = fetchScheduler.createFetch(url, {
@@ -791,11 +797,12 @@ export class MDEditor extends Eventable(Base) {
         const iconDoms = Array.prototype.map.call(this.toolsDom.children, (dom) => {
             return dom;
         });
-        const doms = [this.toolsDom, this.tocDom, this.exportFileDom, this.themeDom];
+        const doms = [this.toolsDom, this.editorDom, this.tocDom, this.exportFileDom, this.themeDom];
         const DARKCLASS = 'mdeditor-dark';
         const TOOLCLASS = 'mdeditor-panel-dark';
+        const dark = this.dark;
         doms.forEach(dom => {
-            if (this.dark) {
+            if (dark) {
                 dom.classList.add(DARKCLASS);
                 dom.classList.add(TOOLCLASS);
             } else {
@@ -804,7 +811,7 @@ export class MDEditor extends Eventable(Base) {
             }
         });
         iconDoms.forEach(dom => {
-            if (this.dark) {
+            if (dark) {
                 dom.classList.add(DARKCLASS);
             } else {
                 dom.classList.remove(DARKCLASS);
@@ -812,9 +819,17 @@ export class MDEditor extends Eventable(Base) {
         });
 
         this.editor.updateOptions({
-            theme: this.dark ? 'vs-dark' : 'vs'
+            theme: dark ? 'vs-dark' : 'vs'
         });
-        this.setTheme(this.dark ? 'github-dark' : 'github');
+        let previewTheme = 'vitepress';
+        for (let i = 0, len = this.themeHistroy.length; i < len; i++) {
+            if (this.themeHistroy[i].indexOf('dark') === -1) {
+                previewTheme = this.themeHistroy[i];
+                break;
+            }
+        }
+        this.setTheme(dark ? 'github-dark' : previewTheme);
+        this.fire(dark ? 'opendark' : 'closedark', { dark });
     }
 
     openDark() {

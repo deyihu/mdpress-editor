@@ -1,12 +1,13 @@
-import { isHeadTag, isTitle, trimTitle } from '../util';
+import { formatHeadContents, isHeadTag, isTitle, trimTitle } from '../util';
 
 export function setHeadLineNumber(editor, dom) {
     const model = editor.getModel();
     const lineCount = model.getLineCount();
     const headLines = [];
+    const headContents = formatHeadContents(dom);
     for (let lineNumber = 1; lineNumber <= lineCount; lineNumber++) {
         const content = model.getLineContent(lineNumber);
-        if (isTitle(content)) {
+        if (isTitle(content, headContents)) {
             headLines.push({
                 lineNumber,
                 content
