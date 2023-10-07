@@ -12,13 +12,13 @@ A simple markdown editor base [monaco-editor](https://github.com/microsoft/monac
 * [plantuml](https://plantuml.com/zh/) support
 * [Swiper](https://github.com/nolimits4web/swiper) support
 * [Qrcode](https://github.com/davidshimjs/qrcodejs) support
-* XLSX File view by [x-spreadsheet](https://github.com/myliang/x-spreadsheet) and [sheetjs](https://github.com/SheetJS/sheetjs/tree/master)
-* [github emoji](https://github.com/markdown-it/markdown-it-emoji) support
+* [github emoji](https://github.com/missive/emoji-mart) support
 * toc support
 * include a remote markdown file
 * Multi theme support, theme from [juejin-markdown-themes](https://github.com/xitu/juejin-markdown-themes)
 * export md, html, png files
 * export [Markmap](https://github.com/markmap/markmap) support
+* XLSX File view by [x-spreadsheet](https://github.com/myliang/x-spreadsheet) and [sheetjs](https://github.com/SheetJS/sheetjs/tree/master)
 * support custom toolbar
 * [Prettier](https://github.com/prettier/prettier) format support
 
@@ -203,6 +203,7 @@ registerMermaid(mermaid);
 ```js
 registerXLSX(XLSX);
 ```
+
 ### registerX_spreadsheet 
 
 [x-spreadsheet](https://github.com/myliang/x-spreadsheet)
@@ -227,6 +228,7 @@ import {
 const mdEditor = new MDEditor(dom, {
     preview: true, //open preview model
     theme: 'vitepress',
+    dark: false,
     themeURL: './../theme/', //theme files path
     tocOpen: false, //open toc
     //monaco config
@@ -273,6 +275,7 @@ const mdEditor = new MDEditor(dom, {
   + isPreview()
   + isFullScreen()
   + isToc()
+  + isDark()
   + getContainer()
   + getEditor() `get monaco editor`
 
@@ -297,6 +300,8 @@ const mdEditor = new MDEditor(dom, {
   + closeFullScreen()
   + openToc()
   + closeToc()
+  + openDark()
+  + closeDark()
 
 #### events
 
@@ -307,6 +312,8 @@ const mdEditor = new MDEditor(dom, {
 * themechange
 * opentoc
 * closetoc
+* opendark
+* closedark
 * paste
 
 ```js
