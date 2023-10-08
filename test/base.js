@@ -86,6 +86,7 @@ function init() {
             mdpress.registerMermaid(window.mermaid);
             mdpress.registerXLSX(window.XLSX);
             mdpress.registerX_spreadsheet(window.x_spreadsheet);
+            mdpress.registerFlowChart(window.flowchart);
             // eslint-disable-next-line no-undef
             prettier.prettierPlugins = prettierPlugins;
             // eslint-disable-next-line no-undef
