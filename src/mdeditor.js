@@ -251,6 +251,9 @@ export class MDEditor extends Eventable(Base) {
                             text
                         }
                     ]);
+                    setTimeout(() => {
+                        this._syncScroll();
+                    }, 1000);
                 });
             }// 点击后执行的操作
         });
