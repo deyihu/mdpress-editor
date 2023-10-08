@@ -12,7 +12,8 @@ export {
     registerQRCode,
     registerMermaid,
     registerXLSX,
-    registerX_spreadsheet
+    registerX_spreadsheet,
+    registerFlowChart
 } from './src/deps';
 export * from './src/mdeditor';
 export * from './src/toolicon';

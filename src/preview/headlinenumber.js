@@ -1,6 +1,6 @@
 import { formatHeadContents, isHeadTag, isTitle, trimTitle } from '../util';
 
-export function setHeadLineNumber(editor, dom) {
+export function setHeadLineNumber(dom, editor) {
     const model = editor.getModel();
     const lineCount = model.getLineCount();
     const headLines = [];

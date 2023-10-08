@@ -90,3 +90,13 @@ export function registerX_spreadsheet(x_spreadsheet) {
 export function getX_spreadsheet() {
     return x_spreadsheetJS;
 }
+
+let flowChartJS;
+
+export function registerFlowChart(flowChart) {
+    flowChartJS = flowChart;
+}
+
+export function getFlowChart() {
+    return flowChartJS;
+}

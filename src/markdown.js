@@ -50,6 +50,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import vim from 'highlight.js/lib/languages/vim';
 import wasm from 'highlight.js/lib/languages/wasm';
 import xml from 'highlight.js/lib/languages/xml';
+import { flowChartPlugin } from './plugins/plugin_flowchart';
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('java', java);
 hljs.registerLanguage('bash', bash);
@@ -136,6 +137,7 @@ export function installPlugins(md) {
     katexPlugin(md);
     mermaidPlugin(md);
     swiperPlugin(md);
+    flowChartPlugin(md);
     md.use(mk);
     md.use(taskLists);
     md.use(qrCodePlugin);

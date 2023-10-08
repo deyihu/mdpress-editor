@@ -32,6 +32,7 @@ import { lazyLoad } from './preview/layzload';
 // import emojiData from '@emoji-mart/data'
 import { Picker } from 'emoji-mart';
 import { setHeadLineNumber } from './preview/headlinenumber';
+import { initFlowChart } from './preview/flowchart';
 
 const THEME_ID = 'mdeditor_theme_style';
 const THEMECACHE = new Map();
@@ -553,13 +554,14 @@ export class MDEditor extends Eventable(Base) {
             initQRCode(dom, this);
 
             initSwiper(dom, this);
+            initFlowChart(dom, this);
 
             if (this.imageViewer) {
                 this.imageViewer.destroy();
             }
             this.imageViewer = new Viewer(dom);
             initExcel(dom, this);
-            setHeadLineNumber(this.editor, dom);
+            setHeadLineNumber(dom, this.editor);
             scrollTop(dom, this);
             this._initTocData();
         });

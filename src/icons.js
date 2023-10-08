@@ -108,6 +108,26 @@ const TASKLIST = `
 - [ ] Contact the media
 `;
 
+const FLOWCHART = `
+::: flowchart\n
+st=>start: Start:>http://www.google.com[blank]
+e=>end:>http://www.google.com
+op1=>operation: My Operation
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes
+or No?:>http://www.google.com
+io=>inputoutput: catch something...
+para=>parallel: parallel tasks
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->para
+para(path1, bottom)->sub1(right)->op1
+para(path2, top)->op1
+
+::: 
+`;
+
 function getEditors(iconDom) {
     const mdEditor = iconDom.getEditor();
     return [mdEditor, mdEditor.editor];
@@ -603,6 +623,13 @@ const ICONS = [
         title: 'mermaid',
         click: function () {
             containerClick(this.getEditor(), MERMAID);
+        }
+    },
+    {
+        name: 'icon-flowChart',
+        title: 'flowchart',
+        click: function () {
+            containerClick(this.getEditor(), FLOWCHART);
         }
     },
     {
