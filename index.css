@@ -64,7 +64,12 @@
   color: #6b6666;
   cursor: pointer;
   padding: 4px;
-  background: #f7f7f7;
+  background-color: #f7f7f7;
+  /* border-right: 1px solid gray; */
+}
+
+.mdeditor-tools .item {
+  background-color: transparent;
   /* border-right: 1px solid gray; */
 }
 
@@ -79,6 +84,10 @@
 .mdeditor-tools .item:hover {
   background-color: #d7d6d6;
   color: black;
+}
+.mdeditor-tools .mdeditor-dark:hover {
+  background: #000;
+  /* color: black; */
 }
 
 .mdeditor-main {
@@ -253,8 +262,9 @@
 }
 
 .mdeditor-dark {
-  background: #1E1E1E !important;
+  background-color: #1E1E1E;
   color: #9b9999 !important;
+  color-scheme: dark;
 }
 
 .mdeditor-panel-dark {
