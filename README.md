@@ -10,6 +10,7 @@ A simple markdown editor base [monaco-editor](https://github.com/microsoft/monac
 * [KateX](https://github.com/KaTeX/KaTeX) support
 * [Mermaid](https://github.com/mermaid-js/mermaid) support
 * [plantuml](https://plantuml.com/zh/) support
+* [flowchart](http://flowchart.js.org/) support
 * [Swiper](https://github.com/nolimits4web/swiper) support
 * [Qrcode](https://github.com/davidshimjs/qrcodejs) support
 * [github emoji](https://github.com/missive/emoji-mart) support
@@ -247,6 +248,13 @@ registerXLSX(XLSX);
 
 ```js
 registerX_spreadsheet(x_spreadsheet);
+```
+### registerFlowChart 
+
+* [flowchart](http://flowchart.js.org/)
+
+```js
+registerFlowChart(flowchart);
 ```
 
 ### MDEditor  
