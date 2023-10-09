@@ -1,5 +1,8 @@
 export const themes = [
     'vitepress',
+    'v-green',
+    'simplicity-green',
+    'vuepress',
     'github',
     'github-dark',
     'serene-rose',
@@ -19,5 +22,6 @@ export const themes = [
     'smart-blue',
     'z-blue',
     'arknights',
-    'Chinese-red'
+    'Chinese-red',
+    'greenwillow'
 ];
