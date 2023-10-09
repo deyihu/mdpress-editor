@@ -22,6 +22,7 @@ A simple markdown editor base [monaco-editor](https://github.com/microsoft/monac
 * XLSX File view by [x-spreadsheet](https://github.com/myliang/x-spreadsheet) and [sheetjs](https://github.com/SheetJS/sheetjs/tree/master)
 * support custom toolbar
 * [Prettier](https://github.com/prettier/prettier) format support
+* dark model support
 
 ## Install
 
@@ -249,6 +250,7 @@ registerXLSX(XLSX);
 ```js
 registerX_spreadsheet(x_spreadsheet);
 ```
+
 ### registerFlowChart 
 
 * [flowchart](http://flowchart.js.org/)
@@ -277,6 +279,7 @@ const mdEditor = new MDEditor(dom, {
     themeURL: './../theme/', //theme files path
     themeCache: true, //open theme cache
     tocOpen: false, //open toc
+    emojiURL: 'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
     //monaco config
     monacoOptions: {
         language: 'markdown',

@@ -67,6 +67,11 @@ const exportFilesData = [
 ];
 
 function hideDomByDisplay(dom) {
+    dom = dom.target || dom;
+    if (!(dom instanceof HTMLElement)) {
+        console.error(dom, 'is not HTMLElement');
+        return;
+    }
     const display = getDomDisplay(dom);
     if (display === 'block') {
         domHide(dom);
@@ -79,6 +84,12 @@ function createFloatPanel() {
     return dom;
 }
 
+function createLiElement() {
+    const li = createDom('div');
+    li.className = 'mdeditor-theme-select-item';
+    return li;
+}
+
 const OPTIONS = {
     preview: true,
     dark: false,
@@ -86,6 +97,7 @@ const OPTIONS = {
     themeURL: './../theme/',
     themeCache: true,
     tocOpen: false,
+    emojiURL: 'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
     monacoOptions: {
         language: 'markdown',
         value: '',
@@ -164,6 +176,14 @@ export class MDEditor extends Eventable(Base) {
     }
 
     _initDoms() {
+        const monaco = getMonaco();
+        const miniToastr = getToastr();
+        if (!monaco) {
+            const message = 'not find monaco editor namespace';
+            console.error(message);
+            miniToastr.error(message);
+            return;
+        }
         const { monacoOptions } = this.options;
 
         const editorDom = this.editorDom = createDom('div');
@@ -203,14 +223,7 @@ export class MDEditor extends Eventable(Base) {
         });
         // mainDom.appendChild(editorDom);
         // mainDom.appendChild(previewDom);
-        const monaco = getMonaco();
-        const miniToastr = getToastr();
-        if (!monaco) {
-            const message = 'not find monaco editor namespace';
-            console.error(message);
-            miniToastr.error(message);
-            return;
-        }
+
         this.editor = monaco.editor.create(this.editorDom, Object.assign({}, OPTIONS.monacoOptions, monacoOptions));
         this.editor.onDidChangeModelContent(() => {
             const value = this.getValue();
@@ -243,7 +256,6 @@ export class MDEditor extends Eventable(Base) {
                     parser: 'markdown',
                     plugins: prettier.prettierPlugins
                 })).then(text => {
-                    // console.log(text);
                     const [range] = this.getWholeRange();
                     this.editor.executeEdits('', [
                         {
@@ -255,11 +267,8 @@ export class MDEditor extends Eventable(Base) {
                         this._syncScroll();
                     }, 1000);
                 });
-            }// 点击后执行的操作
+            }
         });
-        // this.editor.onMouseDown(() => {
-        //     domHide(this.themeDom);
-        // });
     }
 
     _initTools() {
@@ -271,8 +280,7 @@ export class MDEditor extends Eventable(Base) {
         this.themeDom = themeDom;
         this.mainDom.appendChild(themeDom);
         const lis = themes.map(name => {
-            const li = createDom('div');
-            li.className = 'mdeditor-theme-select-item';
+            const li = createLiElement();
             li.dataset.theme = name;
             li.innerHTML = `<i class="iconfont icon-31liebiao"></i>&nbsp;&nbsp;${name}`;
             themeDom.appendChild(li);
@@ -286,9 +294,7 @@ export class MDEditor extends Eventable(Base) {
             });
         });
         this.clickOutSide.addDom(this.themeDom);
-        on(themeDom, 'clickoutside', e => {
-            hideDomByDisplay(e.target);
-        });
+        on(themeDom, 'clickoutside', hideDomByDisplay);
     }
 
     _initExportFile() {
@@ -296,8 +302,7 @@ export class MDEditor extends Eventable(Base) {
         this.exportFileDom = exportFileDom;
         this.mainDom.appendChild(exportFileDom);
         const lis = exportFilesData.map(d => {
-            const li = createDom('div');
-            li.className = 'mdeditor-theme-select-item';
+            const li = createLiElement();
             li.dataset.type = d.type;
             li.innerHTML = `<i class="iconfont ${d.icon}"></i>&nbsp;&nbsp;${d.label}`;
             exportFileDom.appendChild(li);
@@ -310,15 +315,12 @@ export class MDEditor extends Eventable(Base) {
             });
         });
         this.clickOutSide.addDom(this.exportFileDom);
-        on(exportFileDom, 'clickoutside', e => {
-            hideDomByDisplay(e.target);
-        });
+        on(exportFileDom, 'clickoutside', hideDomByDisplay);
     }
 
     _initEmoji() {
         const emojiDom = createFloatPanel();
         this.emojiDom = emojiDom;
-
         const onEmojiSelect = (data) => {
             // console.log(data);
             const native = data.native;
@@ -329,13 +331,11 @@ export class MDEditor extends Eventable(Base) {
                     text: `${native}\n`
                 }
             ]);
-
         };
-
         const pickerOptions = {
             onEmojiSelect,
             data: async () => {
-                const response = await fetch('https://cdn.jsdelivr.net/npm/@emoji-mart/data');
+                const response = await fetch(this.options.emojiURL);
                 return response.json();
             }
         };
@@ -344,13 +344,10 @@ export class MDEditor extends Eventable(Base) {
 
         this.mainDom.appendChild(emojiDom);
         this.clickOutSide.addDom(this.emojiDom);
-        on(emojiDom, 'clickoutside', e => {
-            hideDomByDisplay(e.target);
-        });
+        on(emojiDom, 'clickoutside', hideDomByDisplay);
     }
 
     _exportFile(type) {
-        // console.log(type);
         const previewDom = this.previewDom;
         const children = this.previewDom.children;
         const scrollTopDom = children[children.length - 1];
@@ -396,19 +393,6 @@ export class MDEditor extends Eventable(Base) {
                 hideLoading();
                 addScroll();
             });
-            // html2canvas(previewDom, { useCORS: true, windowWidth: Math.max(width, scrollWidth, innerWidth), windowHeight: Math.max(height, scrollHeight, innerHeight) + 10 })
-            //     .then((canvas) => {
-            //         canvas.toBlob((blob) => {
-            //             saveAs(blob, `${now()}.${fileType}`);
-            //         });
-            //         hideLoading();
-            //         addScroll();
-            //     }).catch(err => {
-            //         console.error(err);
-            //     })
-            //     .finally(() => {
-
-            //     });
             return;
         } else if (type === 'print') {
             printJS(this.previewDom.id, 'html');
@@ -429,12 +413,9 @@ export class MDEditor extends Eventable(Base) {
         if (preview) {
             this.editorDom.style.width = '50%';
             domShow(this.previewDom);
-            // this.editorUpdateValues.push(this.getValue());
-            // this.previewDom.style.width = '50%';
         } else {
             this.editorDom.style.width = '100%';
             domHide(this.previewDom);
-            // this.previewDom.style.width = '50%';
         }
         this.fire(preview ? 'openpreview' : 'closepreview', { preview });
     }
@@ -542,7 +523,6 @@ export class MDEditor extends Eventable(Base) {
         const value = this.editorUpdateValues[len - 1];
         checkInclude(value, (text) => {
             this.mdText = text;
-            // text = checkMarkMap(text);
             let html = md.render(text);
             html = lazyLoad(html, this);
             const dom = this.previewDom;
@@ -553,7 +533,6 @@ export class MDEditor extends Eventable(Base) {
             checkIframe(dom, this);
             initMermaid(dom, this);
             removePreBgColor(dom, this);
-            // initMarkMap(dom);
             initQRCode(dom, this);
 
             initSwiper(dom, this);
@@ -567,26 +546,25 @@ export class MDEditor extends Eventable(Base) {
             setHeadLineNumber(dom, this.editor);
             scrollTop(dom, this);
             this._initTocData();
+            this._syncScroll();
         });
     }
 
     _syncScroll() {
-        if (!this._scrollEvent) {
-            return this;
-        }
-        if (!this.preview) {
+        if (!this._scrollEvent || !this.preview) {
             return this;
         }
         const { scrollHeight, scrollTop } = this._scrollEvent;
+        const previewDom = this.previewDom;
         let top = 0;
         if (scrollTop > 10) {
-            top = calScroll(this.editor, this.previewDom);
+            top = calScroll(this.editor, previewDom);
             if (!top) {
-                const previewHeight = Math.max(this.previewDom.scrollHeight, scrollHeight);
+                const previewHeight = Math.max(previewDom.scrollHeight, scrollHeight);
                 top = scrollTop / scrollHeight * previewHeight;
             }
         }
-        this.previewDom.scroll({
+        previewDom.scroll({
             top,
             left: 0,
             behavior: 'smooth'
@@ -594,7 +572,6 @@ export class MDEditor extends Eventable(Base) {
     }
 
     // https://github.com/microsoft/monaco-editor/issues/639
-    // eslint-disable-next-line no-unused-vars
     getSelectText() {
         const range = this.editor.getSelection();
         const text = this.editor.getModel().getValueInRange(range);
@@ -640,7 +617,6 @@ export class MDEditor extends Eventable(Base) {
     }
 
     getWholeRange() {
-
         const model = this.editor.getModel();
         const linesNumber = model.getLineCount();
         const range = {
@@ -692,20 +668,20 @@ export class MDEditor extends Eventable(Base) {
         item.classList.add(ACTIVE_CLASS);
     }
 
-    setTheme(themeName) {
-        if (themeName === this.themeName) {
-            console.warn(`'${themeName}' equal current theme '${this.themeName}'`);
+    setTheme(theme) {
+        if (theme === this.themeName) {
+            console.warn(`'${theme}' equal current theme '${this.themeName}'`);
             return this;
         }
-        if (themes.indexOf(themeName) === -1) {
-            getToastr().error(`'${themeName}' theme not exist`);
+        if (themes.indexOf(theme) === -1) {
+            getToastr().error(`'${theme}' theme not exist`);
             return this;
         }
-        this.themeName = themeName;
-        this.themeHistroy.push(themeName);
+        this.themeName = theme;
+        this.themeHistroy.push(theme);
         const themeChange = (text) => {
-            if (themeName !== this.themeName) {
-                console.warn(`'${themeName}' theme ignored,the new '${this.themeName}' will fetch`);
+            if (theme !== this.themeName) {
+                console.warn(`'${theme}' theme ignored,the new '${this.themeName}' will fetch`);
                 return this;
             }
             const children = document.head.children;
@@ -724,28 +700,28 @@ export class MDEditor extends Eventable(Base) {
             style.type = 'text/css';
             style.innerHTML = text;
             document.head.appendChild(style);
-            this._activeThemeItem(themeName);
-            this.fire('themechange', { theme: themeName, value: text });
-            if (this.dark && themeName.indexOf('dark') === -1) {
-                console.warn(`current model is dark,the '${themeName}' theme is mismatching`);
+            this._activeThemeItem(theme);
+            this.fire('themechange', { theme, value: text });
+            if (this.dark && theme.indexOf('dark') === -1) {
+                console.warn(`current model is dark,the '${theme}' theme is mismatching`);
             }
         };
         const themeCache = this.options.themeCache;
-        if (THEMECACHE.get(themeName) && themeCache) {
-            themeChange(THEMECACHE.get(themeName));
+        if (THEMECACHE.get(theme) && themeCache) {
+            themeChange(THEMECACHE.get(theme));
         } else {
-            const url = `${this.options.themeURL}${themeName}.css?t=${now()}`;
+            const url = `${this.options.themeURL}${theme}.css?t=${now()}`;
             // get theme style
             const promise = fetchScheduler.createFetch(url, {
                 // ...
             });
             promise.then(res => res.text()).then(text => {
                 if (themeCache) {
-                    THEMECACHE.set(themeName, text);
+                    THEMECACHE.set(theme, text);
                 }
                 themeChange(text);
             }).catch(err => {
-                console.error(`not fetch theme：'${themeName}' from:${url}`);
+                console.error(`not fetch theme：'${theme}' from:${url}`);
                 console.error(err);
             });
         }
