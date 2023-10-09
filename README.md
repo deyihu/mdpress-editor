@@ -409,9 +409,19 @@ icon.addTo(mdEditor);
 
 * getDom()
 * on(event, handler)
+
+```js
+icon.on('click', e => {
+    console.log(e);
+})
+```
+
 * getEditor() 
 * addTo(mdEditor)
 * remove()
+* show()
+* hide()
+* isVisible()
 
 #### example
 

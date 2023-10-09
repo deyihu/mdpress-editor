@@ -1,4 +1,4 @@
-import { createDom, extend, on } from './util';
+import { createDom, domHide, domShow, extend, getDomDisplay, on } from './util';
 
 const OPTIONS = {
     icon: 'icon-zitijiacu',
@@ -35,10 +35,7 @@ export class ToolIcon {
     }
 
     isEnable() {
-        if (this.options.enable === false) {
-            return false;
-        }
-        return true;
+        return this.options.enable !== false;
     }
 
     getDom() {
@@ -72,5 +69,19 @@ export class ToolIcon {
             this.editor.toolsDom.removeChild(this.dom);
             this.editor = null;
         }
+    }
+
+    show() {
+        domShow(this.getDom());
+        return this;
+    }
+
+    hide() {
+        domHide(this.getDom());
+        return this;
+    }
+
+    isVisible() {
+        return getDomDisplay(this.getDom()) !== 'none';
     }
 }
