@@ -105,7 +105,8 @@ const OPTIONS = {
     },
     prettierOptions: {
         tabWidth: 4
-    }
+    },
+    updatePreviewDuration: 500
 };
 
 /**
@@ -158,7 +159,7 @@ export class MDEditor extends Eventable(Base) {
         this.frameId = null;
         let time = now();
         const loop = () => {
-            if (now() - time > 500) {
+            if (now() - time > this.options.updatePreviewDuration) {
                 this.updatePreview();
                 time = now();
             }
