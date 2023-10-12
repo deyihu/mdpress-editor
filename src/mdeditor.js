@@ -237,7 +237,7 @@ export class MDEditor extends Eventable(Base) {
         this.editor.addAction({
             id: '', // 菜单项 id
             label: 'Format Code', // 菜单项名称
-            // keybindings: [this.monaco.KeyMod.CtrlCmd | this.monaco.KeyCode.KEY_J], // 绑定快捷键
+            keybindings: [monaco.KeyMod.Shift | monaco.KeyMod.Alt | monaco.KeyCode.KeyF],
             contextMenuGroupId: '9_cutcopypaste', // 所属菜单的分组
             run: () => {
                 const prettier = getPrettier();
