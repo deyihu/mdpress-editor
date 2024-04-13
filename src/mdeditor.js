@@ -90,6 +90,41 @@ function createLiElement() {
     return li;
 }
 
+function getVSCodePasteData(items) {
+    let editorDataItem, codeItem;
+    items.forEach(item => {
+        const { type } = item;
+        if (type === 'vscode-editor-data') {
+            editorDataItem = item;
+        }
+        if (type === 'text/plain') {
+            codeItem = item;
+        }
+    });
+    if (!editorDataItem || !codeItem || !editorDataItem.text || !codeItem.text) {
+        return;
+    }
+    const text = editorDataItem.text;
+    if (!text) {
+        return;
+    }
+    let json;
+    try {
+        json = JSON.parse(text);
+    } catch (error) {
+        return;
+    }
+    if (!json || !json.mode) {
+        return;
+    }
+
+    return {
+        language: json.mode,
+        text: codeItem.text
+    };
+
+}
+
 const OPTIONS = {
     preview: true,
     dark: false,
@@ -106,7 +141,8 @@ const OPTIONS = {
     prettierOptions: {
         tabWidth: 4
     },
-    updatePreviewDuration: 500
+    updatePreviewDuration: 500,
+    autoParseVSCodePasteData: false
 };
 
 /**
@@ -173,6 +209,7 @@ export class MDEditor extends Eventable(Base) {
             }
             domSizeByWindow(this.getContainer());
         });
+        this.pasteItems = [];
 
     }
 
@@ -199,6 +236,20 @@ export class MDEditor extends Eventable(Base) {
         editorContainer.appendChild(editorDom);
         editorContainer.appendChild(previewDom);
         editorContainer.addEventListener('paste', e => {
+            if (e.clipboardData) {
+                this.pasteItems = Array.prototype.map.call(e.clipboardData.items, (item) => {
+                    return {
+                        type: item.type,
+                        kind: item.kind,
+                        data: item
+                    };
+                });
+                this.pasteItems.forEach((item) => {
+                    item.data.getAsString((text) => {
+                        item.text = text;
+                    });
+                });
+            }
             this.fire('paste', extend({}, e, { target: this }));
         }, true);
 
@@ -233,6 +284,22 @@ export class MDEditor extends Eventable(Base) {
         this.editor.onDidScrollChange((e) => {
             this._scrollEvent = e;
             this._syncScroll();
+        });
+        this.editor.onDidPaste((e) => {
+            if (!this.options.autoParseVSCodePasteData) {
+                return;
+            }
+            const result = getVSCodePasteData(this.pasteItems);
+            if (!e.range || !result || result.language === 'markdown') {
+                return;
+            }
+            this.editor.popUndoStop();
+            this.editor.executeEdits('', [
+                {
+                    range: e.range,
+                    text: '```' + result.language + '\n' + result.text + '\n```\n'
+                }
+            ]);
         });
         this.editor.addAction({
             id: '', // 菜单项 id
