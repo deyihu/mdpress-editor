@@ -11,7 +11,10 @@ const isDEV = process.env.NODE_ENV.trim() === 'dev';
 const FILEMANE = pkg.name;
 const sourceMap = isDEV;
 
-const banner = `/*!\n * ${pkg.name} v${pkg.version}\n  */`;
+const outer = `${pkg.name} v${pkg.version}`;
+
+const banner = `/*!\n * ${outer}\n  */`;
+const intro = `console.log('${outer}')`;
 const external = ['highlight.js'];
 const plugins = [
     json(),
@@ -45,6 +48,7 @@ let outs = [
             'sourcemap': sourceMap,
             'extend': true,
             'banner': banner,
+            'intro': intro,
             'globals': globals
         }
     },
@@ -59,6 +63,7 @@ let outs = [
             'file': `dist/${FILEMANE}.mjs`,
             'extend': true,
             'banner': banner,
+            'intro': intro,
             'globals': globals
         }
     },
@@ -73,6 +78,7 @@ let outs = [
             'sourcemap': false,
             'extend': true,
             'banner': banner,
+            'intro': intro,
             'globals': globals
         }
     }
