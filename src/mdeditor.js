@@ -33,6 +33,7 @@ import { lazyLoad } from './preview/layzload';
 import { Picker } from 'emoji-mart';
 import { setHeadLineNumber } from './preview/headlinenumber';
 import { initFlowChart } from './preview/flowchart';
+import { domDiff } from './diff';
 
 const THEME_ID = 'mdeditor_theme_style';
 const THEMECACHE = new Map();
@@ -126,6 +127,7 @@ function getVSCodePasteData(items) {
 }
 
 const OPTIONS = {
+    debug: false,
     preview: true,
     dark: false,
     theme: 'vitepress',
@@ -594,7 +596,14 @@ export class MDEditor extends Eventable(Base) {
             let html = md.render(text);
             html = lazyLoad(html, this);
             const dom = this.previewDom;
-            dom.innerHTML = html;
+
+            if (dom.childNodes.length === 0) {
+                dom.innerHTML = html;
+            } else {
+                const tempDom = document.createElement('div')
+                tempDom.innerHTML = html;
+                domDiff(dom, tempDom, this);
+            }
             this.editorUpdateValues = [];
             checkCodeGroup(dom, this);
             checkLinks(dom, this);
@@ -612,7 +621,7 @@ export class MDEditor extends Eventable(Base) {
             this.imageViewer = new Viewer(dom);
             initExcel(dom, this);
             setHeadLineNumber(dom, this.editor);
-            scrollTop(dom, this);
+            // scrollTop(dom, this);
             this._initTocData();
             this._syncScroll();
         });

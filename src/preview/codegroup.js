@@ -13,6 +13,11 @@ export function checkCodeGroup(dom) {
         }
     };
     codeGroups.forEach(codeGroup => {
+        const inited = codeGroup.inited;
+        if (inited) {
+            return;
+        }
+        codeGroup.inited = true;
         const tabsDom = codeGroup.querySelector('.tabs');
         const blocksDom = codeGroup.querySelector('.blocks');
         const radios = tabsDom.querySelectorAll('input[type=radio]');
