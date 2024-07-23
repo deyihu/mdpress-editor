@@ -808,7 +808,7 @@ const ICONS = [
                 mdEditor.dialog = null;
                 mdEditor.dom.removeChild(dialog);
                 fileDND && fileDND.dispose();
-            }
+            };
             on(cancelBtn, 'click', close);
             const fileContainer = dialog.querySelector('.file-dnd-container');
             if (fileContainer) {
@@ -818,7 +818,7 @@ const ICONS = [
                     const text = getFolderTreeText(tree);
                     codeClick(this.getMDEditor(), '```\n' + text + '```\n');
                     close();
-                })
+                });
             }
         }
     }

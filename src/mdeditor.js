@@ -8,7 +8,7 @@ import Eventable from './Eventable';
 import Viewer from 'viewerjs';
 import { checkIframe } from './preview/iframe';
 import { checkInclude } from './mdinclude';
-import { scrollTop } from './preview/scrolltop';
+// import { scrollTop } from './preview/scrolltop';
 import { calScroll } from './scrollsync';
 import { removePreBgColor } from './preview/prebackground';
 import { themes } from '../theme';
@@ -616,7 +616,7 @@ export class MDEditor extends Eventable(Base) {
             if (dom.childNodes.length === 0) {
                 dom.innerHTML = html;
             } else {
-                const tempDom = document.createElement('div')
+                const tempDom = document.createElement('div');
                 tempDom.innerHTML = html;
                 domDiff(dom, tempDom, this);
             }

@@ -62,26 +62,26 @@ export function initExcel(dom, editor) {
  * @returns {Object[]} An x-spreadsheet data
  */
 function stox(wb, XLSX) {
-    var out = [];
+    const out = [];
     wb.SheetNames.forEach(function (name) {
-        var o = { name: name, rows: {} };
-        var ws = wb.Sheets[name];
+        const o = { name: name, rows: {} };
+        const ws = wb.Sheets[name];
         if (!ws || !ws['!ref']) return;
-        var range = XLSX.utils.decode_range(ws['!ref']);
+        const range = XLSX.utils.decode_range(ws['!ref']);
         // sheet_to_json will lost empty row and col at begin as default
         range.s = { r: 0, c: 0 };
-        var aoa = XLSX.utils.sheet_to_json(ws, {
+        const aoa = XLSX.utils.sheet_to_json(ws, {
             raw: false,
             header: 1,
             range: range
         });
 
         aoa.forEach(function (r, i) {
-            var cells = {};
+            const cells = {};
             r.forEach(function (c, j) {
                 cells[j] = { text: c };
 
-                var cellRef = XLSX.utils.encode_cell({ r: i, c: j });
+                const cellRef = XLSX.utils.encode_cell({ r: i, c: j });
 
                 if (ws[cellRef] != null && ws[cellRef].f != null) {
                     cells[j].text = '=' + ws[cellRef].f;

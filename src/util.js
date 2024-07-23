@@ -154,12 +154,10 @@ export function getFolderTreeText(nodes) {
         if (children && children.length) {
             level++;
             children.forEach(child => {
-                loopNode(child, level)
+                loopNode(child, level);
             });
         }
-
-    }
-
+    };
     return nodes.map(node => {
         text = '';
         loopNode(node);

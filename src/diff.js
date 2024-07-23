@@ -1,7 +1,7 @@
-import { checkIframe } from "./preview/iframe";
-import { checkLinks } from "./preview/link";
-import { initMermaid } from "./preview/mermaid";
-import { initQRCode } from "./preview/qrcode";
+import { checkIframe } from './preview/iframe';
+import { checkLinks } from './preview/link';
+// import { initMermaid } from './preview/mermaid';
+// import { initQRCode } from './preview/qrcode';
 
 export function domDiff(dom1, dom2, editor) {
     // console.log(dom1.childNodes, dom2.childNodes);
@@ -16,19 +16,19 @@ export function domDiff(dom1, dom2, editor) {
         add: [],
         remove: [],
         update: []
-    }
+    };
     for (let i = 0; i < len; i++) {
         const node1 = childNodes[i], node2 = newChildNodes[i];
         if (!node1 && node2) {
             diff.add.push({
                 index: i,
                 node: node2
-            })
+            });
         } else if (node1 && !node2) {
             diff.remove.push({
                 index: i,
                 node: node1
-            })
+            });
         } else {
             const html1 = node1.outerHTML, html2 = node2.outerHTML;
             if (html1 !== html2) {
@@ -36,7 +36,7 @@ export function domDiff(dom1, dom2, editor) {
                     index: i,
                     node: node1,
                     newNode: node2
-                })
+                });
             }
         }
     }
@@ -49,7 +49,7 @@ export function domDiff(dom1, dom2, editor) {
     });
     add.forEach(({ node, index }) => {
         dom1.appendChild(node);
-    })
+    });
     update.forEach(({ node, newNode }) => {
         delete node.inited;
         if (newNode.parentNode) {
@@ -57,5 +57,5 @@ export function domDiff(dom1, dom2, editor) {
         }
         dom1.replaceChild(newNode, node);
         // node.outerHTML = newNode.outerHTML;
-    })
+    });
 }
