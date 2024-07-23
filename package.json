@@ -28,10 +28,10 @@
     "index.css"
   ],
   "devDependencies": {
-    "@types/markdown-it": "^13.0.2",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.1",
+    "@types/markdown-it": "^13.0.2",
     "cross-env": "^5.1.4",
     "eslint": "^6.2.2",
     "eslint-config-standard": "^14.1.0",
@@ -51,6 +51,7 @@
     "emoji-mart": "^5.5.2",
     "fetch-scheduler": "^0.4.0",
     "file-saver": "^2.0.5",
+    "filednd": "^0.7.0",
     "highlight.js": "^11.8.0",
     "html-to-image": "^1.11.11",
     "katex": "^0.6.0",

@@ -96,6 +96,22 @@ export function createDialog() {
     return dialog;
 }
 
+export function createFolderTreeDialog() {
+    const dialog = createDom('dialog');
+    dialog.className = 'mdeditor-dialog';
+    dialog.innerHTML = `
+    <div class="file-dnd-container">
+         <h2>拖拽文件夹到此处</h2>
+     </div>
+
+    <br>
+    <div style="text-align: right;">
+        <button id="table-btn-cancel">取消</button>
+    </div>
+    `;
+    return dialog;
+}
+
 export function getTableMdText(rows, cols) {
     let head = [], headLine = [];
     let rowsText = '', row = [];
@@ -117,6 +133,38 @@ export function getTableMdText(rows, cols) {
     headLine = headLine.join(' | ');
     headLine = `| ${headLine.toString()} |\n`;
     return `${head}${headLine}${rowsText}`;
+}
+
+export function getFolderTreeText(nodes) {
+
+    // let level = 1;
+    let text = '';
+    const loopNode = (node, level = 1) => {
+        const { name } = node;
+        let prefix = '├─ ';
+        if (level > 1) {
+            const array = [];
+            while (array.length < level - 1) {
+                array.push('| ');
+            }
+            prefix = array.join('').toString() + prefix;
+        }
+        text += `${prefix} ${name} \n`;
+        const children = node.children;
+        if (children && children.length) {
+            level++;
+            children.forEach(child => {
+                loopNode(child, level)
+            });
+        }
+
+    }
+
+    return nodes.map(node => {
+        text = '';
+        loopNode(node);
+        return text;
+    }).join('').toString();
 }
 
 export function getDomDisplay(dom) {

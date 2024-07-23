@@ -1,9 +1,10 @@
 import { ToolIcon } from './toolicon';
-import { createDialog, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
+import { createDialog, createFolderTreeDialog, getFolderTreeText, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
 import dayjs from 'dayjs';
 import { computePosition } from '@floating-ui/dom';
 import { getToastr } from './toast';
 import { checkFullScreen } from './fullscreen';
+import { FileDND } from 'filednd';
 
 const INFOBOX = `
 ::: info\n
@@ -536,6 +537,7 @@ const ICONS = [
             on(cancelBtn, 'click', () => {
                 dialog.close();
                 mdEditor.dialog = null;
+                mdEditor.dom.removeChild(dialog);
             });
             on(confirmBtn, 'click', () => {
                 const rowsDom = dialog.querySelector('#table-rows');
@@ -780,6 +782,41 @@ const ICONS = [
         enable: false,
         click: function () {
             // editor.getAction('editor.action.formatDocument').run();
+        }
+    },
+    {
+        name: 'icon-icon-48-mulushu',
+        title: '文件夹目录树',
+        // enable: false,
+        click: function () {
+            const [mdEditor] = getEditors(this);
+            const miniToastr = getToastr();
+            if (mdEditor.dialog) {
+                miniToastr.warn('检测到你已经打开了一个对话框请关闭当前的才可以使用', '警告', 3000);
+                return;
+            }
+            const dialog = createFolderTreeDialog();
+            mdEditor.dom.appendChild(dialog);
+            dialog.show();
+            mdEditor.dialog = dialog;
+            const cancelBtn = dialog.querySelector('#table-btn-cancel');
+            // const confirmBtn = dialog.querySelector('#table-btn-confirm');
+            let fileDND;
+            on(cancelBtn, 'click', () => {
+                dialog.close();
+                mdEditor.dialog = null;
+                mdEditor.dom.removeChild(dialog);
+            });
+            const fileContainer = dialog.querySelector('.file-dnd-container');
+            if (fileContainer) {
+                fileDND = new FileDND(fileContainer);
+                fileDND.dnd((files) => {
+                    const tree = fileDND.toTree();
+                    const text = getFolderTreeText(tree);
+                    codeClick(this.getEditor(), '```\n' + text + '```\n');
+            
+                })
+            }
         }
     }
 
