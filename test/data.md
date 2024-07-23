@@ -576,7 +576,7 @@ registerPrettier(prettier);
 * The icons from [iconfont](https://www.iconfont.cn/)
 
 ```html
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_sk4bdegrdn.css" crossorigin="anonymous">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_duj4njl0dzn.css" crossorigin="anonymous">
 ```
 
 ## Code highlighting
