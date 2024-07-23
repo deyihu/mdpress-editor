@@ -149,7 +149,7 @@ export function getFolderTreeText(nodes) {
             }
             prefix = array.join('').toString() + prefix;
         }
-        text += `${prefix} ${name} \n`;
+        text += `${prefix}${name} \n`;
         const children = node.children;
         if (children && children.length) {
             level++;

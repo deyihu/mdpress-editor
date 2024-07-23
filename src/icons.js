@@ -802,12 +802,14 @@ const ICONS = [
             const cancelBtn = dialog.querySelector('#table-btn-cancel');
             // const confirmBtn = dialog.querySelector('#table-btn-confirm');
             let fileDND;
-            on(cancelBtn, 'click', () => {
+
+            const close = () => {
                 dialog.close();
                 mdEditor.dialog = null;
                 mdEditor.dom.removeChild(dialog);
-                fileDND.dispose();
-            });
+                fileDND && fileDND.dispose();
+            }
+            on(cancelBtn, 'click', close);
             const fileContainer = dialog.querySelector('.file-dnd-container');
             if (fileContainer) {
                 fileDND = new FileDND(fileContainer);
@@ -815,7 +817,7 @@ const ICONS = [
                     const tree = fileDND.toTree();
                     const text = getFolderTreeText(tree);
                     codeClick(this.getMDEditor(), '```\n' + text + '```\n');
-
+                    close();
                 })
             }
         }
