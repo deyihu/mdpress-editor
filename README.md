@@ -416,7 +416,7 @@ icon.on('click', e => {
 })
 ```
 
-* getEditor() 
+* getMDEditor() 
 * addTo(mdEditor)
 * remove()
 * show()
