@@ -130,8 +130,8 @@ para(path2, top)->op1
 `;
 
 function getEditors(iconDom) {
-    const mdEditor = iconDom.getEditor();
-    return [mdEditor, mdEditor.editor];
+    const mdEditor = iconDom.getMDEditor();
+    return [mdEditor, mdEditor.getEditor()];
 }
 
 const validateSelect = (result) => {
@@ -146,7 +146,7 @@ const hTitle = function (mdEditor, text) {
     if (!validateSelect(result)) {
         return;
     }
-    const editor = mdEditor.editor;
+    const editor = mdEditor.getEditor();
     const [range] = result;
     editor.executeEdits('', [
         {
@@ -161,7 +161,7 @@ const tableClick = function (mdEditor, text) {
     if (!validateSelect(result)) {
         return;
     }
-    const editor = mdEditor.editor;
+    const editor = mdEditor.getEditor();
     const [range] = result;
     editor.executeEdits('', [
         {
@@ -176,7 +176,7 @@ const codeClick = function (mdEditor, text) {
     if (!validateSelect(result)) {
         return;
     }
-    const editor = mdEditor.editor;
+    const editor = mdEditor.getEditor();
     const [range] = result;
     editor.executeEdits('', [
         {
@@ -192,7 +192,7 @@ const containerClick = function (mdEditor, text) {
     if (!validateSelect(result)) {
         return;
     }
-    const editor = mdEditor.editor;
+    const editor = mdEditor.getEditor();
     const [range] = result;
     editor.executeEdits('', [
         {
@@ -355,7 +355,7 @@ const ICONS = [
         title: '标题1',
         enable: false,
         click: function () {
-            hTitle(this.getEditor(), '# ');
+            hTitle(this.getMDEditor(), '# ');
         }
     },
     {
@@ -363,7 +363,7 @@ const ICONS = [
         title: '标题2',
         enable: false,
         click: function () {
-            hTitle(this.getEditor(), '## ');
+            hTitle(this.getMDEditor(), '## ');
         }
     },
     {
@@ -371,7 +371,7 @@ const ICONS = [
         title: '标题3',
         enable: false,
         click: function () {
-            hTitle(this.getEditor(), '### ');
+            hTitle(this.getMDEditor(), '### ');
         }
     },
     {
@@ -379,7 +379,7 @@ const ICONS = [
         title: '标题4',
         enable: false,
         click: function () {
-            hTitle(this.getEditor(), '#### ');
+            hTitle(this.getMDEditor(), '#### ');
         }
     },
     // {
@@ -403,7 +403,7 @@ const ICONS = [
             editor.executeEdits('', [
                 {
                     range,
-                    text: '-  \n-  '
+                    text: '- item1  \n- item2  '
                 }
             ]);
         }
@@ -477,7 +477,7 @@ const ICONS = [
             editor.executeEdits('', [
                 {
                     range,
-                    text: '[Markdown 官方教程](https://markdown.com.cn/)'
+                    text: '[mdpress-editor](https://github.com/deyihu/mdpress-editor)'
                 }
             ]);
         }
@@ -561,84 +561,84 @@ const ICONS = [
         name: 'icon-code',
         title: '插入代码',
         click: function () {
-            codeClick(this.getEditor(), '```\n\n```\n');
+            codeClick(this.getMDEditor(), '```\n\n```\n');
         }
     },
     {
         name: 'icon-js',
         title: '插入js code',
         click: function () {
-            codeClick(this.getEditor(), '```js' + JSCODE + '```\n');
+            codeClick(this.getMDEditor(), '```js' + JSCODE + '```\n');
         }
     },
     {
         name: 'icon-Artboard',
         title: '插入ts code',
         click: function () {
-            codeClick(this.getEditor(), '```ts' + TSCODE + '```\n');
+            codeClick(this.getMDEditor(), '```ts' + TSCODE + '```\n');
         }
     },
     {
         name: 'icon-bootstrap_tabs',
         title: '插入代码组',
         click: function () {
-            containerClick(this.getEditor(), CODEGROUP);
+            containerClick(this.getMDEditor(), CODEGROUP);
         }
     },
     {
         name: 'icon-093info',
         title: '信息容器',
         click: function () {
-            containerClick(this.getEditor(), INFOBOX);
+            containerClick(this.getMDEditor(), INFOBOX);
         }
     },
     {
-        name: 'icon-tipsvip',
+        name: 'icon-yiwancheng',
         title: '提示容器',
         click: function () {
-            containerClick(this.getEditor(), TIPBOX);
+            containerClick(this.getMDEditor(), TIPBOX);
         }
     },
     {
         name: 'icon-jinggao',
         title: '警告容器',
         click: function () {
-            containerClick(this.getEditor(), WARNBOX);
+            containerClick(this.getMDEditor(), WARNBOX);
         }
     },
     {
         name: 'icon-cuowukongxin',
         title: '危险容器',
         click: function () {
-            containerClick(this.getEditor(), DANGERBOX);
+            containerClick(this.getMDEditor(), DANGERBOX);
         }
     },
     {
         name: 'icon-xuekegongshiku_Char-rm-uk',
         title: 'Katex',
         click: function () {
-            containerClick(this.getEditor(), KATEX);
+            containerClick(this.getMDEditor(), KATEX);
         }
     },
     {
         name: 'icon-liuchengtu',
         title: 'mermaid',
         click: function () {
-            containerClick(this.getEditor(), MERMAID);
+            containerClick(this.getMDEditor(), MERMAID);
         }
     },
     {
         name: 'icon-flowChart',
         title: 'flowchart',
         click: function () {
-            containerClick(this.getEditor(), FLOWCHART);
+            containerClick(this.getMDEditor(), FLOWCHART);
         }
     },
     {
         name: 'icon-swiper',
         title: 'swiper',
         click: function () {
-            containerClick(this.getEditor(), SWIPER);
+            containerClick(this.getMDEditor(), SWIPER);
         }
     },
     {
@@ -711,7 +711,7 @@ const ICONS = [
             //         text: ':tada: :dog: :cat: '
             //     }
             // ]);
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             const emojiDom = mdEditor.emojiDom;
             const iconDom = this.getDom();
             const display = checkDomDisplay(emojiDom);
@@ -806,6 +806,7 @@ const ICONS = [
                 dialog.close();
                 mdEditor.dialog = null;
                 mdEditor.dom.removeChild(dialog);
+                fileDND.dispose();
             });
             const fileContainer = dialog.querySelector('.file-dnd-container');
             if (fileContainer) {
@@ -813,8 +814,8 @@ const ICONS = [
                 fileDND.dnd((files) => {
                     const tree = fileDND.toTree();
                     const text = getFolderTreeText(tree);
-                    codeClick(this.getEditor(), '```\n' + text + '```\n');
-            
+                    codeClick(this.getMDEditor(), '```\n' + text + '```\n');
+
                 })
             }
         }
@@ -840,7 +841,7 @@ const ICONS_RIGHT = [
         title: '目录',
         position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             mdEditor.tocOpen = !mdEditor.tocOpen;
             mdEditor._checkTocState();
         }
@@ -850,7 +851,7 @@ const ICONS_RIGHT = [
         title: '主题',
         position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             const themeDom = mdEditor.themeDom;
             const iconDom = this.getDom();
             const display = checkDomDisplay(themeDom);
@@ -865,7 +866,7 @@ const ICONS_RIGHT = [
         title: 'export file',
         position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             const exportFileDom = mdEditor.exportFileDom;
             const iconDom = this.getDom();
             const display = checkDomDisplay(exportFileDom);
@@ -880,7 +881,7 @@ const ICONS_RIGHT = [
         title: '预览',
         position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             mdEditor.preview = !mdEditor.preview;
             mdEditor._checkPreviewState();
         }
@@ -890,7 +891,7 @@ const ICONS_RIGHT = [
         title: '全屏',
         position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             checkFullScreen(mdEditor);
         }
     },
@@ -899,7 +900,7 @@ const ICONS_RIGHT = [
         title: '暗黑模式',
         position: 'right',
         click: function () {
-            const mdEditor = this.getEditor();
+            const mdEditor = this.getMDEditor();
             mdEditor.dark = !mdEditor.dark;
             mdEditor._checkDark();
         }

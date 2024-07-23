@@ -31,7 +31,7 @@ export class ToolIcon {
         //     return this.getEditor();
         // };
         this.dom = dom;
-        this.editor = null;
+        this.mdEditor = null;
     }
 
     isEnable() {
@@ -51,23 +51,27 @@ export class ToolIcon {
     }
 
     getEditor() {
-        return this.editor;
+        return this.mdEditor;
     }
 
-    addTo(editor) {
-        if (this.editor) {
+    getMDEditor() {
+        return this.getEditor();
+    }
+
+    addTo(mdEditor) {
+        if (this.mdEditor) {
             return this;
         }
-        this.editor = editor;
-        this.editor.toolsDom.appendChild(this.dom);
+        this.mdEditor = mdEditor;
+        this.mdEditor.toolsDom.appendChild(this.dom);
         return this;
 
     }
 
     remove() {
-        if (this.editor) {
-            this.editor.toolsDom.removeChild(this.dom);
-            this.editor = null;
+        if (this.mdEditor) {
+            this.mdEditor.toolsDom.removeChild(this.dom);
+            this.mdEditor = null;
         }
     }
 
