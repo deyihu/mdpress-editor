@@ -75,12 +75,6 @@ registerPrettier(prettier);
 ...
 ```
 
-* The icons from [iconfont](https://www.iconfont.cn/)
-
-```html
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_4227162_duj4njl0dzn.css" crossorigin="anonymous">
-```
-
 ## Code highlighting
 
 Built in [highlight.js](https://github.com/highlightjs/highlight.js)  as a Code highlighting tool. If you like [shiki](https://github.com/shikijs/shiki), you can register [shiki](https://github.com/shikijs/shiki) as a Code highlighting tool
@@ -280,6 +274,8 @@ const mdEditor = new MDEditor(dom, {
     themeCache: true, //open theme cache
     tocOpen: false, //open toc
     emojiURL: 'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
+    //if you need offline,you can config your iconfont url
+    iconfontURL: '//at.alicdn.com/t/c/font_4227162_duj4njl0dzn.css',
     //monaco config
     monacoOptions: {
         language: 'markdown',
