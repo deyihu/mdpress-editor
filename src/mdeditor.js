@@ -135,6 +135,7 @@ const OPTIONS = {
     themeCache: true,
     tocOpen: false,
     emojiURL: 'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
+    iconfontURL: '//at.alicdn.com/t/c/font_4227162_duj4njl0dzn.css',
     monacoOptions: {
         language: 'markdown',
         value: '',
@@ -182,6 +183,7 @@ export class MDEditor extends Eventable(Base) {
         this.themeName = '';
         this.clickOutSide = create();
         this.themeHistroy = [];
+        this._initIconFont();
         this._initDoms();
         this._initTheme();
         this._initExportFile();
@@ -213,6 +215,20 @@ export class MDEditor extends Eventable(Base) {
         });
         this.pasteItems = [];
 
+    }
+
+    _initIconFont() {
+        const id = 'mdpress-iconfont';
+        if (document && document.head && this.options.iconfontURL) {
+            const style = document.head.querySelector(`#${id}`);
+            if (!style) {
+                const style = createDom('link');
+                style.rel = 'stylesheet';
+                style.href = this.options.iconfontURL;
+                style.id = id;
+                document.head.appendChild(style);
+            }
+        }
     }
 
     _initDoms() {
