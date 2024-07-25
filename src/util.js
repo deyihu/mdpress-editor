@@ -135,35 +135,35 @@ export function getTableMdText(rows, cols) {
     return `${head}${headLine}${rowsText}`;
 }
 
-export function getFolderTreeText(nodes) {
+// export function getFolderTreeText(nodes) {
 
-    // let level = 1;
-    let text = '';
-    const loopNode = (node, level = 1) => {
-        const { name } = node;
-        let prefix = '├─ ';
-        if (level > 1) {
-            const array = [];
-            while (array.length < level - 1) {
-                array.push('| ');
-            }
-            prefix = array.join('').toString() + prefix;
-        }
-        text += `${prefix}${name} \n`;
-        const children = node.children;
-        if (children && children.length) {
-            level++;
-            children.forEach(child => {
-                loopNode(child, level);
-            });
-        }
-    };
-    return nodes.map(node => {
-        text = '';
-        loopNode(node);
-        return text;
-    }).join('').toString();
-}
+//     // let level = 1;
+//     let text = '';
+//     const loopNode = (node, level = 1) => {
+//         const { name } = node;
+//         let prefix = '├─ ';
+//         if (level > 1) {
+//             const array = [];
+//             while (array.length < level - 1) {
+//                 array.push('| ');
+//             }
+//             prefix = array.join('').toString() + prefix;
+//         }
+//         text += `${prefix}${name} \n`;
+//         const children = node.children;
+//         if (children && children.length) {
+//             level++;
+//             children.forEach(child => {
+//                 loopNode(child, level);
+//             });
+//         }
+//     };
+//     return nodes.map(node => {
+//         text = '';
+//         loopNode(node);
+//         return text;
+//     }).join('').toString();
+// }
 
 export function getDomDisplay(dom) {
     return dom.style.display;

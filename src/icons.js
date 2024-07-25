@@ -1,5 +1,5 @@
 import { ToolIcon } from './toolicon';
-import { createDialog, createFolderTreeDialog, getFolderTreeText, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
+import { createDialog, createFolderTreeDialog, getDomDisplay, getTableMdText, on, setDomDisplay } from './util';
 import dayjs from 'dayjs';
 import { computePosition } from '@floating-ui/dom';
 import { getToastr } from './toast';
@@ -814,8 +814,8 @@ const ICONS = [
             if (fileContainer) {
                 fileDND = new FileDND(fileContainer);
                 fileDND.dnd((files) => {
-                    const tree = fileDND.toTree();
-                    const text = getFolderTreeText(tree);
+                    // const tree = fileDND.toTree();
+                    const text = fileDND.toFolderTree();
                     codeClick(this.getMDEditor(), '```\n' + text + '```\n');
                     close();
                 });

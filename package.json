@@ -51,7 +51,7 @@
     "emoji-mart": "^5.5.2",
     "fetch-scheduler": "^0.4.0",
     "file-saver": "^2.0.5",
-    "filednd": "^0.7.0",
+    "filednd": "^0.8.0",
     "highlight.js": "^11.8.0",
     "html-to-image": "^1.11.11",
     "katex": "^0.6.0",
