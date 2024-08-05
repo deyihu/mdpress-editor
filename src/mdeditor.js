@@ -135,7 +135,7 @@ const OPTIONS = {
     themeCache: true,
     tocOpen: false,
     emojiURL: 'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
-    iconfontURL: '//at.alicdn.com/t/c/font_4227162_duj4njl0dzn.css',
+    iconfontURL: '//at.alicdn.com/t/c/font_4227162_4oipkq7kqoo.css',
     monacoOptions: {
         language: 'markdown',
         value: '',

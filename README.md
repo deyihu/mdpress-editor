@@ -275,7 +275,7 @@ const mdEditor = new MDEditor(dom, {
     tocOpen: false, //open toc
     emojiURL: 'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
     //if you need offline,you can config your iconfont url
-    iconfontURL: '//at.alicdn.com/t/c/font_4227162_duj4njl0dzn.css',
+    iconfontURL: '//at.alicdn.com/t/c/font_4227162_4oipkq7kqoo.css',
     //monaco config
     monacoOptions: {
         language: 'markdown',

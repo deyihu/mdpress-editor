@@ -281,7 +281,7 @@
   background-color: #000;
 }
 
-.file-dnd-container{
+.file-dnd-container {
   width: 500px;
   height: 400px;
   text-align: center;
@@ -455,6 +455,21 @@
   --vp-code-tab-hover-text-color: var(--vp-c-text-dark-1);
   --vp-code-tab-active-text-color: var(--vp-c-text-dark-1);
   --vp-code-tab-active-bar-color: var(--vp-c-brand);
+}
+
+:root {
+  --vp-badge-info-border: transparent;
+  --vp-badge-info-text: var(--vp-c-text-2);
+  --vp-badge-info-bg: var(--vp-c-default-soft);
+  --vp-badge-tip-border: transparent;
+  --vp-badge-tip-text: var(--vp-c-tip-1);
+  --vp-badge-tip-bg: var(--vp-c-tip-soft);
+  --vp-badge-warning-border: transparent;
+  --vp-badge-warning-text: var(--vp-c-warning-1);
+  --vp-badge-warning-bg: var(--vp-c-warning-soft);
+  --vp-badge-danger-border: transparent;
+  --vp-badge-danger-text: var(--vp-c-danger-1);
+  --vp-badge-danger-bg: var(--vp-c-danger-soft);
 }
 
 .custom-block {
@@ -718,4 +733,22 @@
 .vp-doc h6:hover .header-anchor,
 .vp-doc h6 .header-anchor:focus {
   opacity: 1;
+}
+
+.VPBadge {
+  display: inline-block;
+  margin-left: 2px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 0 10px;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 500;
+  transform: translateY(-2px);
+}
+
+.VPBadge.tip {
+  border-color: var(--vp-badge-tip-border);
+  color: #3451b2;
+  background-color: rgba(100, 108, 255, 0.14);
 }

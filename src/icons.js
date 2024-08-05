@@ -586,6 +586,13 @@ const ICONS = [
         }
     },
     {
+        name: 'icon-badge',
+        title: '插入Badge',
+        click: function () {
+            containerClick(this.getMDEditor(), '<span class="VPBadge tip">^1.9.0</span>');
+        }
+    },
+    {
         name: 'icon-093info',
         title: '信息容器',
         click: function () {
