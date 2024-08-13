@@ -435,28 +435,28 @@ export class MDEditor extends Eventable(Base) {
 
     _exportFile(type) {
         const previewDom = this.previewDom;
-        const children = this.previewDom.children;
-        const scrollTopDom = children[children.length - 1];
-        const addScroll = () => {
-            previewDom.appendChild(scrollTopDom);
-        };
+        // const children = this.previewDom.children;
+        // const scrollTopDom = children[children.length - 1];
+        // const addScroll = () => {
+        //     previewDom.appendChild(scrollTopDom);
+        // };
 
-        const removeScroll = () => {
-            previewDom.removeChild(scrollTopDom);
-        };
+        // const removeScroll = () => {
+        //     previewDom.removeChild(scrollTopDom);
+        // };
         let text, fileType;
         if (type === 'markdown') {
             text = this.editor.getValue();
             fileType = 'md';
         } else if (type === 'html') {
-            removeScroll();
+            // removeScroll();
             text = exportHTML(previewDom.outerHTML, this.styleText);
             fileType = type;
-            addScroll();
+            // addScroll();
         } else if (type === 'png') {
             fileType = type;
             showLoading();
-            removeScroll();
+            // removeScroll();
             // let w = 0;
             // Array.prototype.forEach.call(children, element => {
             //     const rect = element.getBoundingClientRect();
@@ -472,12 +472,12 @@ export class MDEditor extends Eventable(Base) {
             toBlob(previewDom, { width: w, height: h }).then(blob => {
                 saveAs(blob, `${now()}.${fileType}`);
                 hideLoading();
-                addScroll();
+                // addScroll();
             }).catch(err => {
                 console.error(err);
                 getToastr().error(err);
                 hideLoading();
-                addScroll();
+                // addScroll();
             });
             return;
         } else if (type === 'print') {
