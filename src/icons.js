@@ -495,7 +495,7 @@ const ICONS = [
             editor.executeEdits('', [
                 {
                     range,
-                    text: '![Markdown 官方教程](https://markdown.com.cn/hero.png)'
+                    text: '![image](https://markdown.com.cn/hero.png)'
                 }
             ]);
         }
