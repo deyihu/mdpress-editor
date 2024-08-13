@@ -20,6 +20,6 @@ function createLinkEle(url) {
     const a = createDom('a');
     a.href = url;
     a.target = '_blank';
-    a.textContent = '独立窗口打开';
+    a.textContent = 'Open in New Tab';
     return a;
 }
