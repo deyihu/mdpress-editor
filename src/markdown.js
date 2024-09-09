@@ -7,11 +7,12 @@ import { katexPlugin, ketexRender } from './plugins/plugin_katex';
 import { mermaidPlugin, mermaidRender } from './plugins/plugin_mermaid';
 import { getShikiHighlighter } from './deps';
 import { swiperPlugin } from './plugins/plugin_swiper';
-import mk from 'markdown-it-katex';
+import mkkatex from 'markdown-it-katex';
 import taskLists from 'markdown-it-task-lists';
 import { qrCodePlugin } from './plugins/plugin_qrcode';
 import { excelPlugin } from './plugins/plugin_excel';
 import mdPlantUML from 'markdown-it-plantuml';
+import { imgLazyload } from '@mdit/plugin-img-lazyload';
 
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -138,11 +139,12 @@ export function installPlugins(md) {
     mermaidPlugin(md);
     swiperPlugin(md);
     flowChartPlugin(md);
-    md.use(mk);
+    md.use(mkkatex);
     md.use(taskLists);
     md.use(qrCodePlugin);
     md.use(excelPlugin);
     md.use(mdPlantUML);
+    md.use(imgLazyload);
     md.renderer.renderAttrs = renderAttrs;
 }
 

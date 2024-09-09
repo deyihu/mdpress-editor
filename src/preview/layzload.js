@@ -1,11 +1,11 @@
-const IMG_TAG = '<img';
+// const IMG_TAG = '<img';
 const IFRAME_TAG = '<iframe';
 
 export function lazyLoad(html, mdEditor) {
-    if (html.indexOf(IMG_TAG) > -1) {
-        const seg = html.split(IMG_TAG);
-        html = seg.join(`${IMG_TAG} loading="lazy" `).toString();
-    }
+    // if (html.indexOf(IMG_TAG) > -1) {
+    //     const seg = html.split(IMG_TAG);
+    //     html = seg.join(`${IMG_TAG} loading="lazy" `).toString();
+    // }
     if (html.indexOf(IFRAME_TAG) > -1) {
         const seg = html.split(IFRAME_TAG);
         html = seg.join(`${IFRAME_TAG} loading="lazy" `).toString();
