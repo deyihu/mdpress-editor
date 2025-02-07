@@ -70,6 +70,7 @@
     "mermaid": "^10.4.0",
     "mini-toastr": "^0.8.1",
     "monaco-editor": "^0.41.0",
+    "morphdom": "^2.7.4",
     "prettier": "^3.0.3",
     "print-js": "^1.6.0",
     "shiki": "^0.14.3",

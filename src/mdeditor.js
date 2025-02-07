@@ -1,6 +1,7 @@
 // import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { create } from 'domclickoutside';
+import morphdom from 'morphdom';
 import { ACTIVE_CLASS, createDom, domHide, domId, domShow, domSizeByWindow, extend, formatHeadContents, getDom, getDomDisplay, hideLoading, isTitle, now, on, showLoading, trimTitle } from './util';
 import { createMarkdown } from './markdown';
 import { createDefaultIcons } from './icons';
@@ -33,7 +34,7 @@ import { lazyLoad } from './preview/layzload';
 import { Picker } from 'emoji-mart';
 import { setHeadLineNumber } from './preview/headlinenumber';
 import { initFlowChart } from './preview/flowchart';
-import { domDiff } from './diff';
+// import { domDiff } from './diff';
 
 const THEME_ID = 'mdeditor_theme_style';
 const THEMECACHE = new Map();
@@ -617,8 +618,11 @@ export class MDEditor extends Eventable(Base) {
                 dom.innerHTML = html;
             } else {
                 const tempDom = document.createElement('div');
+                tempDom.className = this.previewDom.className;
+                tempDom.id = this.previewDom.id;
                 tempDom.innerHTML = html;
-                domDiff(dom, tempDom, this);
+                morphdom(this.previewDom, tempDom);
+                // domDiff(dom, tempDom, this);
             }
             this.editorUpdateValues = [];
             checkCodeGroup(dom, this);
